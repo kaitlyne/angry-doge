@@ -25,11 +25,16 @@
 
               this.floor_y = -8;
               this.bouncing_ball = {
-                  velocity: vec3(0, 0, 0),
-                  center_pos: vec3(0, 1, 0),
+                  velocity: vec3(0.03, 0.03, 0.03),
+                  center_pos: vec3(1, 1, 1),
                   transform: mat4(),
-                  radius: 1
+                  radius: 2.5
               };
+              this.bouncing_ball.transform = mult(this.bouncing_ball.transform,
+                      translation(this.bouncing_ball.center_pos[0],
+                          this.bouncing_ball.center_pos[1], this.bouncing_ball.center_pos[2]));
+              this.bouncing_ball.transform = mult(this.bouncing_ball.transform, 
+                      scale(this.bouncing_ball.radius, this.bouncing_ball.radius, this.bouncing_ball.radius));
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
@@ -38,19 +43,21 @@
           'draw_falling_objects': function() {
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               this.last_animation_time = this.graphics_state.animation_time;
-              this.bouncing_ball.velocity[1] -= 9.81 * frame_delta / 1e5;
+              this.bouncing_ball.velocity[1] -= frame_delta / 1e4;
+              var displacement = this.bouncing_ball.velocity;
               var new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
               if (new_pos[1] - this.bouncing_ball.radius < this.floor_y) {
-                  console.log(new_pos[1]);
+                  console.log(this.bouncing_ball.center_pos[1], new_pos[1]);
                   this.bouncing_ball.velocity[1] *= -0.85;
                   //new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
                   new_pos = add(vec3(this.bouncing_ball.center_pos[0],
                               this.floor_y + this.bouncing_ball.radius, this.bouncing_ball.center_pos[2]),
                               this.bouncing_ball.velocity);
+                  displacement = subtract(new_pos, this.bouncing_ball.center_pos);
               }
               this.bouncing_ball.center_pos = new_pos;
-              this.bouncing_ball.transform = mult(translation(this.bouncing_ball.velocity[0],
-                          this.bouncing_ball.velocity[1], this.bouncing_ball.velocity[2]),
+              this.bouncing_ball.transform = mult(translation(displacement[0],
+                          displacement[1], displacement[2]),
                           this.bouncing_ball.transform);
               var ball_material = new Material(Color(1, 0, 0, 1), .5, .5, .8, 40);
               shapes_in_use["good_sphere"].draw(this.graphics_state,
