@@ -23,13 +23,19 @@
                   ])
               };
 
+              // y position for the floor (constant)
               this.floor_y = -8;
               this.bouncing_ball = {
+                  // initial velocity
                   velocity: vec3(0.03, 0.03, 0.03),
+                  // initial position of the ball's center
                   center_pos: vec3(1, 1, 1),
+                  // model transform
                   transform: mat4(),
+                  // ball's radius
                   radius: 2.5
               };
+              // set the initial transform to scale with the radius and translate to the initial position
               this.bouncing_ball.transform = mult(this.bouncing_ball.transform,
                       translation(this.bouncing_ball.center_pos[0],
                           this.bouncing_ball.center_pos[1], this.bouncing_ball.center_pos[2]));
@@ -41,14 +47,27 @@
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
           'draw_falling_objects': function() {
+              // get the time since last frame
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
+              // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
+              // change in velocity is acceleration * change in time
+              // acceleration in this case is just a constant that looks good
               this.bouncing_ball.velocity[1] -= frame_delta / 1e4;
+              // set displacement to be velocity
               var displacement = this.bouncing_ball.velocity;
+              // calculate new position with given velocity
               var new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
+              // if sphere's bottom is below the floor
               if (new_pos[1] - this.bouncing_ball.radius < this.floor_y) {
                   console.log(this.bouncing_ball.center_pos[1], new_pos[1]);
-                  this.bouncing_ball.velocity[1] *= -0.85;
+                  // this constant specifies how much the velocity is multiplied by when bouncing back up
+                  // from the ground
+                  const bounce_factor = 0.85;
+                  // flip the ball's y velocity to make it bounce, multiply by bounce factor
+                  this.bouncing_ball.velocity[1] *= -bounce_factor;
+                  // don't want the ball to appear partly "inside" the floor, so adjust the displacement
+                  // so that it's right above the floor
                   //new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
                   new_pos = add(vec3(this.bouncing_ball.center_pos[0],
                               this.floor_y + this.bouncing_ball.radius, this.bouncing_ball.center_pos[2]),
@@ -56,6 +75,7 @@
                   displacement = subtract(new_pos, this.bouncing_ball.center_pos);
               }
               this.bouncing_ball.center_pos = new_pos;
+              // translate the ball by the displacement
               this.bouncing_ball.transform = mult(translation(displacement[0],
                           displacement[1], displacement[2]),
                           this.bouncing_ball.transform);
@@ -71,12 +91,14 @@
               floor_transform = mult(floor_transform, scale(floor_scale_factor, 
                           floor_scale_factor, floor_scale_factor));
               floor_transform = mult(floor_transform, rotation(90, 1, 0, 0));
+              // number of rows and columns of blocks
               const num_floor_blocks = {
                   x: 12,
                   y: 12
               };
               for (var i = 0; i < num_floor_blocks.x; i++) {
                   for (var j = 0; j < num_floor_blocks.y; j++) {
+                      // draw the floor block in the ith row, jth column
                       var translate_transf = translation((i - num_floor_blocks.x / 2) * floor_scale_factor,
                              0, (j - num_floor_blocks.y / 2) * floor_scale_factor);
                       var final_transf = mult(translate_transf, floor_transform);
