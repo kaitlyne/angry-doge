@@ -488,7 +488,7 @@ Declare_Any_Class("Canvas_Manager", // This class performs all the setup of doin
         // All per-canvas key controls will be stored here
         this.displayables = [];
         this.shared_scratchpad = {
-            animate: false,
+            animate: true,
             string_map: {},
             graphics_state: new Graphics_State()
         };

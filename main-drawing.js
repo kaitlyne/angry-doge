@@ -24,8 +24,37 @@
               };
 
               this.floor_y = -8;
+              this.bouncing_ball = {
+                  velocity: vec3(0, 0, 0),
+                  center_pos: vec3(0, 1, 0),
+                  transform: mat4(),
+                  radius: 1
+              };
+              // save animation time to calculate time difference b/w frames
+              this.last_animation_time = 0;
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
+          },
+          'draw_falling_objects': function() {
+              var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
+              this.last_animation_time = this.graphics_state.animation_time;
+              this.bouncing_ball.velocity[1] -= 9.81 * frame_delta / 1e5;
+              var new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
+              if (new_pos[1] - this.bouncing_ball.radius < this.floor_y) {
+                  console.log(new_pos[1]);
+                  this.bouncing_ball.velocity[1] *= -0.85;
+                  //new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
+                  new_pos = add(vec3(this.bouncing_ball.center_pos[0],
+                              this.floor_y + this.bouncing_ball.radius, this.bouncing_ball.center_pos[2]),
+                              this.bouncing_ball.velocity);
+              }
+              this.bouncing_ball.center_pos = new_pos;
+              this.bouncing_ball.transform = mult(translation(this.bouncing_ball.velocity[0],
+                          this.bouncing_ball.velocity[1], this.bouncing_ball.velocity[2]),
+                          this.bouncing_ball.transform);
+              var ball_material = new Material(Color(1, 0, 0, 1), .5, .5, .8, 40);
+              shapes_in_use["good_sphere"].draw(this.graphics_state,
+                      this.bouncing_ball.transform, ball_material);
           },
           'draw_floor': function() {
               var floor_transform = mat4();
@@ -50,6 +79,7 @@
           },
           'draw_all_shapes': function(model_transform) {
               this.draw_floor();
+              this.draw_falling_objects();
               return;
           },
           'display': function(time) {
