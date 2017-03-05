@@ -540,7 +540,7 @@ Declare_Any_Class("Texture", // Wrap a pointer to a new texture buffer along wit
         {
             return function() // Instrctions for whenever the real image file is ready
             {
-                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                //gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
                 gl.bindTexture(gl.TEXTURE_2D, texture.id);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);

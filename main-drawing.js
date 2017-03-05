@@ -27,7 +27,7 @@
               this.floor_y = -8;
               this.bouncing_ball = {
                   // initial velocity
-                  velocity: vec3(0.03, 0.03, 0.03),
+                  velocity: vec3(0.0, 0.0, 0.0),
                   // initial position of the ball's center
                   center_pos: vec3(1, 1, 1),
                   // model transform
@@ -39,6 +39,8 @@
               this.bouncing_ball.transform = mult(this.bouncing_ball.transform,
                       translation(this.bouncing_ball.center_pos[0],
                           this.bouncing_ball.center_pos[1], this.bouncing_ball.center_pos[2]));
+              //this.bouncing_ball.transform = mult(this.bouncing_ball.transform, 
+              //        rotation(210, 1, 0, 0));
               this.bouncing_ball.transform = mult(this.bouncing_ball.transform, 
                       scale(this.bouncing_ball.radius, this.bouncing_ball.radius, this.bouncing_ball.radius));
               // save animation time to calculate time difference b/w frames
@@ -79,7 +81,7 @@
               this.bouncing_ball.transform = mult(translation(displacement[0],
                           displacement[1], displacement[2]),
                           this.bouncing_ball.transform);
-              var ball_material = new Material(Color(1, 0, 0, 1), .5, .5, .8, 40);
+              var ball_material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "doge2x1.jpg");
               shapes_in_use["good_sphere"].draw(this.graphics_state,
                       this.bouncing_ball.transform, ball_material);
           },
