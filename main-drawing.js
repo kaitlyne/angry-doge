@@ -25,18 +25,20 @@ class Moving_Ball {
                 scale(this.radius, this.radius, this.radius));
     }
     // modify the ball's center, radius, velocity, and transform to simulate falling
-    apply_gravity(frame_delta) {
+    // frame_delta is the change in time, used to calculate velocity
+    // gravity_const is the gravitational acceleration to multiply by
+    // bounce_factor specifies how much the velocity is multiplied by when bouncing back up
+    // from the ground
+    apply_gravity(frame_delta, gravity_const, bounce_factor) {
               // change in velocity is acceleration * change in time
               // acceleration in this case is just a constant that looks good
-              this.velocity[1] -= frame_delta / 1e4;
+              this.velocity[1] -= frame_delta * gravity_const;
               // set displacement to be velocity
               var displacement = this.velocity;
               // calculate new position with given velocity
               var new_pos = add(this.center_pos, this.velocity);
               // if sphere's bottom is below the floor
               if (new_pos[1] - this.radius < FLOOR_Y_POS) {
-                  // this constant specifies how much the velocity is multiplied by when bouncing back up
-                  // from the ground
                   const bounce_factor = 0.85;
                   // flip the ball's y velocity to make it bounce, multiply by bounce factor
                   this.velocity[1] *= -bounce_factor;
@@ -93,7 +95,8 @@ class Moving_Ball {
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
-              this.bouncing_ball.apply_gravity(frame_delta);
+              const gravity_const = 1e-4, bounce_factor = 0.85;
+              this.bouncing_ball.apply_gravity(frame_delta, gravity_const, bounce_factor);
               var ball_material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "sylvester2x1.jpg");
               shapes_in_use["good_sphere"].draw(this.graphics_state,
                       this.bouncing_ball.transform, ball_material);
