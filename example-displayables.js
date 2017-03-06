@@ -4,6 +4,8 @@
 
 // Now go down to Example_Animation's display() function to see where the sample shapes you see drawn are coded, and a good place to begin filling in your own code.
 
+var theta = 5;
+
 Declare_Any_Class("Debug_Screen", // Debug_Screen - An example of a displayable object that our class Canvas_Manager can manage.  Displays a text user interface.
 {
     'construct': function(context) {
@@ -114,6 +116,10 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
     },
     'init_keys': function(controls) // init_keys():  Define any extra keyboard shortcuts here
     {
+        controls.add("up", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 1, 0, 0), this.graphics_state.camera_transform); });
+        controls.add("down", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 1, 0, 0), this.graphics_state.camera_transform); });
+        controls.add("left", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 0, 1, 0), this.graphics_state.camera_transform); });
+        controls.add("right", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 0, 1, 0), this.graphics_state.camera_transform); });
         controls.add("Space", this, function() {
             this.thrust[1] = -1;
         });
@@ -304,4 +310,3 @@ Declare_Any_Class("Example_Animation", // An example of a displayable object tha
         shapes_in_use.windmill.draw(graphics_state, model_transform, placeHolder);
     }
 }, Animation);
-
