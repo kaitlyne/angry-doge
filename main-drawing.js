@@ -57,11 +57,6 @@
                   this.level3_arr.push(new Moving_Ball("chairman2x1.jpg", vec3((i*5) + 3, FLOOR_Y_POS+2.5, (j*5) + 3), 2.5));
                 }
               }
-              console.log(this.level3_arr[0]);
-              //movements
-              for (var i = 0; i < 7; i++) {
-
-              }
 
 
               //new Moving_Ball("grumpy2x1.jpg", vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5);
@@ -83,6 +78,33 @@
               for (var ball of this.level3_arr) {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
+              }
+              console.log(this.level3_arr[0].center_pos[2]);
+              //animation
+              
+              for (var i = 0; i < 49; i++) {
+                //top line
+                if ((this.level3_arr[i].center_pos[0].toFixed(1) == 3 ||
+                 this.level3_arr[i].center_pos[0].toFixed(1) == 2.9) && this.level3_arr[i].center_pos[2] > 3) {
+                  this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -0.1));
+                  this.level3_arr[i].transform = mult(translation(0, 0, -0.1), this.level3_arr[i].transform);
+                }
+                //left line
+                else if (this.level3_arr[i].center_pos[0] < 33 && (this.level3_arr[i].center_pos[2].toFixed(1) == 3 ||
+                this.level3_arr[i].center_pos[2].toFixed(1) == 2.9)) {
+                  this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0.1, 0, 0));
+                  this.level3_arr[i].transform = mult(translation(0.1, 0, 0), this.level3_arr[i].transform);
+                }
+                //bottom line
+                else if (this.level3_arr[i].center_pos[0].toFixed(1) == 33 && this.level3_arr[i].center_pos[2] < 33) {
+                  this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, 0.1));
+                  this.level3_arr[i].transform = mult(translation(0, 0, 0.1), this.level3_arr[i].transform);
+                }
+                //right line
+                else if (this.level3_arr[i].center_pos[0] > 3 && this.level3_arr[i].center_pos[2].toFixed(1) == 33) {
+                    this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-0.1, 0, 0));
+                    this.level3_arr[i].transform = mult(translation(-0.1, 0, 0), this.level3_arr[i].transform);
+                }
               }
           },
           'draw_floor': function() {
