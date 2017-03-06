@@ -1,3 +1,62 @@
+// y position for the floor (constant)
+const FLOOR_Y_POS = -8;
+
+// Class for a ball capable of motion. Just used es6 syntax here since it's simple,
+// and Declare_Any_Class doesn't seem to work? Don't need to inherit Shape or any of those classes anyway.
+class Moving_Ball {
+    constructor(center_pos, radius, velocity=vec3(0,0,0)) {
+        // position of the ball's center
+        this.center_pos = center_pos;
+        // ball's radius
+        this.radius = radius;
+        // ball's initial velocity
+        this.velocity = velocity;
+
+        // ball's model transform
+        this.transform = mat4();
+        // set the initial transform to scale with the radius and translate to the initial position
+        this.transform = mult(this.transform,
+                translation(this.center_pos[0],
+                    this.center_pos[1], this.center_pos[2]));
+        // rotate the ball 90 degrees so the center of the picture faces the front of the camera
+        this.transform = mult(this.transform,
+                rotation(-90, 0, 1, 0));
+        this.transform = mult(this.transform,
+                scale(this.radius, this.radius, this.radius));
+    }
+    // modify the ball's center, radius, velocity, and transform to simulate falling
+    apply_gravity(frame_delta) {
+              // change in velocity is acceleration * change in time
+              // acceleration in this case is just a constant that looks good
+              this.velocity[1] -= frame_delta / 1e4;
+              // set displacement to be velocity
+              var displacement = this.velocity;
+              // calculate new position with given velocity
+              var new_pos = add(this.center_pos, this.velocity);
+              // if sphere's bottom is below the floor
+              if (new_pos[1] - this.radius < FLOOR_Y_POS) {
+                  // this constant specifies how much the velocity is multiplied by when bouncing back up
+                  // from the ground
+                  const bounce_factor = 0.85;
+                  // flip the ball's y velocity to make it bounce, multiply by bounce factor
+                  this.velocity[1] *= -bounce_factor;
+                  // don't want the ball to appear partly "inside" the floor, so adjust the displacement
+                  // so that it's right above the floor
+                  //new_pos = add(this.center_pos, this.velocity);
+                  new_pos = add(vec3(this.center_pos[0],
+                              FLOOR_Y_POS + this.radius, this.center_pos[2]),
+                              this.velocity);
+                  displacement = subtract(new_pos, this.center_pos);
+                  console.log(this.center_pos[1], new_pos[1], this.velocity);
+              }
+              this.center_pos = new_pos;
+              // translate the ball by the displacement
+              this.transform = mult(translation(displacement[0],
+                          displacement[1], displacement[2]),
+                          this.transform);
+    }
+}
+
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
       {
           'construct': function(context) {
@@ -23,26 +82,7 @@
                   ])
               };
 
-              // y position for the floor (constant)
-              this.floor_y = -8;
-              this.bouncing_ball = {
-                  // initial velocity
-                  velocity: vec3(0.0, 0.0, 0.0),
-                  // initial position of the ball's center
-                  center_pos: vec3(1, 1, 1),
-                  // model transform
-                  transform: mat4(),
-                  // ball's radius
-                  radius: 2.5
-              };
-              // set the initial transform to scale with the radius and translate to the initial position
-              this.bouncing_ball.transform = mult(this.bouncing_ball.transform,
-                      translation(this.bouncing_ball.center_pos[0],
-                          this.bouncing_ball.center_pos[1], this.bouncing_ball.center_pos[2]));
-              this.bouncing_ball.transform = mult(this.bouncing_ball.transform, 
-                      rotation(-90, 0, 1, 0));
-              this.bouncing_ball.transform = mult(this.bouncing_ball.transform, 
-                      scale(this.bouncing_ball.radius, this.bouncing_ball.radius, this.bouncing_ball.radius));
+              this.bouncing_ball = new Moving_Ball(vec3(1, 1, 1), 2.5, vec3(.0, .05, .0));
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
@@ -53,34 +93,7 @@
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
-              // change in velocity is acceleration * change in time
-              // acceleration in this case is just a constant that looks good
-              this.bouncing_ball.velocity[1] -= frame_delta / 1e4;
-              // set displacement to be velocity
-              var displacement = this.bouncing_ball.velocity;
-              // calculate new position with given velocity
-              var new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
-              // if sphere's bottom is below the floor
-              if (new_pos[1] - this.bouncing_ball.radius < this.floor_y) {
-                  console.log(this.bouncing_ball.center_pos[1], new_pos[1]);
-                  // this constant specifies how much the velocity is multiplied by when bouncing back up
-                  // from the ground
-                  const bounce_factor = 0.85;
-                  // flip the ball's y velocity to make it bounce, multiply by bounce factor
-                  this.bouncing_ball.velocity[1] *= -bounce_factor;
-                  // don't want the ball to appear partly "inside" the floor, so adjust the displacement
-                  // so that it's right above the floor
-                  //new_pos = add(this.bouncing_ball.center_pos, this.bouncing_ball.velocity);
-                  new_pos = add(vec3(this.bouncing_ball.center_pos[0],
-                              this.floor_y + this.bouncing_ball.radius, this.bouncing_ball.center_pos[2]),
-                              this.bouncing_ball.velocity);
-                  displacement = subtract(new_pos, this.bouncing_ball.center_pos);
-              }
-              this.bouncing_ball.center_pos = new_pos;
-              // translate the ball by the displacement
-              this.bouncing_ball.transform = mult(translation(displacement[0],
-                          displacement[1], displacement[2]),
-                          this.bouncing_ball.transform);
+              this.bouncing_ball.apply_gravity(frame_delta);
               var ball_material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "sylvester2x1.jpg");
               shapes_in_use["good_sphere"].draw(this.graphics_state,
                       this.bouncing_ball.transform, ball_material);
@@ -89,7 +102,7 @@
               var floor_transform = mat4();
               const floor_scale_factor = 8;
               var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "floor.jpg");
-              floor_transform = mult(floor_transform, translation(0, this.floor_y, 0));
+              floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS, 0));
               floor_transform = mult(floor_transform, scale(floor_scale_factor, 
                           floor_scale_factor, floor_scale_factor));
               floor_transform = mult(floor_transform, rotation(90, 1, 0, 0));
