@@ -84,7 +84,11 @@ class Moving_Ball {
                   ])
               };
 
-              this.bouncing_ball = new Moving_Ball(vec3(1, 1, 1), 2.5, vec3(.0, .05, .0));
+              this.doge= new Moving_Ball(vec3(-5, 2, -5), 2.5, vec3(.0, .05, .0));
+              this.grumpy = new Moving_Ball(vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5);
+              this.chairman = new Moving_Ball(vec3(7, FLOOR_Y_POS + 7.5, 7), 2.5);
+              this.sylvester = new Moving_Ball(vec3(3, FLOOR_Y_POS + 2.5, 3), 2.5);
+              this.meowth = new Moving_Ball(vec3(3, FLOOR_Y_POS + 7.5, 3), 2.5);
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
@@ -96,17 +100,24 @@ class Moving_Ball {
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
               const gravity_const = 1e-4, bounce_factor = 0.85;
-              this.bouncing_ball.apply_gravity(frame_delta, gravity_const, bounce_factor);
-              var ball_material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "sylvester2x1.jpg");
-              shapes_in_use["good_sphere"].draw(this.graphics_state,
-                      this.bouncing_ball.transform, ball_material);
+              this.doge.apply_gravity(frame_delta, gravity_const, bounce_factor);
+              var ball_material1 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "dogecoin2x1.jpg");
+              var ball_material2 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "sylvester2x1.jpg");
+              var ball_material3 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "chairman2x1.jpg");
+              var ball_material4 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "grumpy2x1.jpg");
+              var ball_material5 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "meowth2x1.jpg");
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, ball_material1);
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.grumpy.transform, ball_material2);
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.chairman.transform, ball_material3);
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.sylvester.transform, ball_material4);
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.meowth.transform, ball_material5);
           },
           'draw_floor': function() {
               var floor_transform = mat4();
               const floor_scale_factor = 8;
               var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "floor.jpg");
               floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS, 0));
-              floor_transform = mult(floor_transform, scale(floor_scale_factor, 
+              floor_transform = mult(floor_transform, scale(floor_scale_factor,
                           floor_scale_factor, floor_scale_factor));
               floor_transform = mult(floor_transform, rotation(90, 1, 0, 0));
               // number of rows and columns of blocks
