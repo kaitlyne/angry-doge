@@ -51,7 +51,7 @@ class Moving_Ball {
                               FLOOR_Y_POS + this.radius, this.center_pos[2]),
                               this.velocity);
                   displacement = subtract(new_pos, this.center_pos);
-                  console.log(this.center_pos[1], new_pos[1], this.velocity);
+                  //console.log(this.center_pos[1], new_pos[1], this.velocity);
               }
               this.center_pos = new_pos;
               // translate the ball by the displacement
@@ -86,13 +86,50 @@ class Moving_Ball {
                   ])
               };
 
+              //doge
               this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), 2.5, vec3(.0, .05, .0));
-              this.level1_arr = [
-                  new Moving_Ball("grumpy2x1.jpg", vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5),
-                  new Moving_Ball("chairman2x1.jpg", vec3(7, FLOOR_Y_POS + 7.5, 7), 2.5),
-                  new Moving_Ball("sylvester2x1.jpg", vec3(3, FLOOR_Y_POS + 2.5, 3), 2.5),
-                  new Moving_Ball("meowth2x1.jpg", vec3(3, FLOOR_Y_POS + 7.5, 3), 2.5)
-              ];
+
+              //cube
+              this.level1_arr = [];
+              for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                  for (var k = 0; k < 3; k++) {
+                    this.level1_arr.push(new Moving_Ball("meowth2x1.jpg", vec3((i*5) + 3, FLOOR_Y_POS+2.5 + (5*j), (k*5) + 3), 2.5));
+                  }
+                }
+              }
+
+              //pyramid
+              this.level2_arr = [];
+              for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*5) + 3, FLOOR_Y_POS+2.5, (j*5) + 3), 2.5));
+                }
+              }
+              for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*5) + 8, FLOOR_Y_POS+7.5, (j*5) + 8), 2.5));
+                }
+              }
+              this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3(13, FLOOR_Y_POS+12.5, 13), 2.5));
+
+              //moving square
+              this.level3_arr = []
+              for (var i = 0; i < 7; i++) {
+                for (var j = 0; j < 7; j++) {
+                  this.level3_arr.push(new Moving_Ball("chairman2x1.jpg", vec3((i*5) + 3, FLOOR_Y_POS+2.5, (j*5) + 3), 2.5));
+                }
+              }
+              console.log(this.level3_arr[0]);
+              //movements
+              for (var i = 0; i < 7; i++) {
+
+              }
+
+
+              //new Moving_Ball("grumpy2x1.jpg", vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5);
+              //new Moving_Ball("chairman2x1.jpg", vec3(7, FLOOR_Y_POS + 7.5, 7), 2.5);
+              //new Moving_Ball("sylvester2x1.jpg", vec3(3, FLOOR_Y_POS + 2.5, 3), 2.5);
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
@@ -106,7 +143,7 @@ class Moving_Ball {
               const gravity_const = 1e-4, bounce_factor = 0.85;
               this.doge.apply_gravity(frame_delta, gravity_const, bounce_factor);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
-              for (var ball of this.level1_arr) {
+              for (var ball of this.level3_arr) {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
               }
