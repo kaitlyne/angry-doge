@@ -51,7 +51,7 @@ class Moving_Ball {
                               FLOOR_Y_POS + this.radius, this.center_pos[2]),
                               this.velocity);
                   displacement = subtract(new_pos, this.center_pos);
-                  console.log(this.center_pos[1], new_pos[1], this.velocity);
+                  //console.log(this.center_pos[1], new_pos[1], this.velocity);
               }
               this.center_pos = new_pos;
               // translate the ball by the displacement
@@ -59,5 +59,18 @@ class Moving_Ball {
                           displacement[1], displacement[2]),
                           this.transform);
     }
+}
+
+function do_balls_collide(ball1, ball2) {
+    var position_difference = subtract(ball1.center_pos, ball2.center_pos);
+    //var distance_squared = position_difference[0] * position_difference[0] +
+    //    position_difference[1] * position_difference[1] +
+    //    position_difference[2] * position_difference[2];
+    var distance_squared = dot(position_difference, position_difference);
+    var radii_sum_squared = Math.pow(ball1.radius + ball2.radius, 2);
+    if (distance_squared < radii_sum_squared) {
+        return true;
+    }
+    return false;
 }
 

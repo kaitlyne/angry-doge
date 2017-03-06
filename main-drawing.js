@@ -24,7 +24,7 @@
               };
 
               //doge
-              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), 2.5, vec3(.0, .05, .0));
+              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), 2.5, vec3(.01, .05, .013));
 
               //cube
               this.level1_arr = [];
@@ -75,14 +75,10 @@
               const gravity_const = 1e-4, bounce_factor = 0.85;
               this.doge.apply_gravity(frame_delta, gravity_const, bounce_factor);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
-              for (var ball of this.level3_arr) {
-                  shapes_in_use["good_sphere"].draw(this.graphics_state,
-                          ball.transform, ball.material);
-              }
               console.log(this.level3_arr[0].center_pos[2]);
               //animation
               
-              for (var i = 0; i < 49; i++) {
+              for (var i = 0; i < this.level3_arr.length; i++) {
                 //top line
                 if ((this.level3_arr[i].center_pos[0].toFixed(1) == 3 ||
                  this.level3_arr[i].center_pos[0].toFixed(1) == 2.9) && this.level3_arr[i].center_pos[2] > 3) {
@@ -105,6 +101,16 @@
                     this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-0.1, 0, 0));
                     this.level3_arr[i].transform = mult(translation(-0.1, 0, 0), this.level3_arr[i].transform);
                 }
+              }
+
+              for (var i = this.level3_arr.length - 1; i >= 0; i--) {
+                  var ball = this.level3_arr[i];
+                  shapes_in_use["good_sphere"].draw(this.graphics_state,
+                          ball.transform, ball.material);
+                  if (do_balls_collide(this.doge, ball)) {
+                      console.log("yo stuff collided", this.doge.center_pos, ball.center_pos);
+                      this.level3_arr.splice(i, 1);
+                  }
               }
           },
           'draw_floor': function() {
