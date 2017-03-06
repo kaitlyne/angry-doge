@@ -4,7 +4,9 @@ const FLOOR_Y_POS = -8;
 // Class for a ball capable of motion. Just used es6 syntax here since it's simple,
 // and Declare_Any_Class doesn't seem to work? Don't need to inherit Shape or any of those classes anyway.
 class Moving_Ball {
-    constructor(center_pos, radius, velocity=vec3(0,0,0)) {
+    constructor(texture_filename, center_pos, radius, velocity=vec3(0,0,0)) {
+        // material for ball's texture
+        this.material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, texture_filename);
         // position of the ball's center
         this.center_pos = center_pos;
         // ball's radius
@@ -84,11 +86,13 @@ class Moving_Ball {
                   ])
               };
 
-              this.doge= new Moving_Ball(vec3(-5, 2, -5), 2.5, vec3(.0, .05, .0));
-              this.grumpy = new Moving_Ball(vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5);
-              this.chairman = new Moving_Ball(vec3(7, FLOOR_Y_POS + 7.5, 7), 2.5);
-              this.sylvester = new Moving_Ball(vec3(3, FLOOR_Y_POS + 2.5, 3), 2.5);
-              this.meowth = new Moving_Ball(vec3(3, FLOOR_Y_POS + 7.5, 3), 2.5);
+              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), 2.5, vec3(.0, .05, .0));
+              this.level1_arr = [
+                  new Moving_Ball("grumpy2x1.jpg", vec3(7, FLOOR_Y_POS + 2.5, 7), 2.5),
+                  new Moving_Ball("chairman2x1.jpg", vec3(7, FLOOR_Y_POS + 7.5, 7), 2.5),
+                  new Moving_Ball("sylvester2x1.jpg", vec3(3, FLOOR_Y_POS + 2.5, 3), 2.5),
+                  new Moving_Ball("meowth2x1.jpg", vec3(3, FLOOR_Y_POS + 7.5, 3), 2.5)
+              ];
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
@@ -101,16 +105,11 @@ class Moving_Ball {
               this.last_animation_time = this.graphics_state.animation_time;
               const gravity_const = 1e-4, bounce_factor = 0.85;
               this.doge.apply_gravity(frame_delta, gravity_const, bounce_factor);
-              var ball_material1 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "dogecoin2x1.jpg");
-              var ball_material2 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "sylvester2x1.jpg");
-              var ball_material3 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "chairman2x1.jpg");
-              var ball_material4 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "grumpy2x1.jpg");
-              var ball_material5 = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, "meowth2x1.jpg");
-              shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, ball_material1);
-              shapes_in_use["good_sphere"].draw(this.graphics_state, this.grumpy.transform, ball_material2);
-              shapes_in_use["good_sphere"].draw(this.graphics_state, this.chairman.transform, ball_material3);
-              shapes_in_use["good_sphere"].draw(this.graphics_state, this.sylvester.transform, ball_material4);
-              shapes_in_use["good_sphere"].draw(this.graphics_state, this.meowth.transform, ball_material5);
+              shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
+              for (var ball of this.level1_arr) {
+                  shapes_in_use["good_sphere"].draw(this.graphics_state,
+                          ball.transform, ball.material);
+              }
           },
           'draw_floor': function() {
               var floor_transform = mat4();
