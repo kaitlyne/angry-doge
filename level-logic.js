@@ -28,6 +28,7 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3(x+(4*DEF_RAD), FLOOR_Y_POS+(5*DEF_RAD), z+(4*DEF_RAD)), DEF_RAD));
 
     //moving square
+    this.level3_speed = 0.125;
     this.level3_arr = [];
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
@@ -41,26 +42,28 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     lower_right_corner = this.level3_arr[48].center_pos;
 
     //level 4
+    this.level4_speed = 0.5;
     this.level4_arr = [];
-        for (var i = 0; i < 7; i++) {
-            for (var j = 0; j < 7; j++) {
-                this.level4_arr.push(new Moving_Ball("grumpy2x1.jpg", vec3(x + (i*2*DEF_RAD), FLOOR_Y_POS + (8*DEF_RAD), z + (j*2*DEF_RAD)), DEF_RAD));
-            }
+    for (var i = 0; i < 7; i++) {
+        for (var j = 0; j < 7; j++) {
+            this.level4_arr.push(new Moving_Ball("grumpy2x1.jpg", vec3(x + (i*2*DEF_RAD), FLOOR_Y_POS + (8*DEF_RAD), z + (j*2*DEF_RAD)), DEF_RAD, vec3(0, -this.level4_speed, 0)));
         }
+    }
 
     for (var i = 0; i < this.level4_arr.length; i+=2) {
         this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -7*DEF_RAD, 0));
         this.level4_arr[i].transform = mult(translation(0, -7*DEF_RAD, 0), this.level4_arr[i].transform);
+        this.level4_arr[i].velocity[1] = this.level4_speed;
     }
 
     upper_bound = FLOOR_Y_POS + 8*DEF_RAD;
     lower_bound = FLOOR_Y_POS + DEF_RAD;
 
     //final boss
-    this.final_arr = []
-        for (var i = 0; i < 10; i++) {
-            this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*FINAL_BOSS_RAD), FLOOR_Y_POS + 5*FINAL_BOSS_RAD , 6), FINAL_BOSS_RAD));
-        }
+    this.final_arr = [];
+    for (var i = 0; i < 10; i++) {
+        this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*FINAL_BOSS_RAD), FLOOR_Y_POS + 5*FINAL_BOSS_RAD , 6), FINAL_BOSS_RAD));
+    }
 };
 
 // ***HERE BE DRAGONS***
@@ -70,81 +73,81 @@ window.Main_Drawing.prototype.animate_level3 = function() {
         //7x7
         //top line
         if (this.level3_arr[i].center_pos[0] == upper_left_corner[0] && this.level3_arr[i].center_pos[2] > upper_left_corner[2]) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, -0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, -this.level3_speed), this.level3_arr[i].transform);
         }
         //left line
         else if (this.level3_arr[i].center_pos[0] < lower_left_corner[0] && this.level3_arr[i].center_pos[2] == lower_left_corner[2]) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
         //bottom line
         else if (this.level3_arr[i].center_pos[0] == lower_right_corner[0] && this.level3_arr[i].center_pos[2] < lower_right_corner[2]) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, 0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, 0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, this.level3_speed), this.level3_arr[i].transform);
         }
         //right line
         else if (this.level3_arr[i].center_pos[0] > upper_right_corner[0] && this.level3_arr[i].center_pos[2] == upper_right_corner[2]) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(-0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(-this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
         //5x5
         //top line
         else if (this.level3_arr[i].center_pos[0] == (upper_left_corner[0] + (2*DEF_RAD)) &&
                 (this.level3_arr[i].center_pos[2] > (upper_left_corner[2] + (2*DEF_RAD))
                  && this.level3_arr[i].center_pos[2] <= (upper_left_corner[2] + (12*DEF_RAD)))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, -0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, -this.level3_speed), this.level3_arr[i].transform);
         }
         //left line
         else if ((this.level3_arr[i].center_pos[0] < (lower_left_corner[0] - (2*DEF_RAD)) &&
                     this.level3_arr[i].center_pos[0] >= (lower_left_corner[0] - (12*DEF_RAD)))
                 && this.level3_arr[i].center_pos[2] == (lower_left_corner[2] + (2*DEF_RAD))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
         //bottom line
         else if (this.level3_arr[i].center_pos[0] == (lower_right_corner[0] - (2*DEF_RAD)) &&
                 (this.level3_arr[i].center_pos[2] < (lower_right_corner[2] - (2*DEF_RAD))
                  && this.level3_arr[i].center_pos[2] >= (lower_right_corner[2] - (12*DEF_RAD)) )) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, 0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, 0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, this.level3_speed), this.level3_arr[i].transform);
         }
         //right line
         else if ((this.level3_arr[i].center_pos[0] > (upper_right_corner[0] + (2*DEF_RAD)) &&
                     this.level3_arr[i].center_pos[0] <= (upper_right_corner[0] + (12*DEF_RAD)))
                 && this.level3_arr[i].center_pos[2] == (upper_right_corner[2] - (2*DEF_RAD))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(-0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(-this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
         //3x3
         //top line
         else if (this.level3_arr[i].center_pos[0] == (upper_left_corner[0] + (4*DEF_RAD)) &&
                 (this.level3_arr[i].center_pos[2] > (upper_left_corner[2] + (4*DEF_RAD))
                  && this.level3_arr[i].center_pos[2] <= (upper_left_corner[2] + (8*DEF_RAD)))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, -0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, -this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, -this.level3_speed), this.level3_arr[i].transform);
         }
         //left line
         else if ((this.level3_arr[i].center_pos[0] < (lower_left_corner[0] - (4*DEF_RAD)) &&
                     this.level3_arr[i].center_pos[0] >= (lower_left_corner[0] - (8*DEF_RAD)))
                 && this.level3_arr[i].center_pos[2] == (lower_left_corner[2] + (4*DEF_RAD))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
         //bottom line
         else if (this.level3_arr[i].center_pos[0] == (lower_right_corner[0] - (4*DEF_RAD)) &&
                 (this.level3_arr[i].center_pos[2] < (lower_right_corner[2] - (4*DEF_RAD))
                  && this.level3_arr[i].center_pos[2] >= (lower_right_corner[2] - (8*DEF_RAD)) )) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, 0.125));
-            this.level3_arr[i].transform = mult(translation(0, 0, 0.125), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(0, 0, this.level3_speed));
+            this.level3_arr[i].transform = mult(translation(0, 0, this.level3_speed), this.level3_arr[i].transform);
         }
         //right line
         else if ((this.level3_arr[i].center_pos[0] > (upper_right_corner[0] + (4*DEF_RAD)) &&
                     this.level3_arr[i].center_pos[0] <= (upper_right_corner[0] + (8*DEF_RAD)))
                 && this.level3_arr[i].center_pos[2] == (upper_right_corner[2] - (4*DEF_RAD))) {
-            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-0.125, 0, 0));
-            this.level3_arr[i].transform = mult(translation(-0.125, 0, 0), this.level3_arr[i].transform);
+            this.level3_arr[i].center_pos = add(this.level3_arr[i].center_pos, vec3(-this.level3_speed, 0, 0));
+            this.level3_arr[i].transform = mult(translation(-this.level3_speed, 0, 0), this.level3_arr[i].transform);
         }
     }
 };
@@ -153,36 +156,36 @@ window.Main_Drawing.prototype.animate_level3 = function() {
 window.Main_Drawing.prototype.animate_level4 = function() {
     //animate level 4
     for (var i = 0; i < this.level4_arr.length; i+=2) {
-        if (move_dir[i] == UP) {
-            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
-            this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
+        if (this.level4_arr[i].velocity[1] > 0) {
+            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -this.level4_speed, 0));
+            this.level4_arr[i].transform = mult(translation(0, -this.level4_speed, 0), this.level4_arr[i].transform);
         }
         else {
-            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
-            this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
+            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, this.level4_speed, 0));
+            this.level4_arr[i].transform = mult(translation(0, this.level4_speed, 0), this.level4_arr[i].transform);
         }
         if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-            move_dir[i] = DOWN;
+            this.level4_arr[i].velocity[1] = -this.level4_speed;
         }
         else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-            move_dir[i] = UP;
+            this.level4_arr[i].velocity[1] = this.level4_speed;
         }
     }
 
     for (var i = 1; i < this.level4_arr.length; i+=2) {
-        if (move_dir[i] == UP) {
-            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
-            this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
+        if (this.level4_arr[i].velocity[1] > 0) {
+            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -this.level4_speed, 0));
+            this.level4_arr[i].transform = mult(translation(0, -this.level4_speed, 0), this.level4_arr[i].transform);
         }
         else {
-            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
-            this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
+            this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, this.level4_speed, 0));
+            this.level4_arr[i].transform = mult(translation(0, this.level4_speed, 0), this.level4_arr[i].transform);
         }
         if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-            move_dir[i] = DOWN;
+            this.level4_arr[i].velocity[1] = -this.level4_speed;
         }
         else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-            move_dir[i] = UP;
+            this.level4_arr[i].velocity[1] = this.level4_speed;
         }
     }
 };

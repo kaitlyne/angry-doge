@@ -13,10 +13,6 @@ const UP = 1
 const DOWN = 0
 var upper_bound;
 var lower_bound;
-var move_dir = []
-for (var i = 0; i < 49; i++) {
-  move_dir.push(i%2);
-}
 
 var DEF_RAD = 2.5;
 var FINAL_BOSS_RAD = 5;
@@ -106,7 +102,6 @@ var FINAL_BOSS_HP = 10;
                   if (do_balls_collide(this.doge, ball)) {
                       console.log("wow such collision", this.doge.center_pos, ball.center_pos);
                       this.level4_arr.splice(i, 1);
-                      move_dir.splice(i, 1);
                   }
               }
               // if doge is still, i.e., zero velocity for all components
