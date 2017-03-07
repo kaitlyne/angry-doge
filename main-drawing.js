@@ -13,12 +13,10 @@ const UP = 1
 const DOWN = 0
 var upper_bound;
 var lower_bound;
-var move_dir_odd = new Array(49);
-move_dir_odd.fill(UP);
-var move_dir_even = new Array(49);
-move_dir_even.fill(DOWN);
-
-console.log(move_dir_even);
+var move_dir = []
+for (var i = 0; i < 49; i++) {
+  move_dir.push(i%2);
+}
 
 var DEF_RAD = 2.5;
 var FINAL_BOSS_RAD = 5;
@@ -54,7 +52,7 @@ var FINAL_BOSS_HP = 10;
 			  this.init_center = vec3(-5, FLOOR_Y_POS + DEF_RAD, -5);
               this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
-			  
+
 			  this.xzangle = 90;
 			  this.yzangle = 45;
 			  this.xyangle = 90;
@@ -108,9 +106,7 @@ var FINAL_BOSS_HP = 10;
                   if (do_balls_collide(this.doge, ball)) {
                       console.log("wow such collision", this.doge.center_pos, ball.center_pos);
                       this.level4_arr.splice(i, 1);
-                      console.log(move_dir_even);
-                      move_dir_even.splice(i, 1);
-                      move_dir_odd.splice(i, 1);
+                      move_dir.splice(i, 1);
                   }
               }
               // if doge is still, i.e., zero velocity for all components

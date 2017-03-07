@@ -1,6 +1,6 @@
 // Mmmk these functions were bloating main-drawing.js so I found out that the template just places the Main_Drawing
 // class under the global `window` object by default, soooo with prototype shenanigans I moved these functions
-// to this new file and main-drawing.js still works just the same when I call these functions! 
+// to this new file and main-drawing.js still works just the same when I call these functions!
 // Clearly prototypes = magic. QED.
 window.Main_Drawing.prototype.initialize_levels = function() {
     //cube
@@ -153,7 +153,7 @@ window.Main_Drawing.prototype.animate_level3 = function() {
 window.Main_Drawing.prototype.animate_level4 = function() {
     //animate level 4
     for (var i = 0; i < this.level4_arr.length; i+=2) {
-        if (move_dir_odd[i] == UP) {
+        if (move_dir[i] == UP) {
             this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
             this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
         }
@@ -162,15 +162,15 @@ window.Main_Drawing.prototype.animate_level4 = function() {
             this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
         }
         if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-            move_dir_odd[i] = DOWN;
+            move_dir[i] = DOWN;
         }
         else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-            move_dir_odd[i] = UP;
+            move_dir[i] = UP;
         }
     }
 
     for (var i = 1; i < this.level4_arr.length; i+=2) {
-        if (move_dir_even[i] == UP) {
+        if (move_dir[i] == UP) {
             this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
             this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
         }
@@ -179,10 +179,10 @@ window.Main_Drawing.prototype.animate_level4 = function() {
             this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
         }
         if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-            move_dir_even[i] = DOWN;
+            move_dir[i] = DOWN;
         }
         else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-            move_dir_even[i] = UP;
+            move_dir[i] = UP;
         }
     }
 };
