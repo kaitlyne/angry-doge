@@ -18,8 +18,12 @@ const UP = 1
 const DOWN = 0
 var upper_bound;
 var lower_bound;
-var move_dir_odd = UP;
-var move_dir_even = DOWN;
+var move_dir_odd = new Array(49);
+move_dir_odd.fill(UP);
+var move_dir_even = new Array(49);
+move_dir_even.fill(DOWN);
+
+console.log(move_dir_even);
 
 var DEF_RAD = 2.5;
 var FINAL_BOSS_RAD = 5;
@@ -224,24 +228,24 @@ var FINAL_BOSS_HP = 10;
 
               //animate level 4
               for (var i = 0; i < this.level4_arr.length; i+=2) {
-                if (move_dir_odd == UP) {
+                if (move_dir_odd[i] == UP) {
                   this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
                   this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
                 }
                 else {
                   this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
                   this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
+                }
+                if (this.level4_arr[i].center_pos[1] <= lower_bound) {
+                  move_dir_odd[i] = DOWN;
+                }
+                else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
+                  move_dir_odd[i] = UP;
                 }
               }
 
-              if (this.level4_arr[0].center_pos[1] <= lower_bound) {
-                move_dir_odd = DOWN;
-              }
-              else if (this.level4_arr[0].center_pos[1] >= upper_bound) {
-                move_dir_odd = UP;
-              }
               for (var i = 1; i < this.level4_arr.length; i+=2) {
-                if (move_dir_even == UP) {
+                if (move_dir_even[i] == UP) {
                   this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
                   this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
                 }
@@ -249,22 +253,25 @@ var FINAL_BOSS_HP = 10;
                   this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
                   this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
                 }
-              }
-              if (this.level4_arr[1].center_pos[1] <= lower_bound) {
-                move_dir_even = DOWN;
-              }
-              else if (this.level4_arr[1].center_pos[1] >= upper_bound) {
-                move_dir_even = UP;
+                if (this.level4_arr[i].center_pos[1] <= lower_bound) {
+                  move_dir_even[i] = DOWN;
+                }
+                else if (this.level4_arr[i].center_pos[1] >= upper_bound) {
+                  move_dir_even[i] = UP;
+                }
               }
 
               //collision detection code
-              for (var i = this.level3_arr.length - 1; i >= 0; i--) {
-                  var ball = this.level3_arr[i];
+              for (var i = this.level4_arr.length - 1; i >= 0; i--) {
+                  var ball = this.level4_arr[i];
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
                       console.log("wow such collision", this.doge.center_pos, ball.center_pos);
-                      this.level3_arr.splice(i, 1);
+                      this.level4_arr.splice(i, 1);
+                      console.log(move_dir_even);
+                      move_dir_even.splice(i, 1);
+                      move_dir_odd.splice(i, 1);
                   }
               }
               // if doge is still, i.e., zero velocity for all components
