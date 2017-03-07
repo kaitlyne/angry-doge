@@ -11,7 +11,7 @@ var lower_right_corner;
 var xzangle = 90;
 var yzangle = 45;
 var xyangle = 90;
-var magnitude = .1;
+var magnitude = .2;
 
 //level 4 variables
 const UP = 1
@@ -114,15 +114,16 @@ var FINAL_BOSS_HP = 10;
 
               this.change_velocity(xzangle, yzangle, xyangle, magnitude);
               console.log(this.doge.velocity);
+              console.log(length(this.doge.velocity));
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
           'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
-            newx = (Math.cos(radians(xzangle)) + Math.cos(radians(xyangle))) * magnitude;
-            newy = (Math.sin(radians(yzangle)) + Math.sin(radians(xyangle))) * magnitude;
-            newz = (Math.cos(radians(yzangle)) + Math.sin(radians(xzangle))) * -magnitude;
+            newx = (Math.cos(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
+            newy = (Math.sin(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
+            newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
             velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
           },
