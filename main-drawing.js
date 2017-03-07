@@ -8,11 +8,6 @@ var upper_right_corner;
 var lower_left_corner;
 var lower_right_corner;
 
-var xzangle = 90;
-var yzangle = 45;
-var xyangle = 90;
-var magnitude = .2;
-
 //level 4 variables
 const UP = 1
 const DOWN = 0
