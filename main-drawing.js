@@ -1,3 +1,7 @@
+//position variables
+var x = -15
+var z = -50
+
 //level 3 variables
 var upper_left_corner;
 var upper_right_corner;
@@ -49,7 +53,7 @@ var FINAL_BOSS_HP = 10;
               for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++) {
                   for (var k = 0; k < 3; k++) {
-                    this.level1_arr.push(new Moving_Ball("meowth2x1.jpg", vec3((i*5) + 3, FLOOR_Y_POS+2.5 + (5*j), (k*5) + 3), 2.5));
+                    this.level1_arr.push(new Moving_Ball("meowth2x1.jpg", vec3((i*5) + x, FLOOR_Y_POS+2.5 + (5*j), (k*5) + z), 2.5));
                   }
                 }
               }
@@ -58,21 +62,21 @@ var FINAL_BOSS_HP = 10;
               this.level2_arr = [];
               for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*DEF_RAD) + 3, FLOOR_Y_POS+DEF_RAD, (j*2*DEF_RAD) + 3), DEF_RAD));
+                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*DEF_RAD) + x, FLOOR_Y_POS+DEF_RAD, (j*2*DEF_RAD) + z), DEF_RAD));
                 }
               }
               for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++) {
-                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*DEF_RAD) + 8, FLOOR_Y_POS+(3*DEF_RAD), (j*2*DEF_RAD) + 8), DEF_RAD));
+                  this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*DEF_RAD) + x+(2*DEF_RAD), FLOOR_Y_POS+(3*DEF_RAD), (j*2*DEF_RAD) + z+(2*DEF_RAD)), DEF_RAD));
                 }
               }
-              this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3(13, FLOOR_Y_POS+(5*DEF_RAD), 13), DEF_RAD));
+              this.level2_arr.push(new Moving_Ball("sylvester2x1.jpg", vec3(x+(4*DEF_RAD), FLOOR_Y_POS+(5*DEF_RAD), z+(4*DEF_RAD)), DEF_RAD));
 
               //moving square
               this.level3_arr = []
               for (var i = 0; i < 7; i++) {
                 for (var j = 0; j < 7; j++) {
-                  this.level3_arr.push(new Moving_Ball("chairman2x1.jpg", vec3((i*2*DEF_RAD) + 3, FLOOR_Y_POS+DEF_RAD, (j*2*DEF_RAD) + 3), DEF_RAD));
+                  this.level3_arr.push(new Moving_Ball("chairman2x1.jpg", vec3((i*2*DEF_RAD) + x, FLOOR_Y_POS+DEF_RAD, (j*2*DEF_RAD) + z), DEF_RAD));
                 }
               }
 
@@ -83,18 +87,18 @@ var FINAL_BOSS_HP = 10;
 
               //level 4
               this.level4_arr = []
-              for (var i = 0; i < 8; i++) {
-                for (var j = 0; j < 8; j++) {
-                  this.level4_arr.push(new Moving_Ball("grumpy2x1.jpg", vec3(7 + (i*2*DEF_RAD), FLOOR_Y_POS + (7*DEF_RAD), 7 + (j*2*DEF_RAD)), DEF_RAD));
+              for (var i = 0; i < 7; i++) {
+                for (var j = 0; j < 7; j++) {
+                  this.level4_arr.push(new Moving_Ball("grumpy2x1.jpg", vec3(x + (i*2*DEF_RAD), FLOOR_Y_POS + (8*DEF_RAD), z + (j*2*DEF_RAD)), DEF_RAD));
                 }
               }
 
               for (var i = 0; i < this.level4_arr.length; i+=2) {
-                this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -6*DEF_RAD, 0));
-                this.level4_arr[i].transform = mult(translation(0, -6*DEF_RAD, 0), this.level4_arr[i].transform);
+                this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -7*DEF_RAD, 0));
+                this.level4_arr[i].transform = mult(translation(0, -7*DEF_RAD, 0), this.level4_arr[i].transform);
               }
 
-              upper_bound = FLOOR_Y_POS + 7*DEF_RAD;
+              upper_bound = FLOOR_Y_POS + 8*DEF_RAD;
               lower_bound = FLOOR_Y_POS + DEF_RAD;
 
               //final boss
@@ -203,40 +207,43 @@ var FINAL_BOSS_HP = 10;
               //animate level 4
               for (var i = 0; i < this.level4_arr.length; i+=2) {
                 if (move_dir_odd == UP) {
-                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.125, 0));
-                  this.level4_arr[i].transform = mult(translation(0, -0.125, 0), this.level4_arr[i].transform);
-                  if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-                    move_dir_odd = DOWN;
-                  }
+                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
+                  this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
                 }
                 else {
-                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.125, 0));
-                  this.level4_arr[i].transform = mult(translation(0, 0.125, 0), this.level4_arr[i].transform);
-                  if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-                    move_dir_odd = UP;
-                  }
-                }
-              }
-              for (var i = 1; i < this.level4_arr.length; i+=2) {
-                if (move_dir_even == UP) {
-                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.125, 0));
-                  this.level4_arr[i].transform = mult(translation(0, -0.125, 0), this.level4_arr[i].transform);
-                  if (this.level4_arr[i].center_pos[1] <= lower_bound) {
-                    move_dir_even = DOWN;
-                  }
-                }
-                else {
-                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.125, 0));
-                  this.level4_arr[i].transform = mult(translation(0, 0.125, 0), this.level4_arr[i].transform);
-                  if (this.level4_arr[i].center_pos[1] >= upper_bound) {
-                    move_dir_even = UP;
-                  }
+                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
+                  this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
                 }
               }
 
+              if (this.level4_arr[0].center_pos[1] <= lower_bound) {
+                move_dir_odd = DOWN;
+              }
+              else if (this.level4_arr[0].center_pos[1] >= upper_bound) {
+                move_dir_odd = UP;
+              }
+              for (var i = 1; i < this.level4_arr.length; i+=2) {
+                if (move_dir_even == UP) {
+                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, -0.5, 0));
+                  this.level4_arr[i].transform = mult(translation(0, -0.5, 0), this.level4_arr[i].transform);
+                }
+                else {
+                  this.level4_arr[i].center_pos = add(this.level4_arr[i].center_pos, vec3(0, 0.5, 0));
+                  this.level4_arr[i].transform = mult(translation(0, 0.5, 0), this.level4_arr[i].transform);
+                }
+              }
+              if (this.level4_arr[1].center_pos[1] <= lower_bound) {
+                move_dir_even = DOWN;
+              }
+              else if (this.level4_arr[1].center_pos[1] >= upper_bound) {
+                move_dir_even = UP;
+              }
+
+              console.log(this.level4_arr[0].center_pos);
+
               //collision detection code
-              for (var i = this.level3_arr.length - 1; i >= 0; i--) {
-                  var ball = this.level3_arr[i];
+              for (var i = this.level4_arr.length - 1; i >= 0; i--) {
+                  var ball = this.level4_arr[i];
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
