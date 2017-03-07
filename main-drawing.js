@@ -132,8 +132,8 @@ var FINAL_BOSS_HP = 10;
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
-              const gravity_const = 1e-4, bounce_factor = 0.85;
-              this.doge.apply_gravity(frame_delta, gravity_const, bounce_factor);
+              const gravity_const = 1e-4, bounce_factor = 0.85, friction_factor = 0.01;
+              this.doge.apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
 
               //animate level 3
@@ -260,9 +260,12 @@ var FINAL_BOSS_HP = 10;
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
-                      console.log("yo stuff collided", this.doge.center_pos, ball.center_pos);
+                      console.log("wow such collision", this.doge.center_pos, ball.center_pos);
                       this.level3_arr.splice(i, 1);
                   }
+              }
+              if (dot(this.doge.velocity, this.doge.velocity) == 0) {
+                  console.log("wow much still");
               }
           },
           'draw_floor': function() {

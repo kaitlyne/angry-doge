@@ -1,5 +1,7 @@
 // y position for the floor (constant)
 const FLOOR_Y_POS = -8;
+// if a velocity is below this constant, force the velocity to be 0
+const ZERO_VELOCITY_THRESHOLD = 0.02;
 
 // Class for a ball capable of motion. Just used es6 syntax here since it's simple,
 // and Declare_Any_Class doesn't seem to work? Don't need to inherit Shape or any of those classes anyway.
@@ -31,19 +33,47 @@ class Moving_Ball {
     // gravity_const is the gravitational acceleration to multiply by
     // bounce_factor specifies how much the velocity is multiplied by when bouncing back up
     // from the ground
-    apply_gravity(frame_delta, gravity_const, bounce_factor) {
-        // change in velocity is acceleration * change in time
-        // acceleration in this case is just a constant that looks good
-        this.velocity[1] -= frame_delta * gravity_const;
+    // friction_factor is what fraction to reduce the velocity by if ball is on floor
+    apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor) {
+        // if y velocity is 0 and the ball is touching the floor
+        if (this.velocity[1] == 0.0 && this.center_pos[1] == FLOOR_Y_POS + this.radius) {
+            // leave velocity untouched
+            // apply kinetic friction to slow the ball down
+            // if x velocity is small enough, force it to 0
+            if (Math.abs(this.velocity[0]) < ZERO_VELOCITY_THRESHOLD) {
+                this.velocity[0] = 0.0;
+            }
+            else {
+                this.velocity[0] *= (1 - friction_factor);
+            }
+            // if z velocity is small enough, force it to 0
+            if (Math.abs(this.velocity[2]) < ZERO_VELOCITY_THRESHOLD) {
+                this.velocity[2] = 0.0;
+            }
+            else {
+                this.velocity[2] *= (1 - friction_factor);
+            }
+        }
+        else {
+            // change in velocity is acceleration * change in time
+            // acceleration in this case is just a constant that looks good
+            this.velocity[1] -= frame_delta * gravity_const;
+        }
         // set displacement to be velocity
         var displacement = this.velocity;
         // calculate new position with given velocity
         var new_pos = add(this.center_pos, this.velocity);
         // if sphere's bottom is below the floor
         if (new_pos[1] - this.radius < FLOOR_Y_POS) {
-            const bounce_factor = 0.85;
+            console.log(this.velocity[1]);
+            // if y velocity is small enough, force it to 0
+            if (Math.abs(this.velocity[1]) < ZERO_VELOCITY_THRESHOLD) {
+                this.velocity[1] = 0.0;
+            }
             // flip the ball's y velocity to make it bounce, multiply by bounce factor
-            this.velocity[1] *= -bounce_factor;
+            else {
+                this.velocity[1] *= -bounce_factor;
+            }
             // don't want the ball to appear partly "inside" the floor, so adjust the displacement
             // so that it's right above the floor
             //new_pos = add(this.center_pos, this.velocity);
