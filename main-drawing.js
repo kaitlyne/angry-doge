@@ -56,17 +56,35 @@ var FINAL_BOSS_HP = 10;
 
               //doge
               //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), DEF_RAD, vec3(.01, .05, .013));
-              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, FLOOR_Y_POS + DEF_RAD, -5), DEF_RAD, vec3(0, 0.14, -0.14));
+			  this.init_center = vec3(-5, FLOOR_Y_POS + DEF_RAD, -5);
+              this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
+			  
+			  this.xzangle = 90;
+			  this.yzangle = 45;
+			  this.xyangle = 90;
+			  this.magnitude = .2;
+			  this.at_init_pos = true;
 
-              this.change_velocity(xzangle, yzangle, xyangle, magnitude);
-              console.log(this.doge.velocity);
-              console.log(length(this.doge.velocity));
+              //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
+              //console.log(this.doge.velocity);
+              //console.log(length(this.doge.velocity));
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
+		  'init_keys': function (controls) {
+			  controls.add("Enter", this, function() {
+				  // Fire the doge
+				  if (this.at_init_pos == true) {
+					this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
+					this.at_init_pos = false;
+					console.log(this.doge.velocity);
+					console.log(length(this.doge.velocity));
+				  }
+			  });
+		  },
           'initialize_levels': function() {
               //cube
               this.level1_arr = [];
@@ -128,9 +146,9 @@ var FINAL_BOSS_HP = 10;
               }
           },
           'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
-            newx = (Math.cos(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
-            newy = (Math.sin(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
-            newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
+            var newx = (Math.cos(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
+            var newy = (Math.sin(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
+            var newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
             var velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
           },
@@ -279,6 +297,9 @@ var FINAL_BOSS_HP = 10;
               // (again, square root is expensive and unnecessary)
               if (dot(this.doge.velocity, this.doge.velocity) == 0) {
                   console.log("wow much still");
+				  this.doge.center_pos = this.init_center;
+				  this.at_init_pos = true;
+				  this.doge.init_transform();
               }
           },
           'draw_floor': function() {

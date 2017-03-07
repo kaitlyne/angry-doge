@@ -16,7 +16,10 @@ class Moving_Ball {
         // ball's initial velocity; this is a vec3
         this.velocity = velocity;
 
-        // ball's model transform; this is a mat4
+		this.init_transform();
+    }
+	init_transform() {
+		// ball's model transform; this is a mat4
         this.transform = mat4();
         // set the initial transform to scale with the radius and translate to the initial position
         this.transform = mult(this.transform,
@@ -27,7 +30,7 @@ class Moving_Ball {
                 rotation(-90, 0, 1, 0));
         this.transform = mult(this.transform,
                 scale(this.radius, this.radius, this.radius));
-    }
+	}
     // modify the ball's center, radius, velocity, and transform to simulate falling
     // frame_delta is the change in time, used to calculate velocity
     // gravity_const is the gravitational acceleration to multiply by
