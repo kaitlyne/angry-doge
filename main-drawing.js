@@ -8,6 +8,11 @@ var upper_right_corner;
 var lower_left_corner;
 var lower_right_corner;
 
+var xzangle = 90;
+var yzangle = 45;
+var xyangle = 90;
+var magnitude = .1;
+
 //level 4 variables
 const UP = 1
 const DOWN = 0
@@ -47,7 +52,7 @@ var FINAL_BOSS_HP = 10;
 
               //doge
               //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), DEF_RAD, vec3(.01, .05, .013));
-              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), DEF_RAD);
+              this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, FLOOR_Y_POS + DEF_RAD, -5), DEF_RAD, vec3(0, 0.14, -0.14));
               //cube
               this.level1_arr = [];
               for (var i = 0; i < 3; i++) {
@@ -107,10 +112,19 @@ var FINAL_BOSS_HP = 10;
                 this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*FINAL_BOSS_RAD), FLOOR_Y_POS + 5*FINAL_BOSS_RAD , 6), FINAL_BOSS_RAD));
               }
 
+              this.change_velocity(xzangle, yzangle, xyangle, magnitude);
+              console.log(this.doge.velocity);
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
+          },
+          'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
+            newx = (Math.cos(radians(xzangle)) + Math.cos(radians(xyangle))) * magnitude;
+            newy = (Math.sin(radians(yzangle)) + Math.sin(radians(xyangle))) * magnitude;
+            newz = (Math.cos(radians(yzangle)) + Math.sin(radians(xzangle))) * -magnitude;
+            velocity = vec3(newx, newy, newz);
+            this.doge.velocity = velocity;
           },
           'draw_falling_objects': function() {
               // get the time since last frame
@@ -239,11 +253,9 @@ var FINAL_BOSS_HP = 10;
                 move_dir_even = UP;
               }
 
-              console.log(this.level4_arr[0].center_pos);
-
               //collision detection code
-              for (var i = this.level4_arr.length - 1; i >= 0; i--) {
-                  var ball = this.level4_arr[i];
+              for (var i = this.level3_arr.length - 1; i >= 0; i--) {
+                  var ball = this.level3_arr[i];
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
