@@ -1,23 +1,3 @@
-//position variables
-var x = -15
-var z = -50
-
-//level 3 variables
-var upper_left_corner;
-var upper_right_corner;
-var lower_left_corner;
-var lower_right_corner;
-
-//level 4 variables
-const UP = 1
-const DOWN = 0
-var upper_bound;
-var lower_bound;
-
-var DEF_RAD = 2.5;
-var FINAL_BOSS_RAD = 5;
-var FINAL_BOSS_HP = 10;
-
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
       {
           'construct': function(context) {
@@ -43,10 +23,11 @@ var FINAL_BOSS_HP = 10;
                   ])
               };
 
+              this.DEF_RAD = 2.5;
               //doge
-              //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), DEF_RAD, vec3(.01, .05, .013));
-			  this.init_center = vec3(-5, FLOOR_Y_POS + DEF_RAD, -5);
-              this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, DEF_RAD, vec3(0, 0, 0));
+              //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), this.DEF_RAD, vec3(.01, .05, .013));
+			  this.init_center = vec3(-5, FLOOR_Y_POS + this.DEF_RAD, -5);
+              this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, this.DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
 
 			  this.xzangle = 90;
