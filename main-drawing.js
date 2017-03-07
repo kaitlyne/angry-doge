@@ -53,6 +53,17 @@ var FINAL_BOSS_HP = 10;
               //doge
               //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), DEF_RAD, vec3(.01, .05, .013));
               this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, FLOOR_Y_POS + DEF_RAD, -5), DEF_RAD, vec3(0, 0.14, -0.14));
+              this.initialize_levels();
+
+              this.change_velocity(xzangle, yzangle, xyangle, magnitude);
+              console.log(this.doge.velocity);
+              console.log(length(this.doge.velocity));
+              // save animation time to calculate time difference b/w frames
+              this.last_animation_time = 0;
+
+              Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
+          },
+          'initialize_levels': function() {
               //cube
               this.level1_arr = [];
               for (var i = 0; i < 3; i++) {
@@ -111,20 +122,12 @@ var FINAL_BOSS_HP = 10;
               for (var i = 0; i < 10; i++) {
                 this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*FINAL_BOSS_RAD), FLOOR_Y_POS + 5*FINAL_BOSS_RAD , 6), FINAL_BOSS_RAD));
               }
-
-              this.change_velocity(xzangle, yzangle, xyangle, magnitude);
-              console.log(this.doge.velocity);
-              console.log(length(this.doge.velocity));
-              // save animation time to calculate time difference b/w frames
-              this.last_animation_time = 0;
-
-              Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
           'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
             newx = (Math.cos(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
             newy = (Math.sin(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
             newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
-            velocity = vec3(newx, newy, newz);
+            var velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
           },
           'draw_falling_objects': function() {
@@ -264,6 +267,9 @@ var FINAL_BOSS_HP = 10;
                       this.level3_arr.splice(i, 1);
                   }
               }
+              // if doge is still, i.e., zero velocity for all components
+              // which is the same as if speed squared (dot product) is 0
+              // (again, square root is expensive and unnecessary)
               if (dot(this.doge.velocity, this.doge.velocity) == 0) {
                   console.log("wow much still");
               }
