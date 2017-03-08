@@ -1,7 +1,7 @@
 // y position for the floor (constant)
 const FLOOR_Y_POS = -8;
 // if a velocity is below this constant, force the velocity to be 0
-const ZERO_VELOCITY_THRESHOLD = 0.02;
+const ZERO_VELOCITY_THRESHOLD = 0.05;
 
 // Class for a ball capable of motion. Just used es6 syntax here since it's simple,
 // and Declare_Any_Class doesn't seem to work? Don't need to inherit Shape or any of those classes anyway.

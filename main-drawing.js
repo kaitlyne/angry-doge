@@ -31,9 +31,9 @@
               this.initialize_levels();
 
 			  this.xzangle = 90;
-			  this.yzangle = 45;
+			  this.yzangle = 60;
 			  this.xyangle = 90;
-			  this.magnitude = .2;
+			  this.magnitude = .3;
 			  this.at_init_pos = true;
 
               //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
@@ -67,7 +67,7 @@
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
-              const gravity_const = 1.5e-4, bounce_factor = 0.85, friction_factor = 0.02;
+              const gravity_const = 2.5e-4, bounce_factor = 0.7, friction_factor = 0.05;
               this.doge.apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
 
