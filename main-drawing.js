@@ -31,9 +31,9 @@
               this.initialize_levels();
 
 			  this.xzangle = 90;
-			  this.yzangle = 60;
+			  this.yzangle = 45;
 			  this.xyangle = 90;
-			  this.magnitude = .3;
+			  this.magnitude = .5;
 			  this.at_init_pos = true;
 
               //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
@@ -50,9 +50,32 @@
 				  if (this.at_init_pos == true) {
 					this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
 					this.at_init_pos = false;
+					this.xzangle = 90;
+					this.yzangle = 45;
+					this.xyangle = 90;
 					console.log(this.doge.velocity);
 					console.log(length(this.doge.velocity));
 				  }
+			  });
+			  controls.add("j", this, function() {
+				  if (this.at_init_pos == true) {
+					  this.xzangle -= 5;
+					  //this.yzangle += 5;
+					  this.xyangle -= 5;
+					  console.log("xzangle", this.xzangle);
+					  console.log("yzangle", this.yzangle);
+					  console.log("xyangle", this.xyangle);
+				  }
+			  });
+			  controls.add("k", this, function() {
+				 if (this.at_init_pos == true) {
+					 this.xzangle += 5;
+					 //this.yzangle += 5;
+					 this.xyangle += 5;
+					 console.log("xzangle", this.xzangle);
+					 console.log("yzangle", this.yzangle);
+					 console.log("xyangle", this.xyangle);
+				 } 
 			  });
 		  },
           'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
