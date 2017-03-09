@@ -29,11 +29,12 @@
 			  this.init_center = vec3(-5, FLOOR_Y_POS + this.DEF_RAD, -5);
               this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, this.DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
+              this.doge_flight_tracking_ball = new Moving_Ball("FLIGHT_TRACKING", this.init_center, 0.25);
 
 			  this.yaw= 90;
 			  this.pitch = 45;
 			  this.roll = 45;
-			  this.magnitude = 0.4;
+			  this.magnitude = 0.75;
 			  this.at_init_pos = true;
 
               //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
@@ -53,7 +54,7 @@
 			  controls.add("Enter", this, function() {
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
-					this.change_velocity(this.yaw, this.pitch, this.roll, this.magnitude);
+					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
 					console.log(this.doge.velocity);
 					//console.log(length(this.doge.velocity));
@@ -106,12 +107,12 @@
 				  this.reset_doge();
 			  });
 		  },
-          'change_velocity': function(yaw, pitch, roll, magnitude) {
+          'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
             var newx = Math.cos(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
             var newy = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
             var newz = Math.sin(radians(pitch)) * -magnitude;
             var velocity = vec3(newx, newy, newz);
-            this.doge.velocity = velocity;
+            ball.velocity = velocity;
           },
 		  'reset_doge': function() {
 			  if (this.at_init_pos == false) {
@@ -123,17 +124,43 @@
 			  this.yaw = 90;
 			  this.pitch = 45;
 			  this.roll = 45;
-			  this.magnitude = 0.4;
+			  this.magnitude = 0.75;
 		  },
           'draw_falling_objects': function() {
               // get the time since last frame
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
-              const gravity_const = 2.5e-4, bounce_factor = 0.7, friction_factor = 0.05;
-              this.doge.apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor);
+              const gravity_const = 6.5e-4, bounce_factor = 0.4, friction_factor = 0.05;
+              this.doge.apply_gravity_and_friction(30, gravity_const, bounce_factor, friction_factor);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
 
+              // draw the dotted path that the doge will fly along
+              // start the path at doge's initial position
+              this.doge_flight_tracking_ball.center_pos = this.init_center;
+              this.doge_flight_tracking_ball.init_transform();
+              // simulate doge's movements due to initial velocity and gravity
+              this.change_velocity(this.doge_flight_tracking_ball, this.yaw, this.pitch, this.roll, this.magnitude);
+              var last_y_velocity;
+              for (var i = 0; i < 100; i++) {
+                  //var ball_on_floor_pos = FLOOR_Y_POS + this.doge_flight_tracking_ball.radius;
+                  // stop drawing when this flight ball first hits the ground
+                  // checking y position like the commented code doesn't seem to work
+                  // so I just check for when the y velocity changes from negative to positive
+                  last_y_velocity = this.doge_flight_tracking_ball.velocity[1];
+                  this.doge_flight_tracking_ball.apply_gravity_and_friction(30,
+                          gravity_const, bounce_factor, friction_factor);
+                  //if (this.doge_flight_tracking_ball.center_pos[1].toFixed(1) == ball_on_floor_pos.toFixed(1)) {
+                  if (last_y_velocity < 0 && this.doge_flight_tracking_ball.velocity[1] > 0) {
+                      //console.log('break at ', i, ' pos = ', this.doge_flight_tracking_ball.center_pos[1]);
+                      break;
+                  }
+                  // to make dots, only draw the sphere every third time
+                  if (i % 3 == 0) {
+                      shapes_in_use["good_sphere"].draw(this.graphics_state,
+                              this.doge_flight_tracking_ball.transform, this.doge_flight_tracking_ball.material);
+                  }
+              }
 
               this.animate_level3();
               this.animate_level4();

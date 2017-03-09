@@ -8,7 +8,12 @@ const ZERO_VELOCITY_THRESHOLD = 0.05;
 class Moving_Ball {
     constructor(texture_filename, center_pos, radius, velocity=vec3(0,0,0)) {
         // material for ball's texture
-        this.material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, texture_filename);
+        if (texture_filename == "FLIGHT_TRACKING") {
+            this.material = new Material(Color(1, 0, 0, 1), .7, .5, 0, 0);
+        }
+        else {
+            this.material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, texture_filename);
+        }
         // position of the ball's center; this is a vec3
         this.center_pos = center_pos;
         // ball's radius; this should be constant
@@ -38,22 +43,19 @@ class Moving_Ball {
     // from the ground
     // friction_factor is what fraction to reduce the velocity by if ball is on floor
     apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor) {
+        var ball_on_floor_pos = FLOOR_Y_POS + this.radius;
         // if y velocity is 0 and the ball is touching the floor
-        if (this.velocity[1] == 0.0 && this.center_pos[1] == FLOOR_Y_POS + this.radius) {
+        if (this.velocity[1] == 0.0 && this.center_pos[1].toFixed(1) == ball_on_floor_pos.toFixed(1)) {
             // leave velocity untouched
             // apply kinetic friction to slow the ball down
-            // if x velocity is small enough, force it to 0
-            if (Math.abs(this.velocity[0]) < ZERO_VELOCITY_THRESHOLD) {
-                this.velocity[0] = 0.0;
+            // if total velocity is small enough, force it to 0
+            // dot of velocity and velocity is velocity squared, so check if that's less than
+            // minimum velocity squared
+            if (dot(this.velocity, this.velocity) < ZERO_VELOCITY_THRESHOLD * ZERO_VELOCITY_THRESHOLD) {
+                this.velocity = vec3(0, 0, 0);
             }
             else {
                 this.velocity[0] *= (1 - friction_factor);
-            }
-            // if z velocity is small enough, force it to 0
-            if (Math.abs(this.velocity[2]) < ZERO_VELOCITY_THRESHOLD) {
-                this.velocity[2] = 0.0;
-            }
-            else {
                 this.velocity[2] *= (1 - friction_factor);
             }
         }
@@ -68,7 +70,7 @@ class Moving_Ball {
         var new_pos = add(this.center_pos, this.velocity);
         // if sphere's bottom is below the floor
         if (new_pos[1] - this.radius < FLOOR_Y_POS) {
-            console.log(this.velocity[1]);
+            //console.log(this.velocity[1]);
             // if y velocity is small enough, force it to 0
             if (Math.abs(this.velocity[1]) < ZERO_VELOCITY_THRESHOLD) {
                 this.velocity[1] = 0.0;
