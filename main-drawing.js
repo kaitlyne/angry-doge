@@ -30,10 +30,10 @@
               this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, this.DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
 
-			  this.xzangle = 90;
-			  this.yzangle = 45;
-			  this.xyangle = 90;
-			  this.magnitude = .5;
+			  this.yaw= 90;
+			  this.pitch = 45;
+			  this.roll = 45;
+			  this.magnitude = .4;
 			  this.at_init_pos = true;
 
               //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
@@ -48,40 +48,44 @@
 			  controls.add("Enter", this, function() {
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
-					this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
+					this.change_velocity(this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
-					this.xzangle = 90;
-					this.yzangle = 45;
-					this.xyangle = 90;
+					this.yaw = 90;
+					this.pitch = 45;
+					this.roll = 45;
 					console.log(this.doge.velocity);
 					//console.log(length(this.doge.velocity));
 				  }
 			  });
 			  controls.add("j", this, function() {
 				  if (this.at_init_pos == true) {
-					  this.xzangle += 5;
-					  //this.yzangle += 5;
-					  this.xyangle += 5;
-					  console.log("xzangle", this.xzangle);
-					  console.log("yzangle", this.yzangle);
-					  console.log("xyangle", this.xyangle);
+					  this.yaw += 5;
+            console.log(this.yaw);
 				  }
 			  });
-			  controls.add("k", this, function() {
+			  controls.add("l", this, function() {
 				 if (this.at_init_pos == true) {
-					 this.xzangle -= 5;
-					 //this.yzangle += 5;
-					 this.xyangle -= 5;
-					 console.log("xzangle", this.xzangle);
-					 console.log("yzangle", this.yzangle);
-					 console.log("xyangle", this.xyangle);
-				 } 
+					 this.yaw -= 5;
+           console.log(this.yaw);
+				 }
 			  });
+        controls.add("i", this, function() {
+          if (this.at_init_pos == true) {
+            this.pitch -= 5;
+            console.log(this.pitch);
+          }
+        });
+        controls.add("k", this, function() {
+         if (this.at_init_pos == true) {
+           this.pitch += 5;
+           console.log(this.pitch);
+         }
+        });
 		  },
-          'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
-            var newx = (Math.sin(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
-            var newy = (Math.cos(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
-            var newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
+          'change_velocity': function(yaw, pitch, roll, magnitude) {
+            var newx = Math.cos(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
+            var newy = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
+            var newz = Math.sin(radians(pitch)) * -magnitude;
             var velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
           },
