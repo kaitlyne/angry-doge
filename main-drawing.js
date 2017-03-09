@@ -55,49 +55,55 @@
 				  if (this.at_init_pos == true) {
 					this.change_velocity(this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
-					this.yaw = 90;
-					this.pitch = 45;
-					this.roll = 45;
-					this.magnitude = 0.4;
 					console.log(this.doge.velocity);
 					//console.log(length(this.doge.velocity));
 				  }
 			  });
 			  controls.add("j", this, function() {
+				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
 					  console.log(this.yaw);
 				  }
 			  });
 			  controls.add("l", this, function() {
+				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
 					  this.yaw -= 5;
 					  console.log(this.yaw);
 				 }
 			  });
 			  controls.add("i", this, function() {
+				  // Change angle to fire up
 				  if (this.at_init_pos == true) {
 					  this.pitch -= 5;
 					  console.log(this.pitch);
 				  }
 			  });
 			  controls.add("k", this, function() {
+				  // Change angle to fire down
 				  if (this.at_init_pos == true) {
 					  this.pitch += 5;
 					  console.log(this.pitch);
 				  }
 			  });
 			  controls.add("o", this, function() {
+				  // Decrease magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude -= 0.05;
 					  console.log("magnitude", this.magnitude);
 				  }
 			  });
 			  controls.add("p", this, function() {
+				  // Increase magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude += 0.05;
 					  console.log("magnitude", this.magnitude);
 				  }
+			  });
+			  controls.add("r", this, function() {
+				  // Make doge come back, and reset angles and magnitude
+				  this.reset_doge();
 			  });
 		  },
           'change_velocity': function(yaw, pitch, roll, magnitude) {
@@ -107,6 +113,18 @@
             var velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
           },
+		  'reset_doge': function() {
+			  if (this.at_init_pos == false) {
+				  this.doge.velocity = vec3(0, 0, 0);
+				  this.doge.center_pos = this.init_center;
+				  this.doge.init_transform();
+				  this.at_init_pos = true;
+			  }
+			  this.yaw = 90;
+			  this.pitch = 45;
+			  this.roll = 45;
+			  this.magnitude = 0.4;
+		  },
           'draw_falling_objects': function() {
               // get the time since last frame
               var frame_delta = this.graphics_state.animation_time - this.last_animation_time;
@@ -139,11 +157,9 @@
               // if doge is still, i.e., zero velocity for all components
               // which is the same as if speed squared (dot product) is 0
               // (again, square root is expensive and unnecessary)
-              if (dot(this.doge.velocity, this.doge.velocity) == 0) {
+              if (this.at_init_pos == false && dot(this.doge.velocity, this.doge.velocity) == 0) {
                   //console.log("wow much still");
-				  this.doge.center_pos = this.init_center;
-				  this.at_init_pos = true;
-				  this.doge.init_transform();
+				  this.reset_doge();
               }
           },
           'draw_floor': function() {

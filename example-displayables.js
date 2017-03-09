@@ -180,9 +180,9 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
         controls.add("o", this, function() {
             this.origin = mult_vec(inverse(this.graphics_state.camera_transform), vec4(0, 0, 0, 1)).slice(0, 3);
         });
-        controls.add("r", this, function() {
+        /*controls.add("r", this, function() {
             this.graphics_state.camera_transform = mat4();
-        });
+        });*/
     },
     'update_strings': function(user_interface_string_manager) // Strings that this displayable object (Animation) contributes to the UI:
     {
