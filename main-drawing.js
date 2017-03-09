@@ -33,7 +33,7 @@
 			  this.yaw= 90;
 			  this.pitch = 45;
 			  this.roll = 45;
-			  this.magnitude = .4;
+			  this.magnitude = 0.4;
 			  this.at_init_pos = true;
 
               //this.change_velocity(this.xzangle, this.yzangle, this.xyangle, this.magnitude);
@@ -53,6 +53,7 @@
 					this.yaw = 90;
 					this.pitch = 45;
 					this.roll = 45;
+					this.magnitude = 0.4;
 					console.log(this.doge.velocity);
 					//console.log(length(this.doge.velocity));
 				  }
@@ -60,27 +61,39 @@
 			  controls.add("j", this, function() {
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
-            console.log(this.yaw);
+					  console.log(this.yaw);
 				  }
 			  });
 			  controls.add("l", this, function() {
-				 if (this.at_init_pos == true) {
-					 this.yaw -= 5;
-           console.log(this.yaw);
+				  if (this.at_init_pos == true) {
+					  this.yaw -= 5;
+					  console.log(this.yaw);
 				 }
 			  });
-        controls.add("i", this, function() {
-          if (this.at_init_pos == true) {
-            this.pitch -= 5;
-            console.log(this.pitch);
-          }
-        });
-        controls.add("k", this, function() {
-         if (this.at_init_pos == true) {
-           this.pitch += 5;
-           console.log(this.pitch);
-         }
-        });
+			  controls.add("i", this, function() {
+				  if (this.at_init_pos == true) {
+					  this.pitch -= 5;
+					  console.log(this.pitch);
+				  }
+			  });
+			  controls.add("k", this, function() {
+				  if (this.at_init_pos == true) {
+					  this.pitch += 5;
+					  console.log(this.pitch);
+				  }
+			  });
+			  controls.add("o", this, function() {
+				  if (this.at_init_pos == true) {
+					  this.magnitude -= 0.05;
+					  console.log("magnitude", this.magnitude);
+				  }
+			  });
+			  controls.add("p", this, function() {
+				  if (this.at_init_pos == true) {
+					  this.magnitude += 0.05;
+					  console.log("magnitude", this.magnitude);
+				  }
+			  });
 		  },
           'change_velocity': function(yaw, pitch, roll, magnitude) {
             var newx = Math.cos(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
