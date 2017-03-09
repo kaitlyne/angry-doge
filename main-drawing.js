@@ -31,9 +31,9 @@
               this.initialize_levels();
               this.doge_flight_tracking_ball = new Moving_Ball("FLIGHT_TRACKING", this.init_center, 0.25);
 
-			  this.yaw= 90;
+			  this.yaw= 0;
 			  this.pitch = 45;
-			  this.roll = 45;
+			  this.roll = 0;
 			  this.magnitude = 0.75;
 			  this.at_init_pos = true;
 
@@ -108,9 +108,9 @@
 			  });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
-            var newx = Math.cos(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
-            var newy = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
-            var newz = Math.sin(radians(pitch)) * -magnitude;
+            var newx = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
+            var newy = Math.sin(radians(pitch)) * magnitude;
+            var newz = Math.cos(radians(pitch)) * Math.cos(radians(yaw)) * -magnitude;
             var velocity = vec3(newx, newy, newz);
             ball.velocity = velocity;
           },
@@ -121,9 +121,9 @@
 				  this.doge.init_transform();
 				  this.at_init_pos = true;
 			  }
-			  this.yaw = 90;
+			  this.yaw = 0;
 			  this.pitch = 45;
-			  this.roll = 45;
+			  this.roll = 0;
 			  this.magnitude = 0.75;
 		  },
           'draw_falling_objects': function() {
