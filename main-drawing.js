@@ -192,6 +192,44 @@
 				  this.reset_doge();
               }
           },
+		  'draw_walls': function() {
+			  var wall_transform = mat4();
+			  const wall_scale_factor = 8;
+			  var wall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "floor.jpg");
+			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, -56));
+			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
+			  // Number of blocks to draw in x,y,z directions
+			  const num_wall_blocks = {
+				x: 12,
+				y: 4,
+				z: 12
+			  };
+			  // Draw the back wall
+			  for (var i = 0; i < num_wall_blocks.x; i++) {
+				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
+					  var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 0);
+					  var final_transf = mult(translate_transf, wall_transform);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+				  }
+			  }
+			  wall_transform = mult(wall_transform, rotation(90, 0, 1, 0));
+			  // Draw the left wall
+			  for (var i = 0; i < num_wall_blocks.z; i++) {
+				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
+					  var translate_transf = translation(-56, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+					  var final_transf = mult(translate_transf, wall_transform);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+				  }
+			  }
+			  // Draw the right wall
+			  for (var i = 0; i < num_wall_blocks.z; i++) {
+				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
+					  var translate_transf = translation(48, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+					  var final_transf = mult(translate_transf, wall_transform);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+				  }
+			  }
+		  },
           'draw_floor': function() {
               var floor_transform = mat4();
               const floor_scale_factor = 8;
@@ -203,13 +241,13 @@
               // number of rows and columns of blocks
               const num_floor_blocks = {
                   x: 12,
-                  y: 12
+                  z: 12
               };
               for (var i = 0; i < num_floor_blocks.x; i++) {
-                  for (var j = 0; j < num_floor_blocks.y; j++) {
+                  for (var j = 0; j < num_floor_blocks.z; j++) {
                       // draw the floor block in the ith row, jth column
                       var translate_transf = translation((i - num_floor_blocks.x / 2) * floor_scale_factor,
-                             0, (j - num_floor_blocks.y / 2) * floor_scale_factor);
+                             0, (j - num_floor_blocks.z / 2) * floor_scale_factor);
                       var final_transf = mult(translate_transf, floor_transform);
                       shapes_in_use["strip"].draw(this.graphics_state, final_transf, floor_material);
                   }
@@ -217,6 +255,7 @@
           },
           'draw_all_shapes': function(model_transform) {
               this.draw_floor();
+			  this.draw_walls();
               this.draw_falling_objects();
               return;
           },
