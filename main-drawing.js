@@ -63,14 +63,14 @@
 			  controls.add("j", this, function() {
 				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
-					  this.yaw += 5;
+					  this.yaw -= 5;
 					  console.log(this.yaw);
 				  }
 			  });
 			  controls.add("l", this, function() {
 				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
-					  this.yaw -= 5;
+					  this.yaw += 5;
 					  console.log(this.yaw);
 				 }
 			  });
