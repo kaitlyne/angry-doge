@@ -42,6 +42,11 @@
               // save animation time to calculate time difference b/w frames
               this.last_animation_time = 0;
 
+              // start the level at first level, which has index 0 in this.level_arr
+              this.current_level_num = 0;
+              // take a reference to the level array
+              this.current_level_arr = this.level_arr[this.current_level_num];
+
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
 		  'init_keys': function (controls) {
@@ -116,13 +121,19 @@
               this.animate_level4();
 
               //collision detection code
-              for (var i = this.level4_arr.length - 1; i >= 0; i--) {
-                  var ball = this.level4_arr[i];
+              for (var i = this.current_level_arr.length - 1; i >= 0; i--) {
+                  var ball = this.current_level_arr[i];
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
                       console.log("wow such collision", this.doge.center_pos, ball.center_pos);
-                      this.level4_arr.splice(i, 1);
+                      this.current_level_arr.splice(i, 1);
+                  }
+              }
+              if (!this.current_level_arr.length) {
+                  if (this.current_level_num < 3) {
+                      this.current_level_num++;
+                      this.current_level_arr = this.level_arr[this.current_level_num];
                   }
               }
               // if doge is still, i.e., zero velocity for all components
