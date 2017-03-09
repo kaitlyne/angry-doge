@@ -77,14 +77,14 @@
 			  controls.add("i", this, function() {
 				  // Change angle to fire up
 				  if (this.at_init_pos == true) {
-					  this.pitch -= 5;
+					  this.pitch += 5;
 					  console.log(this.pitch);
 				  }
 			  });
 			  controls.add("k", this, function() {
 				  // Change angle to fire down
 				  if (this.at_init_pos == true) {
-					  this.pitch += 5;
+					  this.pitch -= 5;
 					  console.log(this.pitch);
 				  }
 			  });
