@@ -48,8 +48,8 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     //level 4
     this.level4_speed = 0.5;
     this.level_arr[3] = [];
-    for (var i = 0; i < 7; i++) {
-        for (var j = 0; j < 7; j++) {
+    for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
             this.level_arr[3].push(new Moving_Ball("grumpy2x1.jpg", vec3(x + (i*2*this.DEF_RAD), FLOOR_Y_POS + (8*this.DEF_RAD), z + (j*2*this.DEF_RAD)), this.DEF_RAD, vec3(0, -this.level4_speed, 0)));
         }
     }

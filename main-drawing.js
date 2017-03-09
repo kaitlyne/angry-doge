@@ -176,9 +176,12 @@
                   }
               }
               if (!this.current_level_arr.length) {
-                  if (this.current_level_num < 3) {
+                  if (this.current_level_num < 3 && this.at_init_pos == true) {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
+                  }
+                  else if (this.current_level_num == 3) {
+                    console.log("A winner is you");
                   }
               }
               // if doge is still, i.e., zero velocity for all components
