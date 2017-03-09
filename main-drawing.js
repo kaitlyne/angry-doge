@@ -54,14 +54,14 @@
 					this.yzangle = 45;
 					this.xyangle = 90;
 					console.log(this.doge.velocity);
-					console.log(length(this.doge.velocity));
+					//console.log(length(this.doge.velocity));
 				  }
 			  });
 			  controls.add("j", this, function() {
 				  if (this.at_init_pos == true) {
-					  this.xzangle -= 5;
+					  this.xzangle += 5;
 					  //this.yzangle += 5;
-					  this.xyangle -= 5;
+					  this.xyangle += 5;
 					  console.log("xzangle", this.xzangle);
 					  console.log("yzangle", this.yzangle);
 					  console.log("xyangle", this.xyangle);
@@ -69,9 +69,9 @@
 			  });
 			  controls.add("k", this, function() {
 				 if (this.at_init_pos == true) {
-					 this.xzangle += 5;
+					 this.xzangle -= 5;
 					 //this.yzangle += 5;
-					 this.xyangle += 5;
+					 this.xyangle -= 5;
 					 console.log("xzangle", this.xzangle);
 					 console.log("yzangle", this.yzangle);
 					 console.log("xyangle", this.xyangle);
@@ -79,8 +79,8 @@
 			  });
 		  },
           'change_velocity': function(xzangle, yzangle, xyangle, magnitude) {
-            var newx = (Math.cos(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
-            var newy = (Math.sin(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
+            var newx = (Math.sin(radians(xzangle)) * Math.cos(radians(xyangle))) * magnitude;
+            var newy = (Math.cos(radians(yzangle)) * Math.sin(radians(xyangle))) * magnitude;
             var newz = (Math.cos(radians(yzangle)) * Math.sin(radians(xzangle))) * -magnitude;
             var velocity = vec3(newx, newy, newz);
             this.doge.velocity = velocity;
