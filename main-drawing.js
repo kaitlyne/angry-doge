@@ -187,19 +187,19 @@ var BOUNDARY_BACK = 48
                 case 0:
                 break
                 case 1:
-                this.doge.center_pos[2] = 45.5
+                this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
                 this.doge.velocity[2] *= -1
                 break
                 case 2:
-                this.doge.center_pos[2] = -53.5
+                this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
                 this.doge.velocity[2] *= -1
                 break
                 case 5:
-                this.doge.center_pos[0] = 45.5
+                this.doge.center_pos[0] = BOUNDARY_RIGHT - this.doge.radius
                 this.doge.velocity[0] *= -1
                 break
                 case 6:
-                this.doge.center_pos[0] = -53.5
+                this.doge.center_pos[0] = BOUNDARY_LEFT + this.doge.radius
                 this.doge.velocity[0] *= -1
                 break
               }
@@ -225,7 +225,7 @@ var BOUNDARY_BACK = 48
 			  var wall_transform = mat4();
 			  const wall_scale_factor = 8;
 			  var wall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
-			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, -56));
+			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, BOUNDARY_FRONT));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
 			  const num_wall_blocks = {
