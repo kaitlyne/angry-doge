@@ -245,7 +245,7 @@ var BOUNDARY_BACK = 48
 			  // Draw the left wall
 			  for (var i = 0; i < num_wall_blocks.z; i++) {
 				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
-					  var translate_transf = translation(-56, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+					  var translate_transf = translation(BOUNDARY_LEFT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
 					  var final_transf = mult(translate_transf, wall_transform);
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
 				  }
@@ -253,7 +253,7 @@ var BOUNDARY_BACK = 48
 			  // Draw the right wall
 			  for (var i = 0; i < num_wall_blocks.z; i++) {
 				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
-					  var translate_transf = translation(48, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+					  var translate_transf = translation(BOUNDARY_RIGHT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
 					  var final_transf = mult(translate_transf, wall_transform);
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
 				  }
