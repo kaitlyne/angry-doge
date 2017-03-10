@@ -1,3 +1,9 @@
+//world coordinates
+var BOUNDARY_LEFT = -56
+var BOUNDARY_RIGHT = 48
+var BOUNDARY_FRONT = -56
+var BOUNDARY_BACK = 48
+
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
       {
           'construct': function(context) {
@@ -175,6 +181,29 @@
                       this.current_level_arr.splice(i, 1);
                   }
               }
+              var wall_collision = collide_with_wall(this.doge)
+              switch(wall_collision) {
+                //since there are no boundaries, I had to hard code this.
+                case 0:
+                break
+                case 1:
+                this.doge.center_pos[2] = 45.5
+                this.doge.velocity[2] *= -1
+                break
+                case 2:
+                this.doge.center_pos[2] = -53.5
+                this.doge.velocity[2] *= -1
+                break
+                case 5:
+                this.doge.center_pos[0] = 45.5
+                this.doge.velocity[0] *= -1
+                break
+                case 6:
+                this.doge.center_pos[0] = -53.5
+                this.doge.velocity[0] *= -1
+                break
+              }
+
               if (!this.current_level_arr.length) {
                   if (this.current_level_num < 3 && this.at_init_pos == true) {
                       this.current_level_num++;
@@ -195,7 +224,7 @@
 		  'draw_walls': function() {
 			  var wall_transform = mat4();
 			  const wall_scale_factor = 8;
-			  var wall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "floor.jpg");
+			  var wall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
 			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, -56));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
@@ -254,10 +283,10 @@
               }
           },
           'draw_all_shapes': function(model_transform) {
-              this.draw_floor();
-			  this.draw_walls();
-              this.draw_falling_objects();
-              return;
+                 this.draw_floor();
+			           this.draw_walls();
+                 this.draw_falling_objects();
+                 return;
           },
           'display': function(time) {
               var model_transform = mat4();

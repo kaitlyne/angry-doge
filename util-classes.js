@@ -96,6 +96,46 @@ class Moving_Ball {
     }
 }
 
+function collide_with_wall(ball) {
+    //define directions
+    var no_collision = 0
+    var pos_z = 1
+    var neg_z = 2
+    //var pos_y = 3
+    //var neg_y = 4
+    var pos_x = 5
+    var neg_x = 6
+    //define wall boundaries
+    var left_edge = -56
+    var right_edge = 48
+    var front_edge = -56
+    var back_edge = 48
+    //define ball attributes
+    var radius = ball.radius
+    var center = ball.center_pos
+    var front_point = center[2] - radius
+    var back_point = center[2] + radius
+    //var upper_point = center[1] + radius
+    //var lower_point = center[1] - radius
+    var left_point = center[0] - radius
+    var right_point = center[0] + radius
+    //check if hitting boundaries
+    if (front_point <= front_edge) {
+      return neg_z
+    }
+    if (back_point >= back_edge) {
+      return pos_z
+    }
+    if (left_point <= left_edge) {
+      return neg_x
+    }
+    if (right_point >= right_edge) {
+      return pos_x
+    }
+
+}
+
+
 function do_balls_collide(ball1, ball2) {
     // get the difference between the two balls' centers as a vector
     var position_difference = subtract(ball1.center_pos, ball2.center_pos);
@@ -114,4 +154,3 @@ function do_balls_collide(ball1, ball2) {
     }
     return false;
 }
-
