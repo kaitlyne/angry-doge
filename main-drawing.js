@@ -162,6 +162,7 @@ const SCREEN_ID = {
 		  'reset_doge': function(reset_angles_magnitude) {
         if (this.current_level_arr.length != 0) {
           this.level_attempts[this.current_level_num]--
+          console.log("number of attempts left: " + this.level_attempts[this.current_level_num])
           if (this.level_attempts[this.current_level_num] == 0) {
             this.graphics_state.current_screen_id = SCREEN_ID.LOSE;
             this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
@@ -263,6 +264,7 @@ const SCREEN_ID = {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
 					            this.reset_doge(true);
+                      this.graphics_state.current_screen_id = SCREEN_ID.WIN;
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
                   else if (this.current_level_num == 3) {
