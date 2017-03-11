@@ -53,10 +53,16 @@
                   textures = Object.keys(textures_in_use);
 
               var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "doge-sunglasses.jpg");
+              var lose_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott.jpg");
               var pic_transf = mat4();
               // flip picture so it's upright
               pic_transf = mult(pic_transf, scale(1, -1, 1));
-              shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
+              if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
+                shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
+              }
+              else {
+                shapes_in_use['strip'].draw(this.graphics_state, pic_transf, lose_material);
+              }
           },
           'display': function(time) {
               // don't draw if we're not in menu

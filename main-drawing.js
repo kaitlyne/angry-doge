@@ -10,6 +10,11 @@ const ANIMATION_STATE = {
     MENU_SCREEN: 2
 };
 
+const SCREEN_ID = {
+  WIN: 0,
+  LOSE: 1
+}
+
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
       {
           'construct': function(context) {
@@ -38,6 +43,7 @@ const ANIMATION_STATE = {
               // initialized a shared variable which indicates current state
               // for now, start in game
               this.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
+              this.graphics_state.current_screen_id = SCREEN_ID.WIN;
 
               this.DEF_RAD = 2.5;
               //doge
@@ -154,6 +160,15 @@ const ANIMATION_STATE = {
             ball.velocity = velocity;
           },
 		  'reset_doge': function(reset_angles_magnitude) {
+        if (this.current_level_arr.length != 0) {
+          this.level_attempts[this.current_level_num]--
+          if (this.level_attempts[this.current_level_num] == 0) {
+            this.graphics_state.current_screen_id = SCREEN_ID.LOSE;
+            this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
+            this.initialize_levels();
+            this.current_level_arr = this.level_arr[this.current_level_num];
+          }
+        }
 			  if (this.at_init_pos == false) {
 				  this.doge.velocity = vec3(0, 0, 0);
 				  this.doge.center_pos = this.init_center;
@@ -247,7 +262,7 @@ const ANIMATION_STATE = {
                   if (this.current_level_num < 3 && this.at_init_pos == true) {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
-					  this.reset_doge(true);
+					            this.reset_doge(true);
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
                   else if (this.current_level_num == 3) {
