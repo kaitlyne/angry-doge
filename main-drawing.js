@@ -1,8 +1,8 @@
 //world coordinates
-var BOUNDARY_LEFT = -56
-var BOUNDARY_RIGHT = 48
-var BOUNDARY_FRONT = -56
-var BOUNDARY_BACK = 48
+const BOUNDARY_LEFT = -56;
+const BOUNDARY_RIGHT = 48;
+const BOUNDARY_FRONT = -56;
+const BOUNDARY_BACK = 48;
 
 // constants to state whether we're playing or in a menu
 const ANIMATION_STATE = {
@@ -68,6 +68,9 @@ const ANIMATION_STATE = {
           },
 		  'init_keys': function (controls) {
 			  controls.add("Enter", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
 					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
@@ -77,36 +80,54 @@ const ANIMATION_STATE = {
 				  }
 			  });
 			  controls.add("j", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
 					  this.yaw -= 5;
 				  }
 			  });
 			  controls.add("l", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
 				 }
 			  });
 			  controls.add("i", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Change angle to fire up
 				  if (this.at_init_pos == true) {
 					  this.pitch += 5;
 				  }
 			  });
 			  controls.add("k", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Change angle to fire down
 				  if (this.at_init_pos == true) {
 					  this.pitch -= 5;
 				  }
 			  });
 			  controls.add("o", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Decrease magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude -= 0.05;
 				  }
 			  });
 			  controls.add("p", this, function() {
+                  if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                      return;
+                  }
 				  // Increase magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude += 0.05;
@@ -175,6 +196,9 @@ const ANIMATION_STATE = {
               this.animate_level3();
               this.animate_level4();
 
+
+          },
+          'check_collision_detection': function() {
               //collision detection code
               for (var i = this.current_level_arr.length - 1; i >= 0; i--) {
                   var ball = this.current_level_arr[i];
@@ -206,7 +230,8 @@ const ANIMATION_STATE = {
                 this.doge.velocity[0] *= -1
                 break
               }
-
+          },
+          'check_level_state': function() {
               // wow all enemies gone, we won!
               if (!this.current_level_arr.length) {
                   if (this.current_level_num < 3 && this.at_init_pos == true) {
@@ -291,6 +316,8 @@ const ANIMATION_STATE = {
                  this.draw_floor();
 			           this.draw_walls();
                  this.draw_falling_objects();
+                 this.check_collision_detection();
+                 this.check_level_state();
                  return;
           },
           'display': function(time) {

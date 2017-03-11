@@ -26,8 +26,6 @@ index.html - The web page document containing the canvas (drawing surface), that
       shaders_in_use[ "Demo_Shader" ] = new Funny_Shader           ( g_state );
                                                                                 // IMPORTANT: -- You have to include all your new images in here:
       texture_filenames_to_load.push( "text.png" );                             // Put all our texture images in the GPU.
-      texture_filenames_to_load.push( "earth.gif" );
-      texture_filenames_to_load.push( "stars.png" );
       texture_filenames_to_load.push( "floor.jpg" );
       texture_filenames_to_load.push( "chairman2x1.jpg" );
       texture_filenames_to_load.push( "grumpy2x1.jpg" );
@@ -38,7 +36,7 @@ index.html - The web page document containing the canvas (drawing surface), that
       texture_filenames_to_load.push( "finalboss.jpg" );
       texture_filenames_to_load.push( "scott.jpg" );
       texture_filenames_to_load.push( "wall.jpg" );
-      for( var i = 0; i < texture_filenames_to_load.length; i++ ) textures_in_use[ texture_filenames_to_load[i] ] = ( new Texture( texture_filenames_to_load[i], false ) );
+      for( var i = 0; i < texture_filenames_to_load.length; i++ ) textures_in_use[ texture_filenames_to_load[i] ] = ( new Texture( texture_filenames_to_load[i], true ) );
 
       main_canvas.register_display_object( new Debug_Screen     ( main_canvas ) );  // We instantiate some of our custom "Animation" subclasses and register these displayable
       //main_canvas.register_display_object( new Example_Animation( main_canvas ) );  // objects to their master "Canvas_Manager" object -- which OpenGL calls upon every time a

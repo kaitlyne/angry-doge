@@ -35,9 +35,13 @@
               // Measure mouse steering, for rotating the flyaround camera.
               canvas.addEventListener("mouseup", (function(self) {
                   return function(e) {
+                      if (self.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
+                          return;
+                      }
                       e = e || window.event;
                       self.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
                       document.getElementById('top-text').style.visibility = 'hidden';
+                      console.log('mouseup');
                   }
               })(this), false);
 
