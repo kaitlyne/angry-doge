@@ -80,42 +80,36 @@ const ANIMATION_STATE = {
 				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
 					  this.yaw -= 5;
-					  console.log(this.yaw);
 				  }
 			  });
 			  controls.add("l", this, function() {
 				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
-					  console.log(this.yaw);
 				 }
 			  });
 			  controls.add("i", this, function() {
 				  // Change angle to fire up
 				  if (this.at_init_pos == true) {
 					  this.pitch += 5;
-					  console.log(this.pitch);
 				  }
 			  });
 			  controls.add("k", this, function() {
 				  // Change angle to fire down
 				  if (this.at_init_pos == true) {
 					  this.pitch -= 5;
-					  console.log(this.pitch);
 				  }
 			  });
 			  controls.add("o", this, function() {
 				  // Decrease magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude -= 0.05;
-					  console.log("magnitude", this.magnitude);
 				  }
 			  });
 			  controls.add("p", this, function() {
 				  // Increase magnitude
 				  if (this.at_init_pos == true) {
 					  this.magnitude += 0.05;
-					  console.log("magnitude", this.magnitude);
 				  }
 			  });
 			  controls.add("r", this, function() {
@@ -187,7 +181,6 @@ const ANIMATION_STATE = {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
-                      console.log("wow such collision", this.doge.center_pos, ball.center_pos);
                       this.current_level_arr.splice(i, 1);
                   }
               }

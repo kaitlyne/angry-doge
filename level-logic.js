@@ -100,30 +100,30 @@ window.Main_Drawing.prototype.animate_level3 = function() {
         }
         //5x5
         //top line
-        else if (this.level_arr[2][i].center_pos[0] == (this.upper_left_corner[0] + (2*this.DEF_RAD)) &&
-                (this.level_arr[2][i].center_pos[2] > (this.upper_left_corner[2] + (2*this.DEF_RAD))
-                 && this.level_arr[2][i].center_pos[2] <= (this.upper_left_corner[2] + (12*this.DEF_RAD)))) {
-            this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(0, 0, -this.level3_speed));
-            this.level_arr[2][i].transform = mult(translation(0, 0, -this.level3_speed), this.level_arr[2][i].transform);
-        }
-        //left line
-        else if ((this.level_arr[2][i].center_pos[0] < (this.lower_left_corner[0] - (2*this.DEF_RAD)) &&
-                    this.level_arr[2][i].center_pos[0] >= (this.lower_left_corner[0] - (12*this.DEF_RAD)))
-                && this.level_arr[2][i].center_pos[2] == (this.lower_left_corner[2] + (2*this.DEF_RAD))) {
-            this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(this.level3_speed, 0, 0));
-            this.level_arr[2][i].transform = mult(translation(this.level3_speed, 0, 0), this.level_arr[2][i].transform);
-        }
-        //bottom line
-        else if (this.level_arr[2][i].center_pos[0] == (this.lower_right_corner[0] - (2*this.DEF_RAD)) &&
-                (this.level_arr[2][i].center_pos[2] < (this.lower_right_corner[2] - (2*this.DEF_RAD))
-                 && this.level_arr[2][i].center_pos[2] >= (this.lower_right_corner[2] - (12*this.DEF_RAD)) )) {
+        else if (this.level_arr[2][i].center_pos[0] == (this.upper_right_corner[0] + (2*this.DEF_RAD)) &&
+                (this.level_arr[2][i].center_pos[2] < (this.upper_right_corner[2] - (2*this.DEF_RAD))
+                 && this.level_arr[2][i].center_pos[2] >= (this.upper_right_corner[2] - (12*this.DEF_RAD)))) {
             this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(0, 0, this.level3_speed));
             this.level_arr[2][i].transform = mult(translation(0, 0, this.level3_speed), this.level_arr[2][i].transform);
         }
         //right line
-        else if ((this.level_arr[2][i].center_pos[0] > (this.upper_right_corner[0] + (2*this.DEF_RAD)) &&
-                    this.level_arr[2][i].center_pos[0] <= (this.upper_right_corner[0] + (12*this.DEF_RAD)))
-                && this.level_arr[2][i].center_pos[2] == (this.upper_right_corner[2] - (2*this.DEF_RAD))) {
+        else if ((this.level_arr[2][i].center_pos[0] < (this.lower_right_corner[0] - (2*this.DEF_RAD)) &&
+                    this.level_arr[2][i].center_pos[0] >= (this.lower_right_corner[0] - (12*this.DEF_RAD)))
+                && this.level_arr[2][i].center_pos[2] == (this.lower_right_corner[2] - (2*this.DEF_RAD))) {
+            this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(this.level3_speed, 0, 0));
+            this.level_arr[2][i].transform = mult(translation(this.level3_speed, 0, 0), this.level_arr[2][i].transform);
+        }
+        //bottom line
+        else if (this.level_arr[2][i].center_pos[0] == (this.lower_left_corner[0] - (2*this.DEF_RAD)) &&
+                (this.level_arr[2][i].center_pos[2] > (this.lower_left_corner[2] + (2*this.DEF_RAD))
+                 && this.level_arr[2][i].center_pos[2] <= (this.lower_left_corner[2] + (12*this.DEF_RAD)) )) {
+            this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(0, 0, -this.level3_speed));
+            this.level_arr[2][i].transform = mult(translation(0, 0, -this.level3_speed), this.level_arr[2][i].transform);
+        }
+        //left line
+        else if ((this.level_arr[2][i].center_pos[0] > (this.upper_left_corner[0] + (2*this.DEF_RAD)) &&
+                    this.level_arr[2][i].center_pos[0] <= (this.upper_left_corner[0] + (12*this.DEF_RAD)))
+                && this.level_arr[2][i].center_pos[2] == (this.upper_left_corner[2] + (2*this.DEF_RAD))) {
             this.level_arr[2][i].center_pos = add(this.level_arr[2][i].center_pos, vec3(-this.level3_speed, 0, 0));
             this.level_arr[2][i].transform = mult(translation(-this.level3_speed, 0, 0), this.level_arr[2][i].transform);
         }
