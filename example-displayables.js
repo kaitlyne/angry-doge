@@ -5,6 +5,7 @@
 // Now go down to Example_Animation's display() function to see where the sample shapes you see drawn are coded, and a good place to begin filling in your own code.
 
 var theta = 5;
+var PERSPECTIVE_TRANSFORM;
 
 Declare_Any_Class("Debug_Screen", // Debug_Screen - An example of a displayable object that our class Canvas_Manager can manage.  Displays a text user interface.
 {
@@ -79,6 +80,7 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
             origin: vec3(0, 5, 0),
             looking: false
         });
+        PERSPECTIVE_TRANSFORM = this.graphics_state.camera_transform;
 
         // *** Mouse controls: ***
         this.mouse = {

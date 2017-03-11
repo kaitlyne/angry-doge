@@ -41,6 +41,7 @@
                       e = e || window.event;
                       self.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
                       document.getElementById('top-text').style.visibility = 'hidden';
+                      self.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
                       console.log('mouseup');
                   }
               })(this), false);
@@ -51,33 +52,30 @@
                   t = this.graphics_state.animation_time / 1000,
                   textures = Object.keys(textures_in_use);
 
-              for (key in this.newest_shapes) {
-                  i++;
-                  var funny_function_of_time = 50 * t + i * i * Math.cos(t / 2),
-                      random_material = new Material(Color((i % 7) / 7, (i % 6) / 6, (i % 5) / 5, 1), .2, 1, 1, 40, textures[i % textures.length]);
-
-                  model_transform = mult(model_transform, rotation(funny_function_of_time, i % 3 == 0, i % 3 == 1, i % 3 == 2)); // Irregular motion
-                  model_transform = mult(model_transform, translation(0, -3, 0));
-                  shapes_in_use[key].draw(this.graphics_state, model_transform, random_material); //  Draw the current shape in the list		
-              }
-              return model_transform;
+              var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "doge-sunglasses.jpg");
+              var pic_transf = mat4();
+              // flip picture so it's upright
+              pic_transf = mult(pic_transf, scale(1, -1, 1));
+              shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
           },
           'display': function(time) {
               // don't draw if we're not in menu
               if (this.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
                   return;
               }
+              // orthographic projection to show a flat picture; pictures should be at z = 0
+              this.graphics_state.camera_transform = ortho(-2.5, 2.5, -2.5, 2.5, 0, 0.5);
+              //this.graphics_state.camera_transform = mat4();
               document.getElementById('top-text').style.visibility = 'visible';
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 
-              for (var i = 0; i < 7; i++) {
+              for (var i = 0; i < 1; i++) {
                   this.graphics_state.lights = [new Light(vec4(i % 7 - 3, i % 6 - 3, i % 5 - 3, 1), Color(1, 0, 0, 1), 100000000),
                       new Light(vec4(i % 6 - 3, i % 5 - 3, i % 7 - 3, 1), Color(0, 1, 0, 1), 100000000)
                   ];
 
-                  model_transform = this.draw_all_shapes(model_transform); // *** How to call a function and still have a single matrix state ***
-                  model_transform = mult(model_transform, rotation(360 / 13, 0, 0, 1));
+                  this.draw_all_shapes();
               }
           }
       }, Animation);
