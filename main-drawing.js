@@ -63,6 +63,9 @@ const ANIMATION_STATE = {
               this.current_level_num = 0;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
+              this.audio = {
+                  launch: new Audio("launch.mp3")
+              };
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
@@ -73,8 +76,7 @@ const ANIMATION_STATE = {
                   }
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
-					var launch_audio = new Audio("launch.mp3");
-					launch_audio.play();
+					this.audio.launch.play();
 					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
 					console.log(this.doge.velocity);
