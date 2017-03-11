@@ -48,7 +48,7 @@ const SCREEN_ID = {
               this.DEF_RAD = 2.5;
               //doge
               //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), this.DEF_RAD, vec3(.01, .05, .013));
-			           this.init_center = vec3(0, FLOOR_Y_POS + this.DEF_RAD, -5);
+			           this.init_center = vec3(-1, FLOOR_Y_POS + this.DEF_RAD, -5);
               this.doge = new Moving_Ball("dogecoin2x1.jpg", this.init_center, this.DEF_RAD, vec3(0, 0, 0));
               this.initialize_levels();
               this.doge_flight_tracking_ball = new Moving_Ball("FLIGHT_TRACKING", this.init_center, 0.25);
