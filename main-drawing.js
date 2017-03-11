@@ -73,6 +73,8 @@ const ANIMATION_STATE = {
                   }
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
+					var launch_audio = new Audio("launch.mp3");
+					launch_audio.play();
 					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
 					console.log(this.doge.velocity);
