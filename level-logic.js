@@ -4,7 +4,7 @@
 // Clearly prototypes = magic. QED.
 window.Main_Drawing.prototype.initialize_levels = function() {
     //position variables of the cat ball
-    var x = -15;
+    var x = -5;
     var z = -50;
     //cube
     this.level_arr = [];
