@@ -4,6 +4,12 @@ var BOUNDARY_RIGHT = 48
 var BOUNDARY_FRONT = -56
 var BOUNDARY_BACK = 48
 
+// constants to state whether we're playing or in a menu
+const ANIMATION_STATE = {
+    IN_GAME: 1,
+    MENU_SCREEN: 2
+};
+
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
       {
           'construct': function(context) {
@@ -28,6 +34,10 @@ var BOUNDARY_BACK = 48
                       [0, 7][0, 7]
                   ])
               };
+
+              // initialized a shared variable which indicates current state
+              // for now, start in game
+              this.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
 
               this.DEF_RAD = 2.5;
               //doge
@@ -204,10 +214,12 @@ var BOUNDARY_BACK = 48
                 break
               }
 
+              // wow all enemies gone, we won!
               if (!this.current_level_arr.length) {
                   if (this.current_level_num < 3 && this.at_init_pos == true) {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
+                      this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
                   else if (this.current_level_num == 3) {
                     console.log("A winner is you");
@@ -289,6 +301,10 @@ var BOUNDARY_BACK = 48
                  return;
           },
           'display': function(time) {
+              // don't draw if we're not in game
+              if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
+                  return;
+              }
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 

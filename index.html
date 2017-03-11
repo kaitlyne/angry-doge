@@ -14,6 +14,7 @@ index.html - The web page document containing the canvas (drawing surface), that
 <script type="text/javascript" src="bee-scene.js"             ></script>
 <script type="text/javascript" src="util-classes.js"             ></script>
 <script type="text/javascript" src="main-drawing.js"             ></script>
+<script type="text/javascript" src="menu-screen.js"             ></script>
 <script type="text/javascript" src="level-logic.js"             ></script>
 <script type="text/javascript"> "use strict"
   window.onload = function init()           // ********************* OUR WHOLE PROGRAM'S ENTRY POINT *********************
@@ -45,6 +46,7 @@ index.html - The web page document containing the canvas (drawing surface), that
       //main_canvas.register_display_object( new Surfaces_Tester  ( main_canvas ) );
       //main_canvas.register_display_object( new Bee_Scene        ( main_canvas ) );
       main_canvas.register_display_object( new Main_Drawing     ( main_canvas ) );
+      main_canvas.register_display_object( new Menu_Screen     ( main_canvas ) );
       main_canvas.render();
     }
 
@@ -55,5 +57,21 @@ index.html - The web page document containing the canvas (drawing surface), that
 </script>
 </head><body>
 <canvas id="gl-canvas" width="960" height="640"></canvas>
+<div id="canvas-overlay">
+    <span id="top-text">Click to go onto next level</span>
+</div>
+<style>
+#canvas-overlay {
+    font-size: 2em;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    position: absolute;
+    /* browsers by default have 8px margin */
+    left: 8px;
+    top: 8px;
+    visibility: hidden;
+}
+#top-text {
+    color: red;
+}
 </body>
 </html>
