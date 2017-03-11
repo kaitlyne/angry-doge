@@ -137,7 +137,11 @@ const ANIMATION_STATE = {
 			  });
 			  controls.add("r", this, function() {
 				  // Make doge come back, and reset angles and magnitude
-				  this.reset_doge();
+				  var reset_angles_magnitude = false;
+				  if (this.at_init_pos) {
+					  reset_angles_magnitude = true;
+				  }
+				  this.reset_doge(reset_angles_magnitude);
 			  });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
@@ -147,17 +151,19 @@ const ANIMATION_STATE = {
             var velocity = vec3(newx, newy, newz);
             ball.velocity = velocity;
           },
-		  'reset_doge': function() {
+		  'reset_doge': function(reset_angles_magnitude) {
 			  if (this.at_init_pos == false) {
 				  this.doge.velocity = vec3(0, 0, 0);
 				  this.doge.center_pos = this.init_center;
 				  this.doge.init_transform();
 				  this.at_init_pos = true;
 			  }
-			  this.yaw = 0;
-			  this.pitch = 45;
-			  this.roll = 0;
-			  this.magnitude = 0.75;
+			  if (reset_angles_magnitude) {
+				this.yaw = 0;
+				this.pitch = 45;
+				this.roll = 0;
+				this.magnitude = 0.75;
+			  }
 		  },
           'draw_falling_objects': function() {
               // get the time since last frame
@@ -239,6 +245,7 @@ const ANIMATION_STATE = {
                   if (this.current_level_num < 3 && this.at_init_pos == true) {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
+					  this.reset_doge(true);
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
                   else if (this.current_level_num == 3) {
@@ -250,7 +257,7 @@ const ANIMATION_STATE = {
               // (again, square root is expensive and unnecessary)
               if (this.at_init_pos == false && dot(this.doge.velocity, this.doge.velocity) == 0) {
                   //console.log("wow much still");
-				  this.reset_doge();
+				  this.reset_doge(false);
               }
           },
 		  'draw_walls': function() {
