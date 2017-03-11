@@ -22,22 +22,22 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     this.level_arr[1] = [];
     for (var i = 0; i < 5; i++) {
         for (var j = 0; j < 5; j++) {
-            this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*this.DEF_RAD) + x, FLOOR_Y_POS+this.DEF_RAD, (j*2*this.DEF_RAD) + z), this.DEF_RAD));
+            this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*this.DEF_RAD) + x - 5, FLOOR_Y_POS+this.DEF_RAD, (j*2*this.DEF_RAD) + z), this.DEF_RAD));
         }
     }
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 3; j++) {
-            this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*this.DEF_RAD) + x+(2*this.DEF_RAD), FLOOR_Y_POS+(3*this.DEF_RAD), (j*2*this.DEF_RAD) + z+(2*this.DEF_RAD)), this.DEF_RAD));
+            this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3((i*2*this.DEF_RAD) + x+(2*this.DEF_RAD) - 5, FLOOR_Y_POS+(3*this.DEF_RAD), (j*2*this.DEF_RAD) + z+(2*this.DEF_RAD)), this.DEF_RAD));
         }
     }
-    this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3(x+(4*this.DEF_RAD), FLOOR_Y_POS+(5*this.DEF_RAD), z+(4*this.DEF_RAD)), this.DEF_RAD));
+    this.level_arr[1].push(new Moving_Ball("sylvester2x1.jpg", vec3(x+(4*this.DEF_RAD) - 5, FLOOR_Y_POS+(5*this.DEF_RAD), z+(4*this.DEF_RAD)), this.DEF_RAD));
 
     //moving square
     this.level3_speed = 0.125;
     this.level_arr[2] = [];
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
-            this.level_arr[2].push(new Moving_Ball("chairman2x1.jpg", vec3((i*2*this.DEF_RAD) + x, FLOOR_Y_POS+this.DEF_RAD, (j*2*this.DEF_RAD) + z), this.DEF_RAD));
+            this.level_arr[2].push(new Moving_Ball("chairman2x1.jpg", vec3((i*2*this.DEF_RAD) + x - 10, FLOOR_Y_POS+this.DEF_RAD, (j*2*this.DEF_RAD) + z), this.DEF_RAD));
         }
     }
 
@@ -51,7 +51,7 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     this.level_arr[3] = [];
     for (var i = 0; i < 6; i++) {
         for (var j = 0; j < 6; j++) {
-            this.level_arr[3].push(new Moving_Ball("grumpy2x1.jpg", vec3(x + (i*2*this.DEF_RAD), FLOOR_Y_POS + (8*this.DEF_RAD), z + (j*2*this.DEF_RAD)), this.DEF_RAD, vec3(0, -this.level4_speed, 0)));
+            this.level_arr[3].push(new Moving_Ball("grumpy2x1.jpg", vec3(x - 7.5 + (i*2*this.DEF_RAD), FLOOR_Y_POS + (8*this.DEF_RAD), z + (j*2*this.DEF_RAD)), this.DEF_RAD, vec3(0, -this.level4_speed, 0)));
         }
     }
 
