@@ -10,6 +10,14 @@ window.Main_Drawing.prototype.init_animation = function() {
 	//this.graphics_state.camera_transform = mult(this.graphics_state.camera_transform,
 	//	translation(0, 0, -75));
 };
+window.Main_Drawing.prototype.draw_path = function() {
+  var path_transform = mat4();
+  var path_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 40, "path.jpg");
+  path_transform = mult(path_transform, translation(0, FLOOR_Y_POS-0.01, 144));
+  path_transform = mult(path_transform, scale(8, 1, 170));
+  path_transform = mult(path_transform, rotation(90, 1, 0, 0));
+  shapes_in_use["strip"].draw(this.graphics_state, path_transform, path_material);
+}
 window.Main_Drawing.prototype.intro_animation = function() {
 	if (!this.is_in_intro_anim) {
 		this.init_animation();
@@ -23,6 +31,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.graphics_state.camera_transform = mult(PERSPECTIVE_TRANSFORM,
 		translation(0, 0, -300 + 30 * time_diff / 1000));
 	//console.log('animate');
+  this.draw_path();
 	this.draw_walls();
 	this.draw_floor("floor");
 	this.draw_floor("ceiling");
