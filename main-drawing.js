@@ -194,7 +194,7 @@ const SCREEN_ID = {
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
               const gravity_const = 6.5e-4, bounce_factor = 0.4, friction_factor = 0.05;
-              this.doge.apply_gravity_and_friction(30, gravity_const, bounce_factor, friction_factor, true);
+              this.doge.apply_gravity_and_friction(30, gravity_const, bounce_factor, friction_factor, true, this.audio.boink);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
 
               // draw the dotted path that the doge will fly along
@@ -244,7 +244,6 @@ const SCREEN_ID = {
               var wall_collision = collide_with_wall(this.doge)
               if (wall_collision != 0) {
                 // Play boink audio if doge collides with wall
-                this.audio.boink = new Audio("boink.mp3");
                 this.audio.boink.play();
               }
               switch(wall_collision) {
@@ -252,14 +251,10 @@ const SCREEN_ID = {
                 case 0:
                   break;
                 case 1:
-                  //this.audio.boink = new Audio("boink.mp3");
-                  //this.audio.boink.play();
                   this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
                   this.doge.velocity[2] *= -1
                   break;
                 case 2:
-                  //this.audio.boink = new Audio("boink.mp3");
-                  //this.audio.boink.play();
                   this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
                   this.doge.velocity[2] *= -1
                   break;

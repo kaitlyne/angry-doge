@@ -42,7 +42,7 @@ class Moving_Ball {
     // bounce_factor specifies how much the velocity is multiplied by when bouncing back up
     // from the ground
     // friction_factor is what fraction to reduce the velocity by if ball is on floor
-    apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor, is_doge) {
+    apply_gravity_and_friction(frame_delta, gravity_const, bounce_factor, friction_factor, is_doge, boink_audio) {
         var ball_on_floor_pos = FLOOR_Y_POS + this.radius;
         // if y velocity is 0 and the ball is touching the floor
         if (this.velocity[1] == 0.0 && this.center_pos[1].toFixed(1) == ball_on_floor_pos.toFixed(1)) {
@@ -78,8 +78,7 @@ class Moving_Ball {
             // flip the ball's y velocity to make it bounce, multiply by bounce factor
             else {
                 if (is_doge) {
-                   // var boink = new Audio("boink.mp3");
-                   // boink.play();
+                   boink_audio.play();
                 }
                 this.velocity[1] *= -bounce_factor;
             }
