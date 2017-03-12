@@ -13,6 +13,28 @@ window.Main_Drawing.prototype.init_animation = function() {
 };
 
 window.Main_Drawing.prototype.draw_path = function() {
+  // Draw the grass
+  var grass_transform = mat4();
+  var grass_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 40, "grass.jpg");
+  const grass_scale_factor = 8;
+  grass_transform = mult(grass_transform, translation(0, FLOOR_Y_POS-0.02, 100));
+  grass_transform = mult(grass_transform, scale(grass_scale_factor, grass_scale_factor, grass_scale_factor));
+  grass_transform = mult(grass_transform, rotation(90, 1, 0, 0));
+  const num_grass_blocks = {
+    x: 36,
+    z: 104
+  };
+  for (var i = 0; i < num_grass_blocks.x; i++) {
+    for (var j = 0; j < num_grass_blocks.z; j++) {
+      // draw the floor block in the ith row, jth column
+      var translate_transf = translation((i - num_grass_blocks.x / 2) * grass_scale_factor,
+        0, (j - num_grass_blocks.z / 2) * grass_scale_factor);
+      var final_transf = mult(translate_transf, grass_transform);
+      shapes_in_use["strip"].draw(this.graphics_state, final_transf, grass_material);
+    }
+  }
+  //shapes_in_use["strip"].draw(this.graphics_state, grass_transform, grass_material);
+  // Draw the path
   var path_transform = mat4();
   var path_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 40, "path.jpg");
   path_transform = mult(path_transform, translation(0, FLOOR_Y_POS-0.01, 144));
