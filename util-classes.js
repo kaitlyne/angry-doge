@@ -11,6 +11,9 @@ class Moving_Ball {
         if (texture_filename == "FLIGHT_TRACKING") {
             this.material = new Material(Color(1, 0, 0, 1), 1, 0, 0, 0);
         }
+        else if (texture_filename == "dogecoin2x1.jpg") {
+            this.material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, texture_filename);
+        }
         else {
             this.material = new Material(Color(0.5, 0.5, 0.5, 0.8), .5, .4, .4, 200, texture_filename);
         }
