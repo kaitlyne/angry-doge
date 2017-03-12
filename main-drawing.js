@@ -71,7 +71,8 @@ const SCREEN_ID = {
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
                   launch: new Audio("launch.mp3"),
-                  meow: new Audio("meow.mp3")
+                  meow: new Audio("meow.mp3"),
+                  boink: new Audio("boink.mp3")
               };
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
@@ -193,7 +194,7 @@ const SCREEN_ID = {
               // save the new frame's timestamp
               this.last_animation_time = this.graphics_state.animation_time;
               const gravity_const = 6.5e-4, bounce_factor = 0.4, friction_factor = 0.05;
-              this.doge.apply_gravity_and_friction(30, gravity_const, bounce_factor, friction_factor);
+              this.doge.apply_gravity_and_friction(30, gravity_const, bounce_factor, friction_factor, true);
               shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
 
               // draw the dotted path that the doge will fly along
@@ -210,7 +211,7 @@ const SCREEN_ID = {
                   // so I just check for when the y velocity changes from negative to positive
                   last_y_velocity = this.doge_flight_tracking_ball.velocity[1];
                   this.doge_flight_tracking_ball.apply_gravity_and_friction(30,
-                          gravity_const, bounce_factor, friction_factor);
+                          gravity_const, bounce_factor, friction_factor, false);
                   //if (this.doge_flight_tracking_ball.center_pos[1].toFixed(1) == ball_on_floor_pos.toFixed(1)) {
                   if (last_y_velocity < 0 && this.doge_flight_tracking_ball.velocity[1] > 0) {
                       //console.log('break at ', i, ' pos = ', this.doge_flight_tracking_ball.center_pos[1]);
@@ -241,15 +242,24 @@ const SCREEN_ID = {
                   }
               }
               var wall_collision = collide_with_wall(this.doge)
+              if (wall_collision != 0) {
+                // Play boink audio if doge collides with wall
+                this.audio.boink = new Audio("boink.mp3");
+                this.audio.boink.play();
+              }
               switch(wall_collision) {
                 //since there are no boundaries, I had to hard code this.
                 case 0:
                   break;
                 case 1:
+                  //this.audio.boink = new Audio("boink.mp3");
+                  //this.audio.boink.play();
                   this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
                   this.doge.velocity[2] *= -1
                   break;
                 case 2:
+                  //this.audio.boink = new Audio("boink.mp3");
+                  //this.audio.boink.play();
                   this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
                   this.doge.velocity[2] *= -1
                   break;
