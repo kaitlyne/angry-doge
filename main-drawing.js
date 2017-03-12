@@ -292,6 +292,14 @@ const SCREEN_ID = {
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
 				  }
 			  }
+        // Draw the front wall
+        for (var i = 0; i < num_wall_blocks.x; i++) {
+          for (var j = -1; j < num_wall_blocks.y-1; j++) {
+            var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 104);
+            var final_transf = mult(translate_transf, wall_transform);
+            shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+          }
+        }
 			  wall_transform = mult(wall_transform, rotation(90, 0, 1, 0));
 			  // Draw the left wall
 			  for (var i = 0; i < num_wall_blocks.z; i++) {
@@ -311,6 +319,7 @@ const SCREEN_ID = {
 			  }
 		  },
           'draw_floor': function(floor_or_ceiling) {
+              // Takes parameters "floor" or "ceiling" to determine which one to draw
               var floor_transform = mat4();
               const floor_scale_factor = 8;
               var y_diff = 0;
