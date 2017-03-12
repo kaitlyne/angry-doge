@@ -361,8 +361,15 @@ const SCREEN_ID = {
           },
           'draw_text': function() {
               document.getElementById('top-left-text').style.visibility = 'visible';
-              document.getElementById('top-left-text').innerText =
-                  this.level_attempts[this.current_level_num] + ' attempts remaining';
+              var attempts_str = String(this.level_attempts[this.current_level_num]);
+              if (attempts_str == '1') {
+                  attempts_str += ' attempt';
+              }
+              else {
+                  attempts_str += ' attempts';
+              }
+              attempts_str += ' remaining';
+              document.getElementById('top-left-text').innerText = attempts_str;
           },
           'display': function(time) {
               // don't draw if we're not in game
