@@ -56,7 +56,8 @@
               var lose_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott.jpg");
               var pic_transf = mat4();
               // flip picture so it's upright
-              pic_transf = mult(pic_transf, scale(1, -1, 1));
+              pic_transf = mult(pic_transf, translation(-0.8, 0, 0));
+              pic_transf = mult(pic_transf, scale(0.7, -0.7, 0.7));
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
               }
