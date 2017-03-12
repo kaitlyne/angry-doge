@@ -1,7 +1,7 @@
 // y position for the floor (constant)
 const FLOOR_Y_POS = -8;
 // y position for the ceiling (constant)
-const CEILING_Y_POS = 32;
+//const CEILING_Y_POS = 32;
 // if a velocity is below this constant, force the velocity to be 0
 const ZERO_VELOCITY_THRESHOLD = 0.05;
 
@@ -108,11 +108,6 @@ class Moving_Ball {
 
 function collide_with_wall(ball, isDoge) {
     //define wall boundaries
-    var left_edge = -56
-    var right_edge = 48
-    var front_edge = -56
-    var back_edge = 48
-    var top_edge = 32
     var bottom_edge = FLOOR_Y_POS
     //define ball attributes
     var radius = ball.radius
@@ -124,32 +119,32 @@ function collide_with_wall(ball, isDoge) {
     var left_point = center[0] - radius
     var right_point = center[0] + radius
     //check if hitting boundaries
-    if (front_point <= front_edge) {
+    if (front_point <= BOUNDARY_FRONT) {
       ball.center_pos[2] = BOUNDARY_FRONT + ball.radius
       ball.velocity[2] *= -1
       return true
     }
-    if (back_point >= back_edge) {
+    if (back_point >= BOUNDARY_BACK) {
       ball.center_pos[2] = BOUNDARY_BACK - ball.radius
       ball.velocity[2] *= -1
       return true
     }
-    if (left_point <= left_edge) {
+    if (left_point <= BOUNDARY_LEFT) {
       ball.center_pos[0] = BOUNDARY_LEFT + ball.radius
       ball.velocity[0] *= -1
       return true
     }
-    if (right_point >= right_edge) {
+    if (right_point >= BOUNDARY_RIGHT) {
       ball.center_pos[0] = BOUNDARY_RIGHT - ball.radius
       ball.velocity[0] *= -1
       return true
     }
-    if (upper_point >= top_edge) {
+    if (upper_point >= BOUNDARY_TOP) {
       ball.center_pos[1] = BOUNDARY_TOP - ball.radius
       ball.velocity[1] *= -1
       return true
     }
-    if (!isDoge && lower_point <= bottom_edge) {
+    if (!isDoge && lower_point <= FLOOR_Y_POS) {
       ball.center_pos[1] = FLOOR_Y_POS + ball.radius
       ball.velocity[1] *= -1
       return true

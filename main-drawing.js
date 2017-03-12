@@ -1,9 +1,15 @@
+const num_wall_blocks = {
+    x: 7,
+    y: 2,
+    z: 6
+};
+const wall_scale_factor = 8;
 //world coordinates
 const BOUNDARY_LEFT = -56;
-const BOUNDARY_RIGHT = 48;
+const BOUNDARY_RIGHT = BOUNDARY_LEFT + num_wall_blocks.x * 2 * wall_scale_factor;
 const BOUNDARY_FRONT = -56;
-const BOUNDARY_BACK = 48;
-const BOUNDARY_TOP = 32;
+const BOUNDARY_BACK = BOUNDARY_FRONT + num_wall_blocks.z * 2 * wall_scale_factor;
+const BOUNDARY_TOP = FLOOR_Y_POS + num_wall_blocks.y * 2 * wall_scale_factor;
 
 // constants to state whether we're playing or in a menu
 const ANIMATION_STATE = {
@@ -309,30 +315,26 @@ const SCREEN_ID = {
           },
 		  'draw_walls': function() {
 			  var wall_transform = mat4();
-			  const wall_scale_factor = 8;
+			  
 			  var indoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "indoorwall.jpg");
         var outdoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
 			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, BOUNDARY_FRONT));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
-			  const num_wall_blocks = {
-				x: 12,
-				y: 4,
-				z: 12
-			  };
+			  
 			  // Draw the back wall
 			  for (var i = 0; i < num_wall_blocks.x; i++) {
-				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
-					  var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 0);
+				  for (var j = 0; j < num_wall_blocks.y; j++) {
+					  var translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor, (j * 2 + 1)*wall_scale_factor, 0);
 					  var final_transf = mult(translate_transf, wall_transform);
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
         // Draw the front wall
         for (var i = 0; i < num_wall_blocks.x; i++) {
-          for (var j = -1; j < num_wall_blocks.y-1; j++) {
-            if (!((j == -1 || j == 0) && (i == 5 || i == 6 || i == 7))) {
-              var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 104);
+          for (var j = 0; j < num_wall_blocks.y; j++) {
+            if (!((j == 0) && (i == (num_wall_blocks.x - 1) / 2))) {
+              var translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
               var final_transf = mult(translate_transf, wall_transform);
               shapes_in_use["strip"].draw(this.graphics_state, final_transf, outdoorwall_material);
             }
@@ -341,16 +343,16 @@ const SCREEN_ID = {
 			  wall_transform = mult(wall_transform, rotation(90, 0, 1, 0));
 			  // Draw the left wall
 			  for (var i = 0; i < num_wall_blocks.z; i++) {
-				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
-					  var translate_transf = translation(BOUNDARY_LEFT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+				  for (var j = 0; j < num_wall_blocks.y; j++) {
+					  var translate_transf = translation(BOUNDARY_LEFT, (j*2+1)*wall_scale_factor, (i*2+1)*wall_scale_factor);
 					  var final_transf = mult(translate_transf, wall_transform);
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
 			  // Draw the right wall
 			  for (var i = 0; i < num_wall_blocks.z; i++) {
-				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
-					  var translate_transf = translation(BOUNDARY_RIGHT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
+				  for (var j = 0; j < num_wall_blocks.y; j++) {
+					  var translate_transf = translation(BOUNDARY_RIGHT, (j*2+1)*wall_scale_factor, (i*2+1)*wall_scale_factor);
 					  var final_transf = mult(translate_transf, wall_transform);
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
@@ -359,11 +361,11 @@ const SCREEN_ID = {
           'draw_floor': function(floor_or_ceiling) {
               // Takes parameters "floor" or "ceiling" to determine which one to draw
               var floor_transform = mat4();
-              const floor_scale_factor = 8;
+              const floor_scale_factor = wall_scale_factor;
               var y_diff = 0;
               if (floor_or_ceiling == "ceiling") {
                   var floor_material = new Material(Color(0, 0, 0, 1), .8, 0, 0, 40, "ceiling.jpg");
-                  y_diff = CEILING_Y_POS - FLOOR_Y_POS;
+                  y_diff = BOUNDARY_TOP - FLOOR_Y_POS;
               }
               else {
                   var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
@@ -374,14 +376,14 @@ const SCREEN_ID = {
               floor_transform = mult(floor_transform, rotation(90, 1, 0, 0));
               // number of rows and columns of blocks
               const num_floor_blocks = {
-                  x: 12,
-                  z: 12
+                  x: num_wall_blocks.x,
+                  z: num_wall_blocks.z
               };
               for (var i = 0; i < num_floor_blocks.x; i++) {
                   for (var j = 0; j < num_floor_blocks.z; j++) {
                       // draw the floor block in the ith row, jth column
-                      var translate_transf = translation((i - num_floor_blocks.x / 2) * floor_scale_factor,
-                             0, (j - num_floor_blocks.z / 2) * floor_scale_factor);
+                      var translate_transf = translation((i - (num_floor_blocks.x-1)/2) * 2 * floor_scale_factor,
+                             0, (j - num_floor_blocks.z / 2) * 2 * floor_scale_factor);
                       var final_transf = mult(translate_transf, floor_transform);
                       shapes_in_use["strip"].draw(this.graphics_state, final_transf, floor_material);
                   }
@@ -442,7 +444,7 @@ const SCREEN_ID = {
                   //model_transform = mult(model_transform, rotation(360 / 13, 0, 0, 1));
               }
               this.draw_all_shapes();
-              this.draw_roof();
+              //this.draw_roof();
               this.draw_text();
           }
       }, Animation);
