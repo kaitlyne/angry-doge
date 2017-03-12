@@ -70,7 +70,7 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 4;
+              this.current_level_num = 0;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
@@ -245,21 +245,22 @@ const SCREEN_ID = {
                       if (this.current_level_arr[i].already_collided == false) {
                         this.current_level_arr[i].hp--
                         this.current_level_arr[i].already_collided = true
-                      }
-                      if (this.current_level_arr[i].hp == 0) {
-                        this.current_level_arr.splice(i, 1)
+                        if (this.current_level_arr[i].hp == 0) {
+                          this.current_level_arr.splice(i, 1)
+                        }
                       }
                     }
-                  }
 
-                  else {
-                    if (this.current_level_num == 4) {
-                      this.current_level_arr[i].already_collided = false
-                    }
                     else {
                       this.audio.meow = new Audio("meow.mp3");
                       this.audio.meow.play();
                       this.current_level_arr.splice(i, 1);
+                    }
+                }
+
+                  else {
+                    if (this.current_level_num == 4) {
+                      this.current_level_arr[i].already_collided = false
                     }
                   }
               }
