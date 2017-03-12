@@ -68,7 +68,7 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 0;
+              this.current_level_num = 4;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
@@ -228,6 +228,7 @@ const SCREEN_ID = {
 
               this.animate_level3();
               this.animate_level4();
+              this.animate_level5();
 
 
           },
@@ -253,14 +254,14 @@ const SCREEN_ID = {
           'check_level_state': function() {
               // wow all enemies gone, we won!
               if (!this.current_level_arr.length) {
-                  if (this.current_level_num < 3 && this.at_init_pos == true) {
+                  if (this.current_level_num < 4 && this.at_init_pos == true) {
                       this.current_level_num++;
                       this.current_level_arr = this.level_arr[this.current_level_num];
 					            this.reset_doge(true);
                       this.graphics_state.current_screen_id = SCREEN_ID.WIN;
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
-                  else if (this.current_level_num == 3) {
+                  else if (this.current_level_num == 4) {
                     console.log("A winner is you");
                   }
               }

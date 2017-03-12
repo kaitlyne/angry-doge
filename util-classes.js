@@ -122,28 +122,28 @@ function collide_with_wall(ball) {
     var right_point = center[0] + radius
     //check if hitting boundaries
     if (front_point <= front_edge) {
-      this.ball.center_pos[2] = BOUNDARY_FRONT + this.ball.radius
-      this.ball.velocity[2] *= -1
+      ball.center_pos[2] = BOUNDARY_FRONT + ball.radius
+      ball.velocity[2] *= -1
       return true
     }
     if (back_point >= back_edge) {
-      this.ball.center_pos[2] = BOUNDARY_BACK - this.ball.radius
-      this.ball.velocity[2] *= -1
+      ball.center_pos[2] = BOUNDARY_BACK - ball.radius
+      ball.velocity[2] *= -1
       return true
     }
     if (left_point <= left_edge) {
-      this.ball.center_pos[0] = BOUNDARY_LEFT + this.ball.radius
-      this.ball.velocity[0] *= -1
+      ball.center_pos[0] = BOUNDARY_LEFT + ball.radius
+      ball.velocity[0] *= -1
       return true
     }
     if (right_point >= right_edge) {
-      this.ball.center_pos[0] = BOUNDARY_RIGHT - this.ball.radius
-      this.ball.velocity[0] *= -1
+      ball.center_pos[0] = BOUNDARY_RIGHT - ball.radius
+      ball.velocity[0] *= -1
       return true
     }
     if (upper_point >= top_edge) {
-      this.ball.center_pos[1] = BOUNDARY_TOP - this.ball.radius
-      this.ball.velocity[1] *= -1
+      ball.center_pos[1] = BOUNDARY_TOP - ball.radius
+      ball.velocity[1] *= -1
       return true
     }
     return false

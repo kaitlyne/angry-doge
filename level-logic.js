@@ -55,9 +55,6 @@ window.Main_Drawing.prototype.initialize_levels = function() {
         }
     }
 
-    this.level4_speed = 0.125
-    this.level_arr[4] = []
-    this.level_arr[4].push(new Moving_Ball("finalboss.jpg", vec3(x, FLOOR_Y_POS + FINAL_BOSS_RAD, z), vec3(this.level4_speed, this.level4_speed this.level4_speed))
 
     for (var i = 0; i < this.level_arr[3].length; i+=2) {
         this.level_arr[3][i].center_pos = add(this.level_arr[3][i].center_pos, vec3(0, -7*this.DEF_RAD, 0));
@@ -72,10 +69,13 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     this.FINAL_BOSS_RAD = 5;
     this.FINAL_BOSS_HP = 5;
 
-    this.final_arr = [];
+    this.level5_speed = 0.125
+    this.level_arr[4] = []
     for (var i = 0; i < 5; i++) {
-        this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*this.FINAL_BOSS_RAD), FLOOR_Y_POS + 5*this.FINAL_BOSS_RAD , 6), this.FINAL_BOSS_RAD));
+      this.level_arr[4].push(new Moving_Ball("finalboss.jpg", vec3(x, FLOOR_Y_POS + this.FINAL_BOSS_RAD, z), this.FINAL_BOSS_RAD,
+      vec3(Math.random() * this.level5_speed, Math.random() * this.level5_speed, 0)))
     }
+
 };
 
 // ***HERE BE DRAGONS***
@@ -200,4 +200,11 @@ window.Main_Drawing.prototype.animate_level4 = function() {
             this.level_arr[3][i].velocity[1] = this.level4_speed;
         }
     }
+
+window.Main_Drawing.prototype.animate_level5 = function() {
+  for (var i = 0; i < 5; i++) {
+    this.level_arr[4][i].center_pos = add(this.level_arr[3][i].center_pos, vec3(this.level_arr[4][i][0], this.level_arr[4][i][1], this.level_arr[4][i][2]));
+    this.level_arr[4][i].transform = mult(translation(this.level_arr[4][i][0], this.level_arr[4][i][1], this.level_arr[4][i][2]), this.level_arr[4][i].transform);
+  }
+}
 };
