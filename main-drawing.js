@@ -70,7 +70,8 @@ const SCREEN_ID = {
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
-                  launch: new Audio("launch.mp3")
+                  launch: new Audio("launch.mp3"),
+                  meow: new Audio("meow.mp3")
               };
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
@@ -234,6 +235,8 @@ const SCREEN_ID = {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
+                      this.audio.meow = new Audio("meow.mp3");
+                      this.audio.meow.play();
                       this.current_level_arr.splice(i, 1);
                   }
               }
@@ -241,23 +244,23 @@ const SCREEN_ID = {
               switch(wall_collision) {
                 //since there are no boundaries, I had to hard code this.
                 case 0:
-                break
+                  break;
                 case 1:
-                this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
-                this.doge.velocity[2] *= -1
-                break
+                  this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
+                  this.doge.velocity[2] *= -1
+                  break;
                 case 2:
-                this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
-                this.doge.velocity[2] *= -1
-                break
+                  this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
+                  this.doge.velocity[2] *= -1
+                  break;
                 case 5:
-                this.doge.center_pos[0] = BOUNDARY_RIGHT - this.doge.radius
-                this.doge.velocity[0] *= -1
-                break
+                  this.doge.center_pos[0] = BOUNDARY_RIGHT - this.doge.radius
+                  this.doge.velocity[0] *= -1
+                  break;
                 case 6:
-                this.doge.center_pos[0] = BOUNDARY_LEFT + this.doge.radius
-                this.doge.velocity[0] *= -1
-                break
+                  this.doge.center_pos[0] = BOUNDARY_LEFT + this.doge.radius
+                  this.doge.velocity[0] *= -1
+                  break;
               }
           },
           'check_level_state': function() {
