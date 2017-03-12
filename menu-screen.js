@@ -5,22 +5,7 @@
 
               this.newest_shapes = {
                   "good_sphere": new Subdivision_Sphere(4),
-                  "box": new Cube(),
-                  "strip": new Square(),
-                  "septagon": new Regular_2D_Polygon(2, 7),
-                  "tube": new Cylindrical_Tube(10, 10),
-                  "open_cone": new Cone_Tip(3, 10),
-                  "donut": new Torus(15, 15),
-                  "bad_sphere": new Sphere(10, 10),
-                  "cone": new Closed_Cone(10, 10),
-                  "capped": new Capped_Cylinder(4, 12),
-                  "axis": new Axis_Arrows(),
-                  "prism": Capped_Cylinder.prototype.auto_flat_shaded_version(10, 10),
-                  "gem": Subdivision_Sphere.prototype.auto_flat_shaded_version(2),
-                  "gem2": Torus.prototype.auto_flat_shaded_version(20, 20),
-                  "swept_curve": new Surface_Of_Revolution(10, 10, [vec3(2, 0, -1), vec3(1, 0, 0), vec3(1, 0, 1), vec3(0, 0, 2)], 120, [
-                      [0, 7][0, 7]
-                  ])
+                  "strip": new Square()
               };
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
@@ -41,6 +26,8 @@
                       e = e || window.event;
                       self.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
                       document.getElementById('top-text').style.visibility = 'hidden';
+                      document.getElementById('bot-left').style.visibility = 'hidden';
+                      document.getElementById('bot-right').style.visibility = 'hidden';
                       self.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
                       console.log('mouseup');
                   }
@@ -58,11 +45,21 @@
               // flip picture so it's upright
               pic_transf = mult(pic_transf, translation(-0.8, 0, 0));
               pic_transf = mult(pic_transf, scale(0.7, -0.7, 0.7));
+              document.getElementById('top-text').style.visibility = 'visible';
+              document.getElementById('bot-left').style.visibility = 'visible';
+              document.getElementById('bot-right').style.visibility = 'visible';
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
+                document.getElementById('top-text').innerText = "Wow such win!";
+                document.getElementById('bot-left').innerText = "Click for next level";
+                document.getElementById('bot-right').innerText = "Click for main menu";
               }
               else {
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, lose_material);
+                document.getElementById('top-text').innerText = 
+                  "If this were architecture school, you'd be out on day 1!";
+                document.getElementById('bot-left').innerText = "Click to replay";
+                document.getElementById('bot-right').innerText = "Click for main menu";
               }
           },
           'display': function(time) {
@@ -73,7 +70,7 @@
               // orthographic projection to show a flat picture; pictures should be at z = 0
               this.graphics_state.camera_transform = ortho(-2.5, 2.5, -2.5, 2.5, 0, 0.5);
               //this.graphics_state.camera_transform = mat4();
-              document.getElementById('top-text').style.visibility = 'visible';
+              
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 

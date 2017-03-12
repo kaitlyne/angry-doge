@@ -160,21 +160,24 @@ const SCREEN_ID = {
             ball.velocity = velocity;
           },
 		  'reset_doge': function(reset_angles_magnitude) {
-        if (this.current_level_arr.length != 0) {
-          this.level_attempts[this.current_level_num]--
-          console.log("number of attempts left: " + this.level_attempts[this.current_level_num])
-          if (this.level_attempts[this.current_level_num] == 0) {
-            this.graphics_state.current_screen_id = SCREEN_ID.LOSE;
-            this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
-            this.initialize_levels();
-            this.current_level_arr = this.level_arr[this.current_level_num];
-          }
-        }
 			  if (this.at_init_pos == false) {
 				  this.doge.velocity = vec3(0, 0, 0);
 				  this.doge.center_pos = this.init_center;
 				  this.doge.init_transform();
 				  this.at_init_pos = true;
+          // check if player lost
+          if (this.current_level_arr.length != 0) {
+            // decrement # attempts
+            this.level_attempts[this.current_level_num]--;
+            console.log("number of attempts left: " + this.level_attempts[this.current_level_num])
+            // if no attempts, show losing screen and restart level
+            if (this.level_attempts[this.current_level_num] == 0) {
+              this.graphics_state.current_screen_id = SCREEN_ID.LOSE;
+              this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
+              this.initialize_levels();
+              this.current_level_arr = this.level_arr[this.current_level_num];
+            }
+          }
 			  }
 			  if (reset_angles_magnitude) {
 				this.yaw = 0;
