@@ -243,6 +243,7 @@ const SCREEN_ID = {
                   if (do_balls_collide(this.doge, ball)) {
                     if (this.current_level_num == 4) {
                       if (this.current_level_arr[i].already_collided == false) {
+                        //insert audio here
                         this.current_level_arr[i].hp--
                         this.current_level_arr[i].already_collided = true
                         if (this.current_level_arr[i].hp == 0) {
