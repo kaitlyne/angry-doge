@@ -25,7 +25,8 @@ class Moving_Ball {
         this.radius = radius;
         // ball's initial velocity; this is a vec3
         this.velocity = velocity;
-        this.hp = 10
+        this.hp = 5
+        this.already_collided = false
 
 		this.init_transform();
     }
@@ -149,7 +150,6 @@ function collide_with_wall(ball, isDoge) {
       return true
     }
     if (!isDoge && lower_point <= bottom_edge) {
-      console.log(lower_point)
       ball.center_pos[1] = FLOOR_Y_POS + ball.radius
       ball.velocity[1] *= -1
       return true

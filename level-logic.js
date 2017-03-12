@@ -8,7 +8,7 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     var z = -50;
     //cube
     this.level_arr = [];
-    this.level_attempts = [6, 7, 11, 16, 31]
+    this.level_attempts = [6, 6, 10, 16, 30]
     this.level_arr[0] = [];
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 3; j++) {

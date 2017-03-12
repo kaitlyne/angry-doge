@@ -70,7 +70,7 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 0;
+              this.current_level_num = 4;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
@@ -242,12 +242,20 @@ const SCREEN_ID = {
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
                     if (this.current_level_num == 4) {
-                      this.current_level_arr[i].hp--
+                      if (this.current_level_arr[i].already_collided == false) {
+                        this.current_level_arr[i].hp--
+                        this.current_level_arr[i].already_collided = true
+                      }
                       if (this.current_level_arr[i].hp == 0) {
-                        this.current_level_arr.splice(i, i)
+                        this.current_level_arr.splice(i, 1)
                       }
                     }
+                  }
 
+                  else {
+                    if (this.current_level_num == 4) {
+                      this.current_level_arr[i].already_collided = false
+                    }
                     else {
                       this.audio.meow = new Audio("meow.mp3");
                       this.audio.meow.play();
@@ -384,6 +392,13 @@ const SCREEN_ID = {
               }
               attempts_str += ' remaining';
               document.getElementById('top-left-text').innerText = attempts_str;
+
+              if (this.current_level_num == 4) {
+                document.getElementById('top-right-text').style.visibility = 'visible'
+                var hp_str = String(this.current_level_arr[0].hp + this.current_level_arr[1].hp)
+                hp_str += ' hp remaining'
+                document.getElementById('top-right-text').innerText = hp_str
+              }
           },
           'display': function(time) {
               if (this.graphics_state.current_state == ANIMATION_STATE.INTRO_ANIM) {
