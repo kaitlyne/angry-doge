@@ -38,6 +38,7 @@ const SCREEN_ID = {
                   "prism": Capped_Cylinder.prototype.auto_flat_shaded_version(10, 10),
                   "gem": Subdivision_Sphere.prototype.auto_flat_shaded_version(2),
                   "gem2": Torus.prototype.auto_flat_shaded_version(20, 20),
+                  "tetra": new Tetrahedron(),
                   "swept_curve": new Surface_Of_Revolution(10, 10, [vec3(2, 0, -1), vec3(1, 0, 0), vec3(1, 0, 1), vec3(0, 0, 2)], 120, [
                       [0, 7][0, 7]
                   ])
@@ -441,6 +442,7 @@ const SCREEN_ID = {
                   //model_transform = mult(model_transform, rotation(360 / 13, 0, 0, 1));
               }
               this.draw_all_shapes();
+              this.draw_roof();
               this.draw_text();
           }
       }, Animation);

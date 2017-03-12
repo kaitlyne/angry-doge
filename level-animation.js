@@ -56,6 +56,23 @@ window.Main_Drawing.prototype.draw_lawns = function() {
 	shapes_in_use["cone"].draw(this.graphics_state, tree_transf, green_material);
 };
 
+window.Main_Drawing.prototype.draw_roof = function() {
+	var roof_material = new Material(Color(0, 0, 0, 1), 0.8, 0.5, 0, 0, "wall.jpg");
+	var roof_transf = mat4();
+	roof_transf = mult(roof_transf, translation((BOUNDARY_RIGHT + BOUNDARY_LEFT) / 2, 
+		BOUNDARY_TOP + 0.01, (BOUNDARY_BACK + BOUNDARY_FRONT) / 2));
+	roof_transf = mult(roof_transf, scale(BOUNDARY_RIGHT - BOUNDARY_LEFT,
+		50, BOUNDARY_BACK - BOUNDARY_FRONT));
+	//roof_transf = mult(roof_transf, scale(50, 50, 50));
+	shapes_in_use["tetra"].draw(this.graphics_state, roof_transf, roof_material);
+	roof_transf = mult(roof_transf, rotation(90, 0, 1, 0));
+	shapes_in_use["tetra"].draw(this.graphics_state, roof_transf, roof_material);
+	roof_transf = mult(roof_transf, rotation(90, 0, 1, 0));
+	shapes_in_use["tetra"].draw(this.graphics_state, roof_transf, roof_material);
+	roof_transf = mult(roof_transf, rotation(90, 0, 1, 0));
+	shapes_in_use["tetra"].draw(this.graphics_state, roof_transf, roof_material);
+};
+
 window.Main_Drawing.prototype.intro_animation = function() {
 	if (!this.is_in_intro_anim) {
 		this.init_animation();
@@ -82,7 +99,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	//	this.init_center[1], this.init_center[2]);
 	this.doge.init_transform();
 	this.doge.transform = mult(translation(0, 0, 300 - 30 * time_diff / 1000), this.doge.transform);
-	this.doge.transform = mult(this.doge.transform, rotation(2 * time_diff, 0, 0, 1));
+	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 5000, 0, 0, 1));
 	shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
   this.draw_path();
 	this.draw_walls();
@@ -90,5 +107,6 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.draw_floor("ceiling");
 	this.draw_enemies();
 	this.draw_lawns();
+	this.draw_roof();
 };
 
