@@ -70,7 +70,7 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 4;
+              this.current_level_num = 0;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
@@ -278,7 +278,8 @@ const SCREEN_ID = {
 		  'draw_walls': function() {
 			  var wall_transform = mat4();
 			  const wall_scale_factor = 8;
-			  var wall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
+			  var indoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "indoorwall.jpg");
+        var outdoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
 			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, BOUNDARY_FRONT));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
@@ -292,15 +293,17 @@ const SCREEN_ID = {
 				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
 					  var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 0);
 					  var final_transf = mult(translate_transf, wall_transform);
-					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
         // Draw the front wall
         for (var i = 0; i < num_wall_blocks.x; i++) {
           for (var j = -1; j < num_wall_blocks.y-1; j++) {
-            var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 104);
-            var final_transf = mult(translate_transf, wall_transform);
-            shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+            if (!((j == -1 || j == 0) && (i == 5 || i == 6 || i == 7))) {
+              var translate_transf = translation((i - num_wall_blocks.x/2)*wall_scale_factor, (j + num_wall_blocks.y/2)*wall_scale_factor, 104);
+              var final_transf = mult(translate_transf, wall_transform);
+              shapes_in_use["strip"].draw(this.graphics_state, final_transf, outdoorwall_material);
+            }
           }
         }
 			  wall_transform = mult(wall_transform, rotation(90, 0, 1, 0));
@@ -309,7 +312,7 @@ const SCREEN_ID = {
 				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
 					  var translate_transf = translation(BOUNDARY_LEFT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
 					  var final_transf = mult(translate_transf, wall_transform);
-					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
 			  // Draw the right wall
@@ -317,7 +320,7 @@ const SCREEN_ID = {
 				  for (var j = -1; j < num_wall_blocks.y-1; j++) {
 					  var translate_transf = translation(BOUNDARY_RIGHT, (j + num_wall_blocks.y/2)*wall_scale_factor, (i - num_wall_blocks.x)*wall_scale_factor+104);
 					  var final_transf = mult(translate_transf, wall_transform);
-					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, wall_material);
+					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
 		  },
@@ -326,12 +329,12 @@ const SCREEN_ID = {
               var floor_transform = mat4();
               const floor_scale_factor = 8;
               var y_diff = 0;
-              if (floor_or_ceiling == "floor") {
-                  var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
-              }
-              else {
+              if (floor_or_ceiling == "ceiling") {
                   var floor_material = new Material(Color(0, 0, 0, 1), .8, 0, 0, 40, "ceiling.jpg");
                   y_diff = CEILING_Y_POS - FLOOR_Y_POS;
+              }
+              else {
+                  var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
               }
               floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS + y_diff, 0));
               floor_transform = mult(floor_transform, scale(floor_scale_factor,
