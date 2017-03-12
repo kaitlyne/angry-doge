@@ -227,12 +227,24 @@ const SCREEN_ID = {
                               this.doge_flight_tracking_ball.transform, this.doge_flight_tracking_ball.material);
                   }
               }
-
-              this.animate_level3();
-              this.animate_level4();
-              this.animate_level5();
-
-
+              switch(this.current_level_num) {
+                  case 2:
+                    this.animate_level3();
+                    break;
+                  case 3:
+                    this.animate_level4();
+                    break;
+                  case 4:
+                    this.animate_level5();
+                    break;
+              }
+          },
+          'draw_enemies': function() {
+              for (var i = this.current_level_arr.length - 1; i >= 0; i--) {
+                  var ball = this.current_level_arr[i];
+                  shapes_in_use["good_sphere"].draw(this.graphics_state,
+                          ball.transform, ball.material);
+              }
           },
           'check_collision_detection': function() {
               //collision detection code
@@ -379,6 +391,7 @@ const SCREEN_ID = {
                  this.draw_floor("ceiling");
 			           this.draw_walls();
                  this.draw_falling_objects();
+                 this.draw_enemies();
                  this.check_collision_detection();
                  this.check_level_state();
                  return;
