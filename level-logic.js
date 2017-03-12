@@ -8,7 +8,7 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     var z = -50;
     //cube
     this.level_arr = [];
-    this.level_attempts = [6, 7, 11, 16]
+    this.level_attempts = [6, 7, 11, 16, 31]
     this.level_arr[0] = [];
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 3; j++) {
@@ -55,6 +55,10 @@ window.Main_Drawing.prototype.initialize_levels = function() {
         }
     }
 
+    this.level4_speed = 0.125
+    this.level_arr[4] = []
+    this.level_arr[4].push(new Moving_Ball("finalboss.jpg", vec3(x, FLOOR_Y_POS + FINAL_BOSS_RAD, z), vec3(this.level4_speed, this.level4_speed this.level4_speed))
+
     for (var i = 0; i < this.level_arr[3].length; i+=2) {
         this.level_arr[3][i].center_pos = add(this.level_arr[3][i].center_pos, vec3(0, -7*this.DEF_RAD, 0));
         this.level_arr[3][i].transform = mult(translation(0, -7*this.DEF_RAD, 0), this.level_arr[3][i].transform);
@@ -66,10 +70,10 @@ window.Main_Drawing.prototype.initialize_levels = function() {
 
     //final boss
     this.FINAL_BOSS_RAD = 5;
-    this.FINAL_BOSS_HP = 10;
+    this.FINAL_BOSS_HP = 5;
 
     this.final_arr = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
         this.final_arr.push(new Moving_Ball("finalboss.jpg", vec3(6 + (i*2*this.FINAL_BOSS_RAD), FLOOR_Y_POS + 5*this.FINAL_BOSS_RAD , 6), this.FINAL_BOSS_RAD));
     }
 };

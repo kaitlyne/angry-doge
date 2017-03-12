@@ -3,6 +3,7 @@ const BOUNDARY_LEFT = -56;
 const BOUNDARY_RIGHT = 48;
 const BOUNDARY_FRONT = -56;
 const BOUNDARY_BACK = 48;
+const BOUNDARY_TOP = 32;
 
 // constants to state whether we're playing or in a menu
 const ANIMATION_STATE = {
@@ -243,31 +244,10 @@ const SCREEN_ID = {
                   }
               }
               var wall_collision = collide_with_wall(this.doge)
-              if (wall_collision != 0) {
+              if (wall_collision != false) {
                 // Play boink audio if doge collides with wall
                 this.audio.boink = new Audio("boink.mp3");
                 this.audio.boink.play();
-              }
-              switch(wall_collision) {
-                //since there are no boundaries, I had to hard code this.
-                case 0:
-                  break;
-                case 1:
-                  this.doge.center_pos[2] = BOUNDARY_BACK - this.doge.radius
-                  this.doge.velocity[2] *= -1
-                  break;
-                case 2:
-                  this.doge.center_pos[2] = BOUNDARY_FRONT + this.doge.radius
-                  this.doge.velocity[2] *= -1
-                  break;
-                case 5:
-                  this.doge.center_pos[0] = BOUNDARY_RIGHT - this.doge.radius
-                  this.doge.velocity[0] *= -1
-                  break;
-                case 6:
-                  this.doge.center_pos[0] = BOUNDARY_LEFT + this.doge.radius
-                  this.doge.velocity[0] *= -1
-                  break;
               }
           },
           'check_level_state': function() {
@@ -389,7 +369,7 @@ const SCREEN_ID = {
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 
-              
+
               for (var i = 0; i < 1; i++) {
                   this.graphics_state.lights = [new Light(vec4(this.doge.center_pos[0],
                     this.doge.center_pos[1], this.doge.center_pos[2], 1), Color(1, 1, 0, 1), 1000000),
