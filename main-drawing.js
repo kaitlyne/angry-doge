@@ -331,7 +331,7 @@ const SCREEN_ID = {
           'draw_floor': function() {
               var floor_transform = mat4();
               const floor_scale_factor = 8;
-              var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "floor.jpg");
+              var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
               floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS, 0));
               floor_transform = mult(floor_transform, scale(floor_scale_factor,
                           floor_scale_factor, floor_scale_factor));
@@ -374,8 +374,9 @@ const SCREEN_ID = {
 
               
               for (var i = 0; i < 1; i++) {
-                  this.graphics_state.lights = [new Light(vec4(3, 3, 3, 1), Color(1, 0, 0, 1), 100000000),
-                      new Light(vec4(3, 3,7, 1), Color(0, 1, 0, 1), 100000000)
+                  this.graphics_state.lights = [new Light(vec4(this.doge.center_pos[0],
+                    this.doge.center_pos[1], this.doge.center_pos[2], 1), Color(1, 1, 0, 1), 1000000),
+                      new Light(vec4(300, 3,7, 1), Color(1, 1, 0, 1), 1)
                   ];
 
                   //this.draw_all_shapes(); // *** How to call a function and still have a single matrix state ***

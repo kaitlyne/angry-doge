@@ -9,10 +9,10 @@ class Moving_Ball {
     constructor(texture_filename, center_pos, radius, velocity=vec3(0,0,0)) {
         // material for ball's texture
         if (texture_filename == "FLIGHT_TRACKING") {
-            this.material = new Material(Color(1, 0, 0, 1), .7, .5, 0, 0);
+            this.material = new Material(Color(1, 0, 0, 1), 1, 0, 0, 0);
         }
         else {
-            this.material = new Material(Color(0, 0, 0, 1), .7, .5, .0, 40, texture_filename);
+            this.material = new Material(Color(0.5, 0.5, 0.5, 0.8), .5, .4, .4, 200, texture_filename);
         }
         // position of the ball's center; this is a vec3
         this.center_pos = center_pos;
