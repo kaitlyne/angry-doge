@@ -66,15 +66,16 @@ window.Main_Drawing.prototype.initialize_levels = function() {
     this.lower_bound = FLOOR_Y_POS + this.DEF_RAD;
 
     //final boss
-    this.FINAL_BOSS_RAD = 5;
-    this.FINAL_BOSS_HP = 5;
+    this.FINAL_BOSS_RAD = 4;
 
-    this.level5_speed = 0.125
+    this.level5_speed = 0.5
     this.level_arr[4] = []
-    for (var i = 0; i < 5; i++) {
-      this.level_arr[4].push(new Moving_Ball("finalboss.jpg", vec3(x, FLOOR_Y_POS + this.FINAL_BOSS_RAD, z), this.FINAL_BOSS_RAD,
-      vec3(Math.random() * this.level5_speed, Math.random() * this.level5_speed, 0)))
+    for (var i = 0; i < 2; i++) {
+      this.level_arr[4].push(new Moving_Ball("finalboss.jpg", vec3(x + (2 * i * this.FINAL_BOSS_RAD), FLOOR_Y_POS + this.FINAL_BOSS_RAD, z), this.FINAL_BOSS_RAD,
+      vec3(this.level5_speed + (i * 0.25), this.level5_speed + (i * 0.5), 0)))
     }
+    this.level_arr[4][1].velocity[0] *= -1
+    this.level_arr[4][1].velocity[1] *= -1
 
 };
 
@@ -202,9 +203,22 @@ window.Main_Drawing.prototype.animate_level4 = function() {
     }
 
 window.Main_Drawing.prototype.animate_level5 = function() {
-  for (var i = 0; i < 5; i++) {
-    this.level_arr[4][i].center_pos = add(this.level_arr[3][i].center_pos, vec3(this.level_arr[4][i][0], this.level_arr[4][i][1], this.level_arr[4][i][2]));
-    this.level_arr[4][i].transform = mult(translation(this.level_arr[4][i][0], this.level_arr[4][i][1], this.level_arr[4][i][2]), this.level_arr[4][i].transform);
+  for (var i = 0; i < this.level_arr[4].length; i++) {
+    for (var j = i+1; j < this.level_arr[4].length; j++) {
+      if (do_balls_collide(this.level_arr[4][i], this.level_arr[4][j])) {
+        this.level_arr[4][i].velocity[0] *= -1
+        this.level_arr[4][i].velocity[1] *= -1
+        this.level_arr[4][j].velocity[0] *= -1
+        this.level_arr[4][j].velocity[1] *= -1
+        //console.log(this.level_arr[4][i].center_pos, this.level_arr[4][j].center_pos);
+      }
+    }
+  }
+  for (var i = 0; i < this.level_arr[4].length; i++) {
+    collide_with_wall(this.level_arr[4][i], false)
+    this.level_arr[4][i].center_pos = add(this.level_arr[4][i].center_pos, vec3(this.level_arr[4][i].velocity[0], this.level_arr[4][i].velocity[1], this.level_arr[4][i].velocity[2]));
+    this.level_arr[4][i].transform = mult(translation(this.level_arr[4][i].velocity[0], this.level_arr[4][i].velocity[1], this.level_arr[4][i].velocity[2]), this.level_arr[4][i].transform);
   }
 }
+
 };

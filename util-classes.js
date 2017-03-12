@@ -25,6 +25,7 @@ class Moving_Ball {
         this.radius = radius;
         // ball's initial velocity; this is a vec3
         this.velocity = velocity;
+        this.hp = 10
 
 		this.init_transform();
     }
@@ -104,20 +105,21 @@ class Moving_Ball {
     }
 }
 
-function collide_with_wall(ball) {
+function collide_with_wall(ball, isDoge) {
     //define wall boundaries
     var left_edge = -56
     var right_edge = 48
     var front_edge = -56
     var back_edge = 48
     var top_edge = 32
+    var bottom_edge = FLOOR_Y_POS
     //define ball attributes
     var radius = ball.radius
     var center = ball.center_pos
     var front_point = center[2] - radius
     var back_point = center[2] + radius
     var upper_point = center[1] + radius
-    //var lower_point = center[1] - radius
+    var lower_point = center[1] - radius
     var left_point = center[0] - radius
     var right_point = center[0] + radius
     //check if hitting boundaries
@@ -143,6 +145,12 @@ function collide_with_wall(ball) {
     }
     if (upper_point >= top_edge) {
       ball.center_pos[1] = BOUNDARY_TOP - ball.radius
+      ball.velocity[1] *= -1
+      return true
+    }
+    if (!isDoge && lower_point <= bottom_edge) {
+      console.log(lower_point)
+      ball.center_pos[1] = FLOOR_Y_POS + ball.radius
       ball.velocity[1] *= -1
       return true
     }

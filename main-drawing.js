@@ -241,12 +241,21 @@ const SCREEN_ID = {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
+                    if (this.current_level_num == 4) {
+                      this.current_level_arr[i].hp--
+                      if (this.current_level_arr[i].hp == 0) {
+                        this.current_level_arr.splice(i, i)
+                      }
+                    }
+
+                    else {
                       this.audio.meow = new Audio("meow.mp3");
                       this.audio.meow.play();
                       this.current_level_arr.splice(i, 1);
+                    }
                   }
               }
-              var wall_collision = collide_with_wall(this.doge)
+              var wall_collision = collide_with_wall(this.doge, true)
               if (wall_collision != false) {
                 // Play boink audio if doge collides with wall
                 this.audio.boink = new Audio("boink.mp3");
