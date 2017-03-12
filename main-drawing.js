@@ -396,7 +396,11 @@ const SCREEN_ID = {
 
               if (this.current_level_num == 4) {
                 document.getElementById('top-right-text').style.visibility = 'visible'
-                var hp_str = String(this.current_level_arr[0].hp + this.current_level_arr[1].hp)
+                var hp_str = 0
+                for (var i = 0; i < this.current_level_arr.length; i++) {
+                  hp_str += this.current_level_arr[i].hp
+                }
+                hp_str = String(hp_str)
                 hp_str += ' hp remaining'
                 document.getElementById('top-right-text').innerText = hp_str
               }
