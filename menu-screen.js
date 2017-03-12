@@ -39,7 +39,7 @@
                           return;
                       }
                       e = e || window.event;
-                      self.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
+                      self.graphics_state.current_state = ANIMATION_STATE.INTRO_ANIM;
                       document.getElementById('start-screen').style.visibility = 'hidden';
                       self.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
                       console.log('mouseup');

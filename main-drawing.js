@@ -8,7 +8,8 @@ const BOUNDARY_TOP = 32;
 // constants to state whether we're playing or in a menu
 const ANIMATION_STATE = {
     IN_GAME: 1,
-    MENU_SCREEN: 2
+    MENU_SCREEN: 2,
+    INTRO_ANIM: 3
 };
 
 const SCREEN_ID = {
@@ -46,6 +47,7 @@ const SCREEN_ID = {
               // for now, start in game
               this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
               this.graphics_state.current_screen_id = SCREEN_ID.START;
+              this.is_in_intro_anim = false;
 
               this.DEF_RAD = 2.5;
               //doge
@@ -372,6 +374,9 @@ const SCREEN_ID = {
               document.getElementById('top-left-text').innerText = attempts_str;
           },
           'display': function(time) {
+              if (this.graphics_state.current_state == ANIMATION_STATE.INTRO_ANIM) {
+                  this.intro_animation();
+              }
               // don't draw if we're not in game
               if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                   return;
