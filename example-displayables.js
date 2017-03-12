@@ -80,13 +80,16 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
             origin: vec3(0, 5, 0),
             looking: false
         });
+        //this.graphics_state.camera_transform = mult(this.graphics_state.camera_transform, rotation(10, 1, 0, 0));
+        //this.graphics_state.camera_transform =
+        //mult(this.graphics_state.camera_transform, translation(0, -10, -10));
         PERSPECTIVE_TRANSFORM = this.graphics_state.camera_transform;
 
         // *** Mouse controls: ***
         this.mouse = {
             "from_center": vec2()
         };
-        var mouse_position = function(e) {
+/*        var mouse_position = function(e) {
             return vec2(e.clientX - canvas.width / 2, e.clientY - canvas.height / 2);
         };
         // Measure mouse steering, for rotating the flyaround camera.
@@ -115,7 +118,7 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
             ;
         })(this), false);
         // Stop steering if the mouse leaves the canvas.
-    },
+*/    },
     'init_keys': function(controls) // init_keys():  Define any extra keyboard shortcuts here
     {
         controls.add("up", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 1, 0, 0), this.graphics_state.camera_transform); });

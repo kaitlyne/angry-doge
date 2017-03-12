@@ -1,5 +1,7 @@
 // y position for the floor (constant)
 const FLOOR_Y_POS = -8;
+// y position for the ceiling (constant)
+const CEILING_Y_POS = 32;
 // if a velocity is below this constant, force the velocity to be 0
 const ZERO_VELOCITY_THRESHOLD = 0.05;
 

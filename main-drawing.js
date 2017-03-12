@@ -245,6 +245,7 @@ const SCREEN_ID = {
               var wall_collision = collide_with_wall(this.doge)
               if (wall_collision != 0) {
                 // Play boink audio if doge collides with wall
+                this.audio.boink = new Audio("boink.mp3");
                 this.audio.boink.play();
               }
               switch(wall_collision) {
@@ -329,11 +330,18 @@ const SCREEN_ID = {
 				  }
 			  }
 		  },
-          'draw_floor': function() {
+          'draw_floor': function(floor_or_ceiling) {
               var floor_transform = mat4();
               const floor_scale_factor = 8;
-              var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
-              floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS, 0));
+              var y_diff = 0;
+              if (floor_or_ceiling == "floor") {
+                  var floor_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 40, "floor.jpg");
+              }
+              else {
+                  var floor_material = new Material(Color(0, 0, 0, 1), .8, 0, 0, 40, "ceiling.jpg");
+                  y_diff = CEILING_Y_POS - FLOOR_Y_POS;
+              }
+              floor_transform = mult(floor_transform, translation(0, FLOOR_Y_POS + y_diff, 0));
               floor_transform = mult(floor_transform, scale(floor_scale_factor,
                           floor_scale_factor, floor_scale_factor));
               floor_transform = mult(floor_transform, rotation(90, 1, 0, 0));
@@ -353,7 +361,8 @@ const SCREEN_ID = {
               }
           },
           'draw_all_shapes': function() {
-                 this.draw_floor();
+                 this.draw_floor("floor");
+                 this.draw_floor("ceiling");
 			           this.draw_walls();
                  this.draw_falling_objects();
                  this.check_collision_detection();
