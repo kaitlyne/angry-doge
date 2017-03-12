@@ -57,7 +57,10 @@ index.html - The web page document containing the canvas (drawing surface), that
 </head><body>
 <canvas id="gl-canvas" width="960" height="640"></canvas>
 <div id="canvas-overlay">
-    <div id="top-text"></div>
+    <div id="top-text">
+      <div id="top-left-text"></div>
+      <div id="top-right-text"></div>
+    </div>
     <div id="bot-text">
         <div id="bot-left"></div>
         <div id="bot-right"></div>
@@ -76,25 +79,42 @@ index.html - The web page document containing the canvas (drawing surface), that
     visibility: hidden;
 }
 #top-text {
-    color: red;
     position: relative;
-    left: 50%;
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 85%;
+}
+#top-left-text {
+    float: left;
     width: 50%;
-    top: 40px;
+    color: white;
+}
+#top-right-text {
+    float: left;
+    width: 50%;
+    color: red;
 }
 #bot-text {
-    top: 490px;
-    left: 20px;
+    /*top: 500px;*/
+    padding: 0px 20px;
     position: relative;
     color: white;
+    cursor: pointer;
 }
 #bot-left {
     width: 50%;
     float: left;
 }
+#bot-left:hover {
+    background-color: green;
+}
 #bot-right {
-    left: 50%;
-    position: relative;
+    width: 50%;
+    float: left;
+}
+#bot-right:hover {
+    background-color: green;
 }
 </body>
 </html>

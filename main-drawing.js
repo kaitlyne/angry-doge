@@ -356,13 +356,18 @@ const SCREEN_ID = {
                   }
               }
           },
-          'draw_all_shapes': function(model_transform) {
+          'draw_all_shapes': function() {
                  this.draw_floor();
 			           this.draw_walls();
                  this.draw_falling_objects();
                  this.check_collision_detection();
                  this.check_level_state();
                  return;
+          },
+          'draw_text': function() {
+              document.getElementById('top-left-text').style.visibility = 'visible';
+              document.getElementById('top-left-text').innerText =
+                  this.level_attempts[this.current_level_num] + ' attempts remaining';
           },
           'display': function(time) {
               // don't draw if we're not in game
@@ -372,13 +377,16 @@ const SCREEN_ID = {
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 
+              
               for (var i = 0; i < 1; i++) {
                   this.graphics_state.lights = [new Light(vec4(3, 3, 3, 1), Color(1, 0, 0, 1), 100000000),
                       new Light(vec4(3, 3,7, 1), Color(0, 1, 0, 1), 100000000)
                   ];
 
-                  this.draw_all_shapes(model_transform); // *** How to call a function and still have a single matrix state ***
+                  //this.draw_all_shapes(); // *** How to call a function and still have a single matrix state ***
                   //model_transform = mult(model_transform, rotation(360 / 13, 0, 0, 1));
               }
+              this.draw_all_shapes();
+              this.draw_text();
           }
       }, Animation);
