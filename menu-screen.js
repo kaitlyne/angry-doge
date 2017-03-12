@@ -33,12 +33,21 @@
                   }
               })(this), false);
 
-          },
-          'draw_all_shapes': function(model_transform) {
-              var i = 0,
-                  t = this.graphics_state.animation_time / 1000,
-                  textures = Object.keys(textures_in_use);
+              document.getElementById('start-game').addEventListener("mouseup", (function(self) {
+                  return function(e) {
+                      if (self.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
+                          return;
+                      }
+                      e = e || window.event;
+                      self.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
+                      document.getElementById('start-screen').style.visibility = 'hidden';
+                      self.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
+                      console.log('mouseup');
+                  }
+              })(this), false);
 
+          },
+          'draw_win_lose_screen': function(model_transform) {
               var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "doge-sunglasses.jpg");
               var lose_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott.jpg");
               var pic_transf = mat4();
@@ -63,6 +72,9 @@
                 document.getElementById('bot-right').innerText = "Click for main menu";
               }
           },
+          'draw_start_screen': function() {
+              document.getElementById('start-screen').style.visibility = 'visible';
+          },
           'display': function(time) {
               // don't draw if we're not in menu
               if (this.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
@@ -80,7 +92,14 @@
                       new Light(vec4(i % 6 - 3, i % 5 - 3, i % 7 - 3, 1), Color(0, 1, 0, 1), 100000000)
                   ];
 
-                  this.draw_all_shapes();
+                  if (this.graphics_state.current_screen_id == SCREEN_ID.WIN ||
+                      this.graphics_state.current_screen_id == SCREEN_ID.LOSE) {
+                      this.draw_win_lose_screen();
+                  }
+                  else if (this.graphics_state.current_screen_id == SCREEN_ID.START) {
+                      this.draw_start_screen();
+                      //console.log('start');
+                  }
               }
           }
       }, Animation);

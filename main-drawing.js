@@ -12,7 +12,8 @@ const ANIMATION_STATE = {
 
 const SCREEN_ID = {
   WIN: 0,
-  LOSE: 1
+  LOSE: 1,
+  START: 2
 }
 
   Declare_Any_Class("Main_Drawing", // An example of a displayable object that our class Canvas_Manager can manage.  This one draws the scene's 3D shapes.
@@ -42,8 +43,8 @@ const SCREEN_ID = {
 
               // initialized a shared variable which indicates current state
               // for now, start in game
-              this.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
-              this.graphics_state.current_screen_id = SCREEN_ID.WIN;
+              this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
+              this.graphics_state.current_screen_id = SCREEN_ID.START;
 
               this.DEF_RAD = 2.5;
               //doge

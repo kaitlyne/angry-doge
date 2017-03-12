@@ -56,18 +56,24 @@ index.html - The web page document containing the canvas (drawing surface), that
 </script>
 </head><body>
 <canvas id="gl-canvas" width="960" height="640"></canvas>
-<div id="canvas-overlay">
+<div class="canvas-overlay">
     <div id="top-text">
       <div id="top-left-text"></div>
       <div id="top-right-text"></div>
     </div>
     <div id="bot-text">
-        <div id="bot-left"></div>
-        <div id="bot-right"></div>
+        <div id="bot-left" class="clickable"></div>
+        <div id="bot-right" class="clickable"></div>
+    </div>
+</div>
+<div class="canvas-overlay">
+    <div id="start-screen" class="centered">
+        <h1 style="color:yellow;">ANGRY DOGE</h1>
+        <span id="start-game" class="clickable">Wow play game</span><br/>
     </div>
 </div>
 <style>
-#canvas-overlay {
+.canvas-overlay {
     width: 960px;
     height: 640px;
     font-size: 2em;
@@ -77,6 +83,11 @@ index.html - The web page document containing the canvas (drawing surface), that
     left: 8px;
     top: 8px;
     visibility: hidden;
+    color: white;
+}
+.centered {
+    text-align: center;
+    top: 20%;
 }
 #top-text {
     position: relative;
@@ -100,21 +111,18 @@ index.html - The web page document containing the canvas (drawing surface), that
     padding: 0px 20px;
     position: relative;
     color: white;
-    cursor: pointer;
 }
 #bot-left {
     width: 50%;
     float: left;
 }
-#bot-left:hover {
-    background-color: green;
-}
 #bot-right {
     width: 50%;
     float: left;
 }
-#bot-right:hover {
+.clickable:hover {
     background-color: green;
+    cursor: pointer;
 }
 </body>
 </html>
