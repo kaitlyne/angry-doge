@@ -383,6 +383,25 @@ const SCREEN_ID = {
 					  shapes_in_use["strip"].draw(this.graphics_state, final_transf, indoorwall_material);
 				  }
 			  }
+
+        var pic_transf = mat4();
+      	pic_transf = mult(pic_transf, translation(-24, 15, BOUNDARY_FRONT + 1));
+      	pic_transf = mult(pic_transf, scale(6, -8, 2));
+      	var paint_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "mona_lisa.jpg");
+      	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, paint_material);
+
+        pic_transf = mat4();
+        pic_transf = mult(pic_transf, translation(24, 15, BOUNDARY_FRONT + 1));
+      	pic_transf = mult(pic_transf, scale(8, -6, 2));
+      	paint_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "starry-night.jpg");
+      	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, paint_material);
+
+        pic_transf = mat4();
+        pic_transf = mult(pic_transf, translation(0, 15, BOUNDARY_FRONT + 1));
+      	pic_transf = mult(pic_transf, scale(6, -6, 2));
+      	paint_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "intro.jpg");
+      	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, paint_material);
+
 		  },
           'draw_floor': function(floor_or_ceiling) {
               // Takes parameters "floor" or "ceiling" to determine which one to draw
