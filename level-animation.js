@@ -137,7 +137,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	//	this.init_center[1], this.init_center[2]);
 	this.doge.init_transform();
 	this.doge.transform = mult(translation(0, 0, 300 - 30 * time_diff / 1000), this.doge.transform);
-	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 5000, 0, 0, 1));
+	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 10000, 0, 0, 1));
 	shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
   this.draw_path();
   // Open the doors
