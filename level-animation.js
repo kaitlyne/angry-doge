@@ -7,10 +7,22 @@ window.Main_Drawing.prototype.init_animation = function() {
 	this.is_in_intro_anim = true;
 	this.animation_start_time = this.graphics_state.animation_time;
 	this.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
+	document.getElementById('top-right-text').style.visibility = 'hidden';
 	//this.doge.transform = mult(translation(0, 0, -300), this.doge.transform);
 	//this.graphics_state.camera_transform = mult(this.graphics_state.camera_transform,
 	//	translation(0, 0, -75));
 };
+
+window.Main_Drawing.prototype.draw_scott = function() {
+	var pic_transf = mat4();
+	// flip picture so it's upright
+	pic_transf = mult(pic_transf, translation(-0.8, 0, 0));
+	pic_transf = mult(pic_transf, scale(0.4, -0.4, 0.4));
+	var intro_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott3.jpg");
+	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, intro_material);
+	document.getElementById('top-right-text').style.visibility = 'visible';
+	document.getElementById('top-right-text').innerText = "These cats invaded my house and used lookat()! Get rid of them!!!";
+}
 
 window.Main_Drawing.prototype.draw_path = function() {
   // Draw the grass
@@ -61,7 +73,7 @@ window.Main_Drawing.prototype.draw_lawns = function() {
 window.Main_Drawing.prototype.draw_roof = function() {
 	var roof_material = new Material(Color(0, 0, 0, 1), 0.8, 0.5, 0, 0, "roof.jpg");
 	var roof_transf = mat4();
-	roof_transf = mult(roof_transf, translation((BOUNDARY_RIGHT + BOUNDARY_LEFT) / 2, 
+	roof_transf = mult(roof_transf, translation((BOUNDARY_RIGHT + BOUNDARY_LEFT) / 2,
 		BOUNDARY_TOP + 0.01, (BOUNDARY_BACK + BOUNDARY_FRONT) / 2));
 	roof_transf = mult(roof_transf, scale(BOUNDARY_RIGHT - BOUNDARY_LEFT,
 		50, BOUNDARY_BACK - BOUNDARY_FRONT));
@@ -103,6 +115,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.doge.transform = mult(translation(0, 0, 300 - 30 * time_diff / 1000), this.doge.transform);
 	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 5000, 0, 0, 1));
 	shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
+	this.draw_scott();
   this.draw_path();
 	this.draw_walls();
 	this.draw_floor("floor");
@@ -111,4 +124,3 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.draw_lawns();
 	this.draw_roof();
 };
-

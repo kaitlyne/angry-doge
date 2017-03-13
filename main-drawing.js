@@ -77,7 +77,7 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 0;
+              this.current_level_num = 3;
               // take a reference to the level array
               this.current_level_arr = this.level_arr[this.current_level_num];
               this.audio = {
@@ -318,13 +318,13 @@ const SCREEN_ID = {
           },
 		  'draw_walls': function() {
 			  var wall_transform = mat4();
-			  
+
 			  var indoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "indoorwall.jpg");
         var outdoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
 			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, BOUNDARY_FRONT));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
-			  
+
 			  // Draw the back wall
 			  for (var i = 0; i < num_wall_blocks.x; i++) {
 				  for (var j = 0; j < num_wall_blocks.y; j++) {
