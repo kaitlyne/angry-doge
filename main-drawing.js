@@ -329,6 +329,7 @@ const SCREEN_ID = {
 
 			  var indoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "indoorwall.jpg");
         var outdoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "wall.jpg");
+        var door_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "door.jpg");
 			  wall_transform = mult(wall_transform, translation(0, FLOOR_Y_POS, BOUNDARY_FRONT));
 			  wall_transform = mult(wall_transform, scale(wall_scale_factor, wall_scale_factor, wall_scale_factor));
 			  // Number of blocks to draw in x,y,z directions
@@ -344,10 +345,24 @@ const SCREEN_ID = {
         // Draw the front wall
         for (var i = 0; i < num_wall_blocks.x; i++) {
           for (var j = 0; j < num_wall_blocks.y; j++) {
+            // Draw wall blocks everywhere except the door hole
             if (!((j == 0) && (i == (num_wall_blocks.x - 1) / 2))) {
               var translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
               var final_transf = mult(translate_transf, wall_transform);
               shapes_in_use["strip"].draw(this.graphics_state, final_transf, outdoorwall_material);
+            }
+            // Draw doors at the door hole
+            else {
+              // Left door
+              var translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor - wall_scale_factor/2, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
+              var final_transf = mult(translate_transf, wall_transform);
+              final_transf = mult(final_transf, scale(0.5, -1, 1));
+              shapes_in_use["strip"].draw(this.graphics_state, final_transf, door_material);
+              // Right door
+              translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor + wall_scale_factor/2, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
+              final_transf = mult(translate_transf, wall_transform);
+              final_transf = mult(final_transf, scale(-0.5, -1, 1));
+              shapes_in_use["strip"].draw(this.graphics_state, final_transf, door_material);
             }
           }
         }
