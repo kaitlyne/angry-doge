@@ -140,7 +140,14 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 5000, 0, 0, 1));
 	shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
   this.draw_path();
-	this.draw_walls();
+  // Open the doors
+  var left_door_rotation = 0;
+  var right_door_rotation = 0;
+  if (time_diff > 5000) {
+    left_door_rotation = (time_diff - 5000) / 5000 * 90;
+    right_door_rotation = -left_door_rotation;
+  }
+	this.draw_walls(left_door_rotation, right_door_rotation);
 	this.draw_floor("floor");
 	this.draw_floor("ceiling");
 	this.draw_enemies();

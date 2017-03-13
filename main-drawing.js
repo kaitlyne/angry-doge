@@ -87,6 +87,9 @@ const SCREEN_ID = {
                   ow: new Audio("ow.mp3")
               };
 
+              this.left_door_transform = mat4();
+              this.right_door_transform = mat4();
+
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
           },
 		  'init_keys': function (controls) {
@@ -324,7 +327,7 @@ const SCREEN_ID = {
 				  this.reset_doge(false);
               }
           },
-		  'draw_walls': function() {
+		  'draw_walls': function(left_door_rotation=0, right_door_rotation=0) {
 			  var wall_transform = mat4();
 
 			  var indoorwall_material = new Material(Color(0, 0, 0, 1), .8, .5, 0, 0, "indoorwall.jpg");
@@ -355,14 +358,20 @@ const SCREEN_ID = {
             else {
               // Left door
               var translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor - wall_scale_factor/2, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
-              var final_transf = mult(translate_transf, wall_transform);
-              final_transf = mult(final_transf, scale(0.5, -1, 1));
-              shapes_in_use["strip"].draw(this.graphics_state, final_transf, door_material);
+              var left_door_transform = mult(translate_transf, wall_transform);
+              left_door_transform = mult(left_door_transform, translation(-0.5, 0, 0));
+              left_door_transform = mult(left_door_transform, rotation(left_door_rotation, 0, 1, 0));
+              left_door_transform = mult(left_door_transform, translation(0.5, 0, 0));
+              left_door_transform = mult(left_door_transform, scale(0.5, -1, 1));
+              shapes_in_use["strip"].draw(this.graphics_state, left_door_transform, door_material);
               // Right door
               translate_transf = translation((i - (num_wall_blocks.x-1)/2)*2*wall_scale_factor + wall_scale_factor/2, (j *2 + 1)*wall_scale_factor, BOUNDARY_BACK - BOUNDARY_FRONT);
-              final_transf = mult(translate_transf, wall_transform);
-              final_transf = mult(final_transf, scale(-0.5, -1, 1));
-              shapes_in_use["strip"].draw(this.graphics_state, final_transf, door_material);
+              var right_door_transform = mult(translate_transf, wall_transform);
+              right_door_transform = mult(right_door_transform, translation(0.5, 0, 0));
+              right_door_transform = mult(right_door_transform, rotation(right_door_rotation, 0, 1, 0));
+              right_door_transform = mult(right_door_transform, translation(-0.5, 0, 0));
+              right_door_transform = mult(right_door_transform, scale(-0.5, -1, 1));
+              shapes_in_use["strip"].draw(this.graphics_state, right_door_transform, door_material);
             }
           }
         }
