@@ -35,6 +35,7 @@ index.html - The web page document containing the canvas (drawing surface), that
       texture_filenames_to_load.push( "finalboss.jpg" );
       texture_filenames_to_load.push( "finalboss_square.jpg" );
       texture_filenames_to_load.push( "scott.jpg" );
+      texture_filenames_to_load.push( "scott2.jpg" );
       texture_filenames_to_load.push( "scott3.jpg" );
       texture_filenames_to_load.push( "mona_lisa.jpg" );
       texture_filenames_to_load.push( "starry-night.jpg" );
@@ -49,6 +50,7 @@ index.html - The web page document containing the canvas (drawing surface), that
       texture_filenames_to_load.push( "treetrunk.jpg" );
       texture_filenames_to_load.push( "treeleaves.jpg" );
       texture_filenames_to_load.push( "door.jpg" );
+      texture_filenames_to_load.push( "sky.jpg" );
       for( var i = 0; i < texture_filenames_to_load.length; i++ ) textures_in_use[ texture_filenames_to_load[i] ] = ( new Texture( texture_filenames_to_load[i], true ) );
 
       main_canvas.register_display_object( new Example_Camera   ( main_canvas ) );  // draw / keyboard / mouse event happens.
@@ -80,7 +82,7 @@ index.html - The web page document containing the canvas (drawing surface), that
     <div id="start-screen" class="centered">
         <h1 style="color:yellow;">ANGRY DOGE</h1>
         <span id="start-game" class="clickable">Wow play game</span><br/>
-        <img src="scott2.jpg" height="400" width="400">
+        <!--<img src="scott2.jpg" height="400" width="400">-->
     </div>
 </div>
 <style>

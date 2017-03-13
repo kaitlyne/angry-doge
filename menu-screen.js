@@ -106,6 +106,12 @@
           },
           'draw_start_screen': function() {
               document.getElementById('start-screen').style.visibility = 'visible';
+              var start_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott2.jpg");
+              var pic_transf = mat4();
+              // flip picture so it's upright
+              pic_transf = mult(pic_transf, translation(0, -0.4, 0));
+              pic_transf = mult(pic_transf, scale(0.6, -0.6, 1));
+              shapes_in_use['strip'].draw(this.graphics_state, pic_transf, start_material);
           },
           'display': function(time) {
               // don't draw if we're not in menu

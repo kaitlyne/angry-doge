@@ -18,15 +18,26 @@ window.Main_Drawing.prototype.init_animation = function() {
 window.Main_Drawing.prototype.draw_scott = function() {
 	var pic_transf = mat4();
 	// flip picture so it's upright
-	pic_transf = mult(pic_transf, translation(-5, 0, 110));
-	pic_transf = mult(pic_transf, scale(2, -2, 2));
+	pic_transf = mult(pic_transf, translation(-1.1, 0.6, 0));
+	pic_transf = mult(pic_transf, scale(0.35, -0.35, 1));
+	this.graphics_state.camera_transform = ortho(-2.5, 2.5, -2.5, 2.5, 0, 0.5);
 	var intro_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott3.jpg");
 	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, intro_material);
 	document.getElementById('top-left-text').style.visibility = 'visible';
 	document.getElementById('top-left-text').innerHTML = "&nbsp;"
 	document.getElementById('top-right-text').style.visibility = 'visible';
 	document.getElementById('top-right-text').innerText = "These cats invaded my house and used lookat()! Get rid of them!!!";
-}
+};
+
+window.Main_Drawing.prototype.draw_sky = function() {
+	var pic_transf = mat4();
+	// flip picture so it's upright
+	pic_transf = mult(pic_transf, translation(0, 0, BOUNDARY_FRONT - 4));
+	pic_transf = mult(pic_transf, scale(500, -250, 1));
+	//this.graphics_state.camera_transform = ortho(-2.5, 2.5, -2.5, 2.5, 0, 50.5);
+	var intro_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "sky.jpg");
+	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, intro_material);
+};
 
 window.Main_Drawing.prototype.draw_path = function() {
   // Draw the grass
@@ -117,6 +128,8 @@ window.Main_Drawing.prototype.intro_animation = function() {
     this.doge.center_pos[1], this.doge.center_pos[2] + 300 - 30 * time_diff / 1000, 1), Color(1, 1, 0, 1), 1000000),
     	  new Light(vec4(300, 3,7, 1), Color(1, 1, 0, 1), 1)
   	];
+  	
+
 	this.graphics_state.camera_transform = mult(PERSPECTIVE_TRANSFORM,
 		translation(0, 0, -300 + 30 * time_diff / 1000));
 	//console.log('animate');
@@ -126,7 +139,6 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.doge.transform = mult(translation(0, 0, 300 - 30 * time_diff / 1000), this.doge.transform);
 	this.doge.transform = mult(this.doge.transform, rotation(time_diff * time_diff / 5000, 0, 0, 1));
 	shapes_in_use["good_sphere"].draw(this.graphics_state, this.doge.transform, this.doge.material);
-	this.draw_scott();
   this.draw_path();
 	this.draw_walls();
 	this.draw_floor("floor");
@@ -134,4 +146,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 	this.draw_enemies();
 	this.draw_trees();
 	this.draw_roof();
+	this.draw_sky();
+	// begin orthographic drawing
+	this.draw_scott();
 };

@@ -491,6 +491,7 @@ const SCREEN_ID = {
               }
               this.draw_all_shapes();
               //this.draw_roof();
+              this.draw_sky();
               this.draw_text();
           }
       }, Animation);
