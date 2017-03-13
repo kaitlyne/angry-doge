@@ -59,6 +59,7 @@ const SCREEN_ID = {
               this.theme_song = new Audio("meow.mp3")
               this.theme_song.loop = true
               this.theme_song.play()
+              this.theme_song.volume = 0.25
 
               this.DEF_RAD = 2.5;
               //doge
