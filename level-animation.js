@@ -3,7 +3,7 @@
 // to this new file and main-drawing.js still works just the same when I call these functions!
 // Clearly prototypes = magic. QED.
 window.Main_Drawing.prototype.init_animation = function() {
-	console.log('animate');
+	//console.log('animate');
 	this.is_in_intro_anim = true;
 	this.animation_start_time = this.graphics_state.animation_time;
 	this.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
@@ -12,7 +12,7 @@ window.Main_Drawing.prototype.init_animation = function() {
 	//	translation(0, 0, -75));
 	this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
 	this.initialize_levels();
-	console.log('level', this.graphics_state.current_level_num);
+	//console.log('level', this.graphics_state.current_level_num);
 };
 
 window.Main_Drawing.prototype.draw_scott = function() {
