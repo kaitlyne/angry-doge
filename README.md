@@ -22,4 +22,5 @@ Enter: fire
 
 r: If doge is in flight, reset position. If doge is at initial position, reset angles and magnitude
 
+Our advanced topics are physics and collision detection. For best performance, use Google Chrome to run this program.
 No cats were harmed in the making of this game.
