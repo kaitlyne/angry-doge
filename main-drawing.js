@@ -118,6 +118,10 @@ const SCREEN_ID = {
 				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
 					  this.yaw -= 5;
+            if (this.yaw == -360) {
+              this.yaw = 0;
+            }
+            console.log("yaw", this.yaw);
 				  }
 			  });
 			  controls.add("right", this, function() {
@@ -127,15 +131,20 @@ const SCREEN_ID = {
 				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
-				 }
+            if (this.yaw == 360) {
+              this.yaw = 0;
+            }
+            console.log("yaw", this.yaw);
+				  }
 			  });
 			  controls.add("up", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
 				  // Change angle to fire up
-				  if (this.at_init_pos == true) {
+				  if (this.at_init_pos == true && this.pitch < 90) {
 					  this.pitch += 5;
+            console.log("pitch", this.pitch);
 				  }
 			  });
 			  controls.add("down", this, function() {
@@ -143,8 +152,9 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Change angle to fire down
-				  if (this.at_init_pos == true) {
+				  if (this.at_init_pos == true && this.pitch > 0) {
 					  this.pitch -= 5;
+            console.log("pitch", this.pitch)
 				  }
 			  });
 			  controls.add(",", this, function() {
@@ -152,8 +162,9 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Decrease magnitude
-				  if (this.at_init_pos == true) {
+				  if (this.at_init_pos == true && this.magnitude > 0) {
 					  this.magnitude -= 0.05;
+            console.log("magnitude", this.magnitude);
 				  }
 			  });
 			  controls.add(".", this, function() {
@@ -161,8 +172,9 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Increase magnitude
-				  if (this.at_init_pos == true) {
+				  if (this.at_init_pos == true && this.magnitude < 2) {
 					  this.magnitude += 0.05;
+            console.log("magnitude", this.magnitude);
 				  }
 			  });
 			  controls.add("r", this, function() {
