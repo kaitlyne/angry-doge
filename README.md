@@ -14,9 +14,9 @@ left: tilt left
 
 right: tilt right
 
-,: decrease magnitude
+, (comma): decrease magnitude
 
-.: increase magnitude
+. (period): increase magnitude
 
 Enter: fire
 
