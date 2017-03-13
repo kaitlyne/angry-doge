@@ -80,7 +80,7 @@
                 var texture_filename = "doge-sunglasses.jpg";
                 if (this.graphics_state.current_level_num == 4) {
                   upper_right_text = "I'd pay you, but you used lookat(), so now you must die.";
-                  texture_filename = "finalboss.jpg";
+                  texture_filename = "finalboss_square.jpg";
                 }
                 document.getElementById('bot-left').innerText = "Click for next level";
                 if (this.graphics_state.current_level_num == 5) {
@@ -98,7 +98,7 @@
               }
               else {
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, lose_material);
-                document.getElementById('top-right-text').innerText = 
+                document.getElementById('top-right-text').innerText =
                   "If this were architecture school, you'd be out on day 1!";
                 document.getElementById('bot-left').innerText = "Click to replay";
                 document.getElementById('bot-right').innerText = "Click for main menu";
@@ -115,7 +115,7 @@
               // orthographic projection to show a flat picture; pictures should be at z = 0
               this.graphics_state.camera_transform = ortho(-2.5, 2.5, -2.5, 2.5, 0, 0.5);
               //this.graphics_state.camera_transform = mat4();
-              
+
               var model_transform = mat4();
               shaders_in_use["Default"].activate();
 
