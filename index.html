@@ -8,10 +8,8 @@ index.html - The web page document containing the canvas (drawing surface), that
 <script type="text/javascript" src="example-displayables.js"  ></script>
 <script type="text/javascript" src="example-shapes.js"        ></script>
 <script type="text/javascript" src="example-shaders.js"       ></script>
+<script type="text/javascript" src="subdivision-sphere.js"       ></script>
 <script type="text/javascript" src="surfaces-of-revolution.js"></script>
-<script type="text/javascript" src="subdivision-sphere.js"    ></script>
-<script type="text/javascript" src="surfaces-tester.js"       ></script>
-<script type="text/javascript" src="bee-scene.js"             ></script>
 <script type="text/javascript" src="util-classes.js"             ></script>
 <script type="text/javascript" src="main-drawing.js"             ></script>
 <script type="text/javascript" src="menu-screen.js"             ></script>
@@ -49,8 +47,6 @@ index.html - The web page document containing the canvas (drawing surface), that
       texture_filenames_to_load.push( "treeleaves.jpg" );
       for( var i = 0; i < texture_filenames_to_load.length; i++ ) textures_in_use[ texture_filenames_to_load[i] ] = ( new Texture( texture_filenames_to_load[i], true ) );
 
-      main_canvas.register_display_object( new Debug_Screen     ( main_canvas ) );  // We instantiate some of our custom "Animation" subclasses and register these displayable
-      //main_canvas.register_display_object( new Example_Animation( main_canvas ) );  // objects to their master "Canvas_Manager" object -- which OpenGL calls upon every time a
       main_canvas.register_display_object( new Example_Camera   ( main_canvas ) );  // draw / keyboard / mouse event happens.
       //main_canvas.register_display_object( new Surfaces_Tester  ( main_canvas ) );
       //main_canvas.register_display_object( new Bee_Scene        ( main_canvas ) );

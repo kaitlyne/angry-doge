@@ -1,8 +1,8 @@
 Declare_Any_Class("Subdivision_Sphere", // A subdivision surface ( Wikipedia ) is initially simple, then builds itself into a more and more detailed shape of the same 
-    { // layout.  Each act of subdivision makes it a better approximation of some desired mathematical surface by projecting each new 
-        // point onto that surface's known implicit equation.  For a sphere, we begin with a closed 3-simplex (a tetrahedron).  For 
-        // each face, connect the midpoints of each edge together to make more faces.  Repeat recursively until the desired level of 
-        populate: function(max_subdivisions) // detail is obtained.  Project all new vertices to unit vectors (onto the unit sphere) and group them into triangles by 
+    { // layout.  Each act of subdivision makes it a better approximation of some desired mathematical surface by projecting each new
+        // point onto that surface's known implicit equation.  For a sphere, we begin with a closed 3-simplex (a tetrahedron).  For
+        // each face, connect the midpoints of each edge together to make more faces.  Repeat recursively until the desired level of
+        populate: function(max_subdivisions) // detail is obtained.  Project all new vertices to unit vectors (onto the unit sphere) and group them into triangles by
         { // following the predictable pattern of the recursion.
             this.positions.push([0, 0, -1], [0, .9428, .3333], [-.8165, -.4714, .3333], [.8165, -.4714, .3333]); // Start with this equilateral tetrahedron
 
@@ -22,7 +22,7 @@ Declare_Any_Class("Subdivision_Sphere", // A subdivision surface ( Wikipedia ) i
                     bc = this.positions.push(bc_vert) - 1;
 
                 subdivideTriangle.call(this, a, ab, ac, count - 1); // Recurse on four smaller triangles, and we're done.
-                subdivideTriangle.call(this, ab, b, bc, count - 1); // Skipping every fourth vertex index in our list takes you down one level of detail, and 
+                subdivideTriangle.call(this, ab, b, bc, count - 1); // Skipping every fourth vertex index in our list takes you down one level of detail, and
                 subdivideTriangle.call(this, ac, bc, c, count - 1); // so on, due to the way we're building it.
                 subdivideTriangle.call(this, ab, bc, ac, count - 1);
             }
