@@ -60,70 +60,70 @@ Declare_Any_Class("Example_Camera", // An example of a displayable object that o
 */    },
     'init_keys': function(controls) // init_keys():  Define any extra keyboard shortcuts here
     {
-        controls.add("up", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 1, 0, 0), this.graphics_state.camera_transform); });
-        controls.add("down", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 1, 0, 0), this.graphics_state.camera_transform); });
-        controls.add("left", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 0, 1, 0), this.graphics_state.camera_transform); });
-        controls.add("right", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 0, 1, 0), this.graphics_state.camera_transform); });
-        controls.add("Space", this, function() {
-            this.thrust[1] = -1;
-        });
-        controls.add("Space", this, function() {
-            this.thrust[1] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("z", this, function() {
-            this.thrust[1] = 1;
-        });
-        controls.add("z", this, function() {
-            this.thrust[1] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("w", this, function() {
-            this.thrust[2] = 1;
-        });
-        controls.add("w", this, function() {
-            this.thrust[2] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("a", this, function() {
-            this.thrust[0] = 1;
-        });
-        controls.add("a", this, function() {
-            this.thrust[0] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("s", this, function() {
-            this.thrust[2] = -1;
-        });
-        controls.add("s", this, function() {
-            this.thrust[2] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("d", this, function() {
-            this.thrust[0] = -1;
-        });
-        controls.add("d", this, function() {
-            this.thrust[0] = 0;
-        }, {
-            'type': 'keyup'
-        });
-        controls.add("f", this, function() {
-            this.looking ^= 1;
-        });
-        controls.add(",", this, function() {
-            this.graphics_state.camera_transform = mult(rotation(6, 0, 0, 1), this.graphics_state.camera_transform);
-        });
-        controls.add(".", this, function() {
-            this.graphics_state.camera_transform = mult(rotation(6, 0, 0, -1), this.graphics_state.camera_transform);
-        });
-        controls.add("o", this, function() {
-            this.origin = mult_vec(inverse(this.graphics_state.camera_transform), vec4(0, 0, 0, 1)).slice(0, 3);
-        });
+        // controls.add("up", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 1, 0, 0), this.graphics_state.camera_transform); });
+        // controls.add("down", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 1, 0, 0), this.graphics_state.camera_transform); });
+        // controls.add("left", this, function() { this.graphics_state.camera_transform = mult(rotation(-theta, 0, 1, 0), this.graphics_state.camera_transform); });
+        // controls.add("right", this, function() { this.graphics_state.camera_transform = mult(rotation(theta, 0, 1, 0), this.graphics_state.camera_transform); });
+        // controls.add("Space", this, function() {
+        //     this.thrust[1] = -1;
+        // });
+        // controls.add("Space", this, function() {
+        //     this.thrust[1] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("z", this, function() {
+        //     this.thrust[1] = 1;
+        // });
+        // controls.add("z", this, function() {
+        //     this.thrust[1] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("w", this, function() {
+        //     this.thrust[2] = 1;
+        // });
+        // controls.add("w", this, function() {
+        //     this.thrust[2] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("a", this, function() {
+        //     this.thrust[0] = 1;
+        // });
+        // controls.add("a", this, function() {
+        //     this.thrust[0] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("s", this, function() {
+        //     this.thrust[2] = -1;
+        // });
+        // controls.add("s", this, function() {
+        //     this.thrust[2] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("d", this, function() {
+        //     this.thrust[0] = -1;
+        // });
+        // controls.add("d", this, function() {
+        //     this.thrust[0] = 0;
+        // }, {
+        //     'type': 'keyup'
+        // });
+        // controls.add("f", this, function() {
+        //     this.looking ^= 1;
+        // });
+        // controls.add(",", this, function() {
+        //     this.graphics_state.camera_transform = mult(rotation(6, 0, 0, 1), this.graphics_state.camera_transform);
+        // });
+        // controls.add(".", this, function() {
+        //     this.graphics_state.camera_transform = mult(rotation(6, 0, 0, -1), this.graphics_state.camera_transform);
+        // });
+        // controls.add("o", this, function() {
+        //     this.origin = mult_vec(inverse(this.graphics_state.camera_transform), vec4(0, 0, 0, 1)).slice(0, 3);
+        // });
         /*controls.add("r", this, function() {
             this.graphics_state.camera_transform = mat4();
         });*/

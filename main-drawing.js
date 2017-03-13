@@ -56,6 +56,10 @@ const SCREEN_ID = {
               this.graphics_state.current_screen_id = SCREEN_ID.START;
               this.is_in_intro_anim = false;
 
+              this.theme_song = new Audio("meow.mp3")
+              this.theme_song.loop = true
+              this.theme_song.play()
+
               this.DEF_RAD = 2.5;
               //doge
               //this.doge = new Moving_Ball("dogecoin2x1.jpg", vec3(-5, 2, -5), this.DEF_RAD, vec3(.01, .05, .013));
@@ -106,7 +110,7 @@ const SCREEN_ID = {
 					//console.log(length(this.doge.velocity));
 				  }
 			  });
-			  controls.add("j", this, function() {
+			  controls.add("left", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -115,7 +119,7 @@ const SCREEN_ID = {
 					  this.yaw -= 5;
 				  }
 			  });
-			  controls.add("l", this, function() {
+			  controls.add("right", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -124,7 +128,7 @@ const SCREEN_ID = {
 					  this.yaw += 5;
 				 }
 			  });
-			  controls.add("i", this, function() {
+			  controls.add("up", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -133,7 +137,7 @@ const SCREEN_ID = {
 					  this.pitch += 5;
 				  }
 			  });
-			  controls.add("k", this, function() {
+			  controls.add("down", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -142,7 +146,7 @@ const SCREEN_ID = {
 					  this.pitch -= 5;
 				  }
 			  });
-			  controls.add("o", this, function() {
+			  controls.add(",", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -151,7 +155,7 @@ const SCREEN_ID = {
 					  this.magnitude -= 0.05;
 				  }
 			  });
-			  controls.add("p", this, function() {
+			  controls.add(".", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
@@ -168,14 +172,14 @@ const SCREEN_ID = {
 				  }
 				  this.reset_doge(reset_angles_magnitude);
 			  });
-        controls.add("1", this, function() {
-          // cheat
-          if (this.graphics_state.current_level_num <= 3) {
-            this.graphics_state.current_level_num++;
-            this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
-          }
-          this.reset_doge(true);
-        });
+        // controls.add("1", this, function() {
+        //   // cheat
+        //   if (this.graphics_state.current_level_num <= 3) {
+        //     this.graphics_state.current_level_num++;
+        //     this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+        //   }
+        //   this.reset_doge(true);
+        // });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
             var newx = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
