@@ -44,20 +44,22 @@ window.Main_Drawing.prototype.draw_path = function() {
 };
 
 window.Main_Drawing.prototype.draw_lawns = function() {
-	var brown_material = new Material(Color(165/255, 42/255, 42/255, 1), 0.5, 0.5, 0.6, 80);
-	var green_material = new Material(Color(0, 1, 0, 1), 0.5, 0.5, 0.6, 80);
-	var tree_transf = mat4();
-	tree_transf = mult(tree_transf, translation(-20, FLOOR_Y_POS, 110));
-	tree_transf = mult(tree_transf, scale(3, 9, 3));
-	tree_transf = mult(tree_transf, rotation(-90, 1, 0, 0));
-	shapes_in_use["capped"].draw(this.graphics_state, tree_transf, brown_material);
-	tree_transf = mult(translation(0, 22.5, 0), tree_transf);
-	tree_transf = mult(tree_transf, scale(2, 1, 2));
-	shapes_in_use["cone"].draw(this.graphics_state, tree_transf, green_material);
+	var brown_material = new Material(Color(0, 0, 0, 1), 0.5, 0.7, 0.3, 80, "treetrunk.jpg"); // brown = 165, 42, 42
+	var green_material = new Material(Color(0, 0, 0, 1), 0.5, 0.7, 0.3, 80, "treeleaves.jpg");
+	var trunk_transf = mat4();
+  var leaves_transf = mat4();
+  // Tree 1
+	trunk_transf = mult(trunk_transf, translation(-20, FLOOR_Y_POS, 110));
+	trunk_transf = mult(trunk_transf, scale(3, 9, 3));
+	trunk_transf = mult(trunk_transf, rotation(-90, 1, 0, 0));
+	shapes_in_use["capped"].draw(this.graphics_state, trunk_transf, brown_material);
+	leaves_transf = mult(translation(0, 22.5, 0), trunk_transf);
+	leaves_transf = mult(leaves_transf, scale(2, 1, 2));
+	shapes_in_use["cone"].draw(this.graphics_state, leaves_transf, green_material);
 };
 
 window.Main_Drawing.prototype.draw_roof = function() {
-	var roof_material = new Material(Color(0, 0, 0, 1), 0.8, 0.5, 0, 0, "wall.jpg");
+	var roof_material = new Material(Color(0, 0, 0, 1), 0.8, 0.5, 0, 0, "roof.jpg");
 	var roof_transf = mat4();
 	roof_transf = mult(roof_transf, translation((BOUNDARY_RIGHT + BOUNDARY_LEFT) / 2, 
 		BOUNDARY_TOP + 0.01, (BOUNDARY_BACK + BOUNDARY_FRONT) / 2));

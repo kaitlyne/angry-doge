@@ -83,7 +83,8 @@ const SCREEN_ID = {
               this.audio = {
                   launch: new Audio("launch.mp3"),
                   meow: new Audio("meow.mp3"),
-                  boink: new Audio("boink.mp3")
+                  boink: new Audio("boink.mp3"),
+                  ow: new Audio("ow.mp3")
               };
 
               Object.assign(shapes_in_use, this.newest_shapes); // This appends newest_shapes onto shapes_in_use
@@ -263,10 +264,12 @@ const SCREEN_ID = {
                     if (this.current_level_num == 4) {
                       if (this.current_level_arr[i].already_collided == false) {
                         //insert audio here
-                        this.current_level_arr[i].hp--
-                        this.current_level_arr[i].already_collided = true
+                        this.audio.ow = new Audio("ow.mp3");
+                        this.audio.ow.play();
+                        this.current_level_arr[i].hp--;
+                        this.current_level_arr[i].already_collided = true;
                         if (this.current_level_arr[i].hp == 0) {
-                          this.current_level_arr.splice(i, 1)
+                          this.current_level_arr.splice(i, 1);
                         }
                       }
                     }

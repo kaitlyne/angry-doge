@@ -20,7 +20,8 @@ index.html - The web page document containing the canvas (drawing surface), that
 <script type="text/javascript"> "use strict"
   window.onload = function init()           // ********************* OUR WHOLE PROGRAM'S ENTRY POINT *********************
     {
-      var main_canvas = new Canvas_Manager( "gl-canvas", Color( 0, 0, 0, 1 ) ),    // Make the master canvas manager.  Set your background color here too.
+      // Make the master canvas manager. Set your background color here too.
+      var main_canvas = new Canvas_Manager( "gl-canvas", Color( 0, 0, 0, 1 ) ),
           g_state = main_canvas.shared_scratchpad.graphics_state;
 
       shaders_in_use[ "Default"     ] = new Phong_or_Gouraud_Shader( g_state );    // Put all our shader programs in the GPU.
@@ -42,6 +43,9 @@ index.html - The web page document containing the canvas (drawing surface), that
       texture_filenames_to_load.push( "indoorwall.jpg" );
       texture_filenames_to_load.push( "path.jpg" );
       texture_filenames_to_load.push( "grass.jpg" );
+      texture_filenames_to_load.push( "roof.jpg" );
+      texture_filenames_to_load.push( "treetrunk.jpg" );
+      texture_filenames_to_load.push( "treeleaves.jpg" );
       for( var i = 0; i < texture_filenames_to_load.length; i++ ) textures_in_use[ texture_filenames_to_load[i] ] = ( new Texture( texture_filenames_to_load[i], true ) );
 
       main_canvas.register_display_object( new Debug_Screen     ( main_canvas ) );  // We instantiate some of our custom "Animation" subclasses and register these displayable
