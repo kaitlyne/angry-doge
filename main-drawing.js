@@ -77,9 +77,9 @@ const SCREEN_ID = {
               this.last_animation_time = 0;
 
               // start the level at first level, which has index 0 in this.level_arr
-              this.current_level_num = 3;
+              this.graphics_state.current_level_num = 0;
               // take a reference to the level array
-              this.current_level_arr = this.level_arr[this.current_level_num];
+              this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
               this.audio = {
                   launch: new Audio("launch.mp3"),
                   meow: new Audio("meow.mp3"),
@@ -165,6 +165,14 @@ const SCREEN_ID = {
 				  }
 				  this.reset_doge(reset_angles_magnitude);
 			  });
+        controls.add("1", this, function() {
+          // cheat
+          if (this.graphics_state.current_level_num <= 3) {
+            this.graphics_state.current_level_num++;
+            this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+          }
+          this.reset_doge(true);
+        });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
             var newx = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
@@ -182,14 +190,14 @@ const SCREEN_ID = {
           // check if player lost
           if (this.current_level_arr.length != 0) {
             // decrement # attempts
-            this.level_attempts[this.current_level_num]--;
-            console.log("number of attempts left: " + this.level_attempts[this.current_level_num])
+            this.level_attempts[this.graphics_state.current_level_num]--;
+            console.log("number of attempts left: " + this.level_attempts[this.graphics_state.current_level_num])
             // if no attempts, show losing screen and restart level
-            if (this.level_attempts[this.current_level_num] == 0) {
+            if (this.level_attempts[this.graphics_state.current_level_num] == 0) {
               this.graphics_state.current_screen_id = SCREEN_ID.LOSE;
               this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
               this.initialize_levels();
-              this.current_level_arr = this.level_arr[this.current_level_num];
+              this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
             }
           }
 			  }
@@ -235,7 +243,7 @@ const SCREEN_ID = {
                               this.doge_flight_tracking_ball.transform, this.doge_flight_tracking_ball.material);
                   }
               }
-              switch(this.current_level_num) {
+              switch(this.graphics_state.current_level_num) {
                   case 2:
                     this.animate_level3();
                     break;
@@ -261,7 +269,7 @@ const SCREEN_ID = {
                   shapes_in_use["good_sphere"].draw(this.graphics_state,
                           ball.transform, ball.material);
                   if (do_balls_collide(this.doge, ball)) {
-                    if (this.current_level_num == 4) {
+                    if (this.graphics_state.current_level_num == 4) {
                       if (this.current_level_arr[i].already_collided == false) {
                         //insert audio here
                         this.audio.ow = new Audio("ow.mp3");
@@ -282,7 +290,7 @@ const SCREEN_ID = {
                 }
 
                   else {
-                    if (this.current_level_num == 4) {
+                    if (this.graphics_state.current_level_num == 4) {
                       this.current_level_arr[i].already_collided = false
                     }
                   }
@@ -297,16 +305,16 @@ const SCREEN_ID = {
           'check_level_state': function() {
               // wow all enemies gone, we won!
               if (!this.current_level_arr.length) {
-                  if (this.current_level_num < 4 && this.at_init_pos == true) {
-                      this.current_level_num++;
-                      this.current_level_arr = this.level_arr[this.current_level_num];
+                  if (this.graphics_state.current_level_num <= 4 && this.at_init_pos == true) {
+                      this.graphics_state.current_level_num++;
+                      this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
 					            this.reset_doge(true);
                       this.graphics_state.current_screen_id = SCREEN_ID.WIN;
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
-                  else if (this.current_level_num == 4) {
+                  /*else if (this.graphics_state.current_level_num == 4) {
                     console.log("A winner is you");
-                  }
+                  }*/
               }
               // if doge is still, i.e., zero velocity for all components
               // which is the same as if speed squared (dot product) is 0
@@ -404,7 +412,7 @@ const SCREEN_ID = {
           },
           'draw_text': function() {
               document.getElementById('top-left-text').style.visibility = 'visible';
-              var attempts_str = String(this.level_attempts[this.current_level_num]);
+              var attempts_str = String(this.level_attempts[this.graphics_state.current_level_num]);
               if (attempts_str == '1') {
                   attempts_str += ' attempt';
               }
@@ -414,7 +422,7 @@ const SCREEN_ID = {
               attempts_str += ' remaining';
               document.getElementById('top-left-text').innerText = attempts_str;
 
-              if (this.current_level_num == 4) {
+              if (this.graphics_state.current_level_num == 4) {
                 document.getElementById('top-right-text').style.visibility = 'visible'
                 var hp_str = 0
                 for (var i = 0; i < this.current_level_arr.length; i++) {
@@ -422,6 +430,7 @@ const SCREEN_ID = {
                 }
                 hp_str = String(hp_str)
                 hp_str += ' hp remaining'
+                document.getElementById('top-right-text').style.fontSize = '2em';
                 document.getElementById('top-right-text').innerText = hp_str
               }
           },

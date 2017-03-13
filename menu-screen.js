@@ -48,7 +48,6 @@
 
           },
           'draw_win_lose_screen': function(model_transform) {
-              var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "doge-sunglasses.jpg");
               var lose_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott.jpg");
               var pic_transf = mat4();
               // flip picture so it's upright
@@ -58,10 +57,26 @@
               document.getElementById('top-right-text').style.visibility = 'visible';
               document.getElementById('bot-left').style.visibility = 'visible';
               document.getElementById('bot-right').style.visibility = 'visible';
+              document.getElementById('top-right-text').style.fontSize = '2em';
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
-                shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
-                document.getElementById('top-right-text').innerText = "Wow such win!";
+                var upper_right_text = "Wow such win!";
+                var texture_filename = "doge-sunglasses.jpg";
+                if (this.graphics_state.current_level_num == 4) {
+                  upper_right_text = "I'd pay you, but you used lookat(), so now you must die.";
+                  texture_filename = "finalboss.jpg";
+                }
                 document.getElementById('bot-left').innerText = "Click for next level";
+                if (this.graphics_state.current_level_num == 5) {
+                  upper_right_text = "Okay fine, you can use lookat()";
+                  texture_filename = "scott3.jpg";
+                  document.getElementById('bot-left').style.visibility = 'hidden';
+                }
+                else {
+                  document.getElementById('bot-left').style.visibility = 'visible';
+                }
+                var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, texture_filename);
+                shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
+                document.getElementById('top-right-text').innerText = upper_right_text;
                 document.getElementById('bot-right').innerText = "Click for main menu";
               }
               else {
