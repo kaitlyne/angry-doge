@@ -478,7 +478,6 @@ const SCREEN_ID = {
                 }
                 hp_str = String(hp_str)
                 hp_str += ' hp remaining'
-                //document.getElementById('top-right-text').style.fontSize = '2em';
                 document.getElementById('top-right-text').innerText = hp_str
               }
           },
@@ -505,7 +504,7 @@ const SCREEN_ID = {
               }
               this.draw_all_shapes();
               //this.draw_roof();
-              this.draw_sky();
+              //this.draw_sky();
               this.draw_text();
           }
       }, Animation);

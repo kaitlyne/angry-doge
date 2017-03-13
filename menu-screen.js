@@ -74,9 +74,9 @@
               document.getElementById('top-right-text').style.visibility = 'visible';
               document.getElementById('bot-left').style.visibility = 'visible';
               document.getElementById('bot-right').style.visibility = 'visible';
-              //document.getElementById('top-right-text').style.fontSize = '2em';
+              
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
-                var upper_right_text = "Wow such win!";
+                var upper_right_text = "<h1>WOW<br/>SUCH<br/>WIN!</h1>";
                 var texture_filename = "doge-sunglasses.jpg";
                 if (this.graphics_state.current_level_num == 4) {
                   upper_right_text = "I'd pay you, but you used lookat(), so now you must die.";
@@ -93,7 +93,7 @@
                 }
                 var win_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, texture_filename);
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, win_material);
-                document.getElementById('top-right-text').innerText = upper_right_text;
+                document.getElementById('top-right-text').innerHTML = upper_right_text;
                 document.getElementById('bot-right').innerText = "Click for main menu";
               }
               else {
