@@ -20,5 +20,6 @@ right: tilt right
 
 Enter: fire
 
+r: If doge is in flight, reset position. If doge is at initial position, reset angles and magnitude
 
 No cats were harmed in the making of this game.
