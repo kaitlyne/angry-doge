@@ -3,7 +3,8 @@
 // to this new file and main-drawing.js still works just the same when I call these functions!
 // Clearly prototypes = magic. QED.
 window.Main_Drawing.prototype.init_animation = function() {
-	//console.log('animate');
+
+	this.beginning_song.play()
 	this.is_in_intro_anim = true;
 	this.animation_start_time = this.graphics_state.animation_time;
 	this.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
@@ -128,7 +129,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
     this.doge.center_pos[1], this.doge.center_pos[2] + 300 - 30 * time_diff / 1000, 1), Color(1, 1, 0, 1), 1000000),
     	  new Light(vec4(300, 3,7, 1), Color(1, 1, 0, 1), 1)
   	];
-  	
+
 
 	this.graphics_state.camera_transform = mult(PERSPECTIVE_TRANSFORM,
 		translation(0, 0, -300 + 30 * time_diff / 1000));

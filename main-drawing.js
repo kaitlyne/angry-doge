@@ -56,10 +56,9 @@ const SCREEN_ID = {
               this.graphics_state.current_screen_id = SCREEN_ID.START;
               this.is_in_intro_anim = false;
 
-              this.theme_song = new Audio("meow.mp3")
-              this.theme_song.loop = true
-              this.theme_song.play()
-              this.theme_song.volume = 0.25
+              this.beginning_song = new Audio("finalboss.mp3")
+              this.beginning_song.loop = true
+              this.beginning_song.volume = 0.25
 
               this.DEF_RAD = 2.5;
               //doge
@@ -107,7 +106,7 @@ const SCREEN_ID = {
 					this.audio.launch.play();
 					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
 					this.at_init_pos = false;
-					//console.log(this.doge.velocity);
+					console.log(this.doge.velocity);
 					//console.log(length(this.doge.velocity));
 				  }
 			  });
@@ -118,9 +117,6 @@ const SCREEN_ID = {
 				  // Change angle to fire left
 				  if (this.at_init_pos == true) {
 					  this.yaw -= 5;
-            if (this.yaw == -360) {
-              this.yaw = 0;
-            }
 				  }
 			  });
 			  controls.add("right", this, function() {
@@ -130,17 +126,14 @@ const SCREEN_ID = {
 				  // Change angle to fire right
 				  if (this.at_init_pos == true) {
 					  this.yaw += 5;
-            if (this.yaw == 360) {
-              this.yaw = 0;
-            }
-				  }
+				 }
 			  });
 			  controls.add("up", this, function() {
                   if (this.graphics_state.current_state != ANIMATION_STATE.IN_GAME) {
                       return;
                   }
 				  // Change angle to fire up
-				  if (this.at_init_pos == true && this.pitch < 90) {
+				  if (this.at_init_pos == true) {
 					  this.pitch += 5;
 				  }
 			  });
@@ -149,7 +142,7 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Change angle to fire down
-				  if (this.at_init_pos == true && this.pitch > 0) {
+				  if (this.at_init_pos == true) {
 					  this.pitch -= 5;
 				  }
 			  });
@@ -158,7 +151,7 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Decrease magnitude
-				  if (this.at_init_pos == true && this.magnitude > 0) {
+				  if (this.at_init_pos == true) {
 					  this.magnitude -= 0.05;
 				  }
 			  });
@@ -167,7 +160,7 @@ const SCREEN_ID = {
                       return;
                   }
 				  // Increase magnitude
-				  if (this.at_init_pos == true && this.magnitude < 2) {
+				  if (this.at_init_pos == true) {
 					  this.magnitude += 0.05;
 				  }
 			  });
@@ -179,14 +172,14 @@ const SCREEN_ID = {
 				  }
 				  this.reset_doge(reset_angles_magnitude);
 			  });
-        // controls.add("1", this, function() {
-        //   // cheat
-        //   if (this.graphics_state.current_level_num <= 3) {
-        //     this.graphics_state.current_level_num++;
-        //     this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
-        //   }
-        //   this.reset_doge(true);
-        // });
+        controls.add("1", this, function() {
+          // cheat
+          if (this.graphics_state.current_level_num <= 3) {
+            this.graphics_state.current_level_num++;
+            this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+          }
+          this.reset_doge(true);
+        });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
             var newx = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
