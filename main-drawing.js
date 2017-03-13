@@ -212,6 +212,7 @@ const SCREEN_ID = {
               this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
               this.initialize_levels();
               this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+              reset_angles_magnitude = true;
             }
           }
 			  }
