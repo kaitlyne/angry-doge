@@ -74,17 +74,31 @@
               document.getElementById('top-right-text').style.visibility = 'visible';
               document.getElementById('bot-left').style.visibility = 'visible';
               document.getElementById('bot-right').style.visibility = 'visible';
-              
+
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
                 var upper_right_text = "<h1 style='text-align:center;'>WOW<br/>SUCH<br/>WIN!</h1>";
                 var texture_filename = "doge-sunglasses.jpg";
                 if (this.graphics_state.current_level_num == 4) {
+<<<<<<< HEAD
                   upper_right_text = "<h2>I'd pay you, but you used lookat(), so now you must die.</h2>";
+=======
+                  this.graphics_state.beginning_song.pause()
+                  this.graphics_state.beginning_song.currentTime = 0
+                  this.graphics_state.finalboss_song.play()
+                  upper_right_text = "I'd pay you, but you used lookat(), so now you must die.";
+>>>>>>> Added some music
                   texture_filename = "finalboss_square.jpg";
                 }
                 document.getElementById('bot-left').innerText = "Click for next level";
                 if (this.graphics_state.current_level_num == 5) {
+<<<<<<< HEAD
                   upper_right_text = "<h2>Okay fine, you can use lookat()</h2>";
+=======
+                  this.graphics_state.finalboss_song.pause()
+                  this.graphics_state.finalboss_song.currentTime = 0
+                  this.graphics_state.end_song.play()
+                  upper_right_text = "Okay fine, you can use lookat()";
+>>>>>>> Added some music
                   texture_filename = "scott3.jpg";
                   document.getElementById('bot-left').style.visibility = 'hidden';
                 }

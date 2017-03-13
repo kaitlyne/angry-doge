@@ -3,8 +3,9 @@
 // to this new file and main-drawing.js still works just the same when I call these functions!
 // Clearly prototypes = magic. QED.
 window.Main_Drawing.prototype.init_animation = function() {
-
-	this.beginning_song.play()
+	this.graphics_state.end_song.pause()
+	this.graphics_state.end_song.currentTime = 0
+	this.graphics_state.beginning_song.play()
 	this.is_in_intro_anim = true;
 	this.animation_start_time = this.graphics_state.animation_time;
 	this.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;

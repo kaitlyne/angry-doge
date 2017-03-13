@@ -56,9 +56,16 @@ const SCREEN_ID = {
               this.graphics_state.current_screen_id = SCREEN_ID.START;
               this.is_in_intro_anim = false;
 
-              this.beginning_song = new Audio("finalboss.mp3")
-              this.beginning_song.loop = true
-              this.beginning_song.volume = 0.25
+              this.graphics_state.beginning_song = new Audio("intro.mp3")
+              this.graphics_state.beginning_song.loop = true
+              this.graphics_state.beginning_song.volume = 0.25
+
+              this.graphics_state.finalboss_song = new Audio("finalboss.mp3")
+              this.graphics_state.finalboss_song.loop = true
+              this.graphics_state.finalboss_song.volume = 0.25
+
+              this.graphics_state.end_song = new Audio("champions.mp3")
+              this.graphics_state.end_song.loop = true
 
               this.DEF_RAD = 2.5;
               //doge
@@ -323,12 +330,15 @@ const SCREEN_ID = {
                     console.log("A winner is you");
                   }*/
               }
+              if (this.graphics_state.current_level_num == 4) {
+
+              }
               // if doge is still, i.e., zero velocity for all components
               // which is the same as if speed squared (dot product) is 0
               // (again, square root is expensive and unnecessary)
               if (this.at_init_pos == false && dot(this.doge.velocity, this.doge.velocity) == 0) {
                   //console.log("wow much still");
-				  this.reset_doge(false);
+				              this.reset_doge(false);
               }
           },
 		  'draw_walls': function(left_door_rotation=0, right_door_rotation=0) {
