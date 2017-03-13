@@ -76,15 +76,15 @@
               document.getElementById('bot-right').style.visibility = 'visible';
               
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
-                var upper_right_text = "<h1>WOW<br/>SUCH<br/>WIN!</h1>";
+                var upper_right_text = "<h1 style='text-align:center;'>WOW<br/>SUCH<br/>WIN!</h1>";
                 var texture_filename = "doge-sunglasses.jpg";
                 if (this.graphics_state.current_level_num == 4) {
-                  upper_right_text = "I'd pay you, but you used lookat(), so now you must die.";
+                  upper_right_text = "<h2>I'd pay you, but you used lookat(), so now you must die.</h2>";
                   texture_filename = "finalboss_square.jpg";
                 }
                 document.getElementById('bot-left').innerText = "Click for next level";
                 if (this.graphics_state.current_level_num == 5) {
-                  upper_right_text = "Okay fine, you can use lookat()";
+                  upper_right_text = "<h2>Okay fine, you can use lookat()</h2>";
                   texture_filename = "scott3.jpg";
                   document.getElementById('bot-left').style.visibility = 'hidden';
                 }
@@ -98,8 +98,8 @@
               }
               else {
                 shapes_in_use['strip'].draw(this.graphics_state, pic_transf, lose_material);
-                document.getElementById('top-right-text').innerText =
-                  "If this were architecture school, you'd be out on day 1!";
+                document.getElementById('top-right-text').innerHTML =
+                  "<h2>If this were architecture school, you'd be out on day 1!</h2>";
                 document.getElementById('bot-left').innerText = "Click to replay";
                 document.getElementById('bot-right').innerText = "Click for main menu";
               }
