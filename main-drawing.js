@@ -312,7 +312,7 @@ const SCREEN_ID = {
                       this.graphics_state.current_screen_id = SCREEN_ID.WIN;
                       this.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
                   }
-                  /*else if (this.graphics_state.current_level_num == 4) {
+                  /*if (this.graphics_state.current_level_num == 4) {
                     console.log("A winner is you");
                   }*/
               }
@@ -430,7 +430,7 @@ const SCREEN_ID = {
                 }
                 hp_str = String(hp_str)
                 hp_str += ' hp remaining'
-                document.getElementById('top-right-text').style.fontSize = '2em';
+                //document.getElementById('top-right-text').style.fontSize = '2em';
                 document.getElementById('top-right-text').innerText = hp_str
               }
           },

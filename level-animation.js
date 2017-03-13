@@ -10,6 +10,9 @@ window.Main_Drawing.prototype.init_animation = function() {
 	//this.doge.transform = mult(translation(0, 0, -300), this.doge.transform);
 	//this.graphics_state.camera_transform = mult(this.graphics_state.camera_transform,
 	//	translation(0, 0, -75));
+	this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+	this.initialize_levels();
+	console.log('level', this.graphics_state.current_level_num);
 };
 
 window.Main_Drawing.prototype.draw_scott = function() {
@@ -98,6 +101,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 		this.init_animation();
 	}
 	var time_diff = this.graphics_state.animation_time - this.animation_start_time;
+	// animation over in 10s, switch to game mode
 	if (time_diff > 10000) {
 		this.graphics_state.current_state = ANIMATION_STATE.IN_GAME;
 		this.is_in_intro_anim = false;

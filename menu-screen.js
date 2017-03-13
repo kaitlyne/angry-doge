@@ -33,6 +33,23 @@
                   }
               })(this), false);
 
+              document.getElementById('bot-right').addEventListener("mouseup", (function(self) {
+                  return function(e) {
+                      if (self.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
+                          return;
+                      }
+                      e = e || window.event;
+                      self.graphics_state.current_state = ANIMATION_STATE.MENU_SCREEN;
+                      self.graphics_state.current_screen_id = SCREEN_ID.START;
+                      self.graphics_state.current_level_num = 0;
+                      document.getElementById('top-right-text').style.visibility = 'hidden';
+                      this.style.visibility = 'hidden';
+                      document.getElementById('bot-left').style.visibility = 'hidden';
+                      //self.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
+                      console.log('mouseup');
+                  }
+              })(this), false);
+
               document.getElementById('start-game').addEventListener("mouseup", (function(self) {
                   return function(e) {
                       if (self.graphics_state.current_state != ANIMATION_STATE.MENU_SCREEN) {
@@ -57,7 +74,7 @@
               document.getElementById('top-right-text').style.visibility = 'visible';
               document.getElementById('bot-left').style.visibility = 'visible';
               document.getElementById('bot-right').style.visibility = 'visible';
-              document.getElementById('top-right-text').style.fontSize = '2em';
+              //document.getElementById('top-right-text').style.fontSize = '2em';
               if (this.graphics_state.current_screen_id == SCREEN_ID.WIN) {
                 var upper_right_text = "Wow such win!";
                 var texture_filename = "doge-sunglasses.jpg";
