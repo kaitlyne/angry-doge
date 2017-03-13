@@ -179,14 +179,14 @@ const SCREEN_ID = {
 				  }
 				  this.reset_doge(reset_angles_magnitude);
 			  });
-        controls.add("1", this, function() {
-          // cheat
-          if (this.graphics_state.current_level_num <= 3) {
-            this.graphics_state.current_level_num++;
-            this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
-          }
-          this.reset_doge(true);
-        });
+        // controls.add("1", this, function() {
+        //   // cheat
+        //   if (this.graphics_state.current_level_num <= 3) {
+        //     this.graphics_state.current_level_num++;
+        //     this.current_level_arr = this.level_arr[this.graphics_state.current_level_num];
+        //   }
+        //   this.reset_doge(true);
+        // });
 		  },
           'change_velocity': function(ball, yaw, pitch, roll, magnitude) {
             var newx = Math.sin(radians(yaw)) * Math.cos(radians(pitch)) * magnitude;
