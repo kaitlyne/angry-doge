@@ -7,7 +7,6 @@ window.Main_Drawing.prototype.init_animation = function() {
 	this.is_in_intro_anim = true;
 	this.animation_start_time = this.graphics_state.animation_time;
 	this.graphics_state.camera_transform = PERSPECTIVE_TRANSFORM;
-	document.getElementById('top-right-text').style.visibility = 'hidden';
 	//this.doge.transform = mult(translation(0, 0, -300), this.doge.transform);
 	//this.graphics_state.camera_transform = mult(this.graphics_state.camera_transform,
 	//	translation(0, 0, -75));
@@ -16,10 +15,12 @@ window.Main_Drawing.prototype.init_animation = function() {
 window.Main_Drawing.prototype.draw_scott = function() {
 	var pic_transf = mat4();
 	// flip picture so it's upright
-	pic_transf = mult(pic_transf, translation(-0.8, 0, 0));
-	pic_transf = mult(pic_transf, scale(0.4, -0.4, 0.4));
+	pic_transf = mult(pic_transf, translation(-5, 0, 110));
+	pic_transf = mult(pic_transf, scale(2, -2, 2));
 	var intro_material = new Material(Color(0, 0, 0, 1), 1, 0, 0, 0, "scott3.jpg");
 	shapes_in_use['strip'].draw(this.graphics_state, pic_transf, intro_material);
+	document.getElementById('top-left-text').style.visibility = 'visible';
+	document.getElementById('top-left-text').innerHTML = "&nbsp;"
 	document.getElementById('top-right-text').style.visibility = 'visible';
 	document.getElementById('top-right-text').innerText = "These cats invaded my house and used lookat()! Get rid of them!!!";
 }
@@ -99,6 +100,7 @@ window.Main_Drawing.prototype.intro_animation = function() {
 		this.at_init_pos = true;
 		this.reset_doge(true);
 		this.doge.init_transform();
+		document.getElementById('top-right-text').style.visibility = 'hidden';
 		return;
 	}
 
