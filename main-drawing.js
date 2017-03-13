@@ -110,11 +110,11 @@ const SCREEN_ID = {
                   }
 				  // Fire the doge
 				  if (this.at_init_pos == true) {
-					this.audio.launch.play();
-					this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
-					this.at_init_pos = false;
-					console.log(this.doge.velocity);
-					//console.log(length(this.doge.velocity));
+            this.audio.launch = new Audio("launch.mp3");
+					  this.audio.launch.play();
+					  this.change_velocity(this.doge, this.yaw, this.pitch, this.roll, this.magnitude);
+					  this.at_init_pos = false;
+					  console.log(this.doge.velocity);
 				  }
 			  });
 			  controls.add("left", this, function() {
